@@ -1,269 +1,214 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, PieChart, Pie, Cell
-} from "recharts";
-import {
-  DollarSign, AlertTriangle, FileCheck, Rocket, Users, Store,
-  TrendingUp, TrendingDown, ArrowUpRight, Activity
-} from "lucide-react";
-import { revenueChartData, denialsByReason, pipelineStages, salesPipeline, marketplaceMatches } from "@/lib/demo-data";
-import { formatCurrency } from "@/lib/utils";
+import { Building2, Rocket, ArrowRight, ShieldCheck, Zap, Activity, BarChart3, Users, ChevronRight, Lock } from "lucide-react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
-const kpis = [
-  { title: "Revenue at Risk", value: "$47,200", change: -12.3, icon: DollarSign, color: "#ef4444", gradient: "from-red-500/20 to-red-500/5" },
-  { title: "Pending PA", value: "23", change: -8.1, icon: FileCheck, color: "#f59e0b", gradient: "from-amber-500/20 to-amber-500/5" },
-  { title: "Denial Risk", value: "14.2%", change: -3.4, icon: AlertTriangle, color: "#f97316", gradient: "from-orange-500/20 to-orange-500/5" },
-  { title: "Startup Leads", value: "156", change: 24.5, icon: Rocket, color: "#8b5cf6", gradient: "from-violet-500/20 to-violet-500/5" },
-  { title: "Active Buyers", value: "48", change: 18.2, icon: Users, color: "#3b82f6", gradient: "from-blue-500/20 to-blue-500/5" },
-  { title: "Marketplace Matches", value: "32", change: 42.1, icon: Store, color: "#10b981", gradient: "from-emerald-500/20 to-emerald-500/5" },
-];
+export default function MarketingLanding() {
+  const [scrolled, setScrolled] = useState(false);
 
-const recentActivity = [
-  { text: "PA approved for Emily Chen — Auth #AUTH-88421", time: "2 min ago", type: "success" },
-  { text: "Denial risk detected — James Rodriguez (82% probability)", time: "15 min ago", type: "warning" },
-  { text: "MedSync AI matched with Pacific Health Partners (94% fit)", time: "1 hr ago", type: "info" },
-  { text: "Revenue leakage: $3,800 in uncaptured CPT codes", time: "2 hrs ago", type: "danger" },
-  { text: "New buyer discovered — Jennifer Liu, CTO at Sunrise Health", time: "3 hrs ago", type: "info" },
-  { text: "InsureBot deal moved to Proposal stage ($85K)", time: "4 hrs ago", type: "success" },
-];
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-const CustomTooltip = ({ active, payload, label }: any) => {
-  if (!active || !payload) return null;
   return (
-    <div className="glass-card-static p-3 text-xs">
-      <p className="text-surface-300 mb-1">{label}</p>
-      {payload.map((p: any, i: number) => (
-        <p key={i} style={{ color: p.color }} className="font-medium">
-          {p.name}: {formatCurrency(p.value)}
-        </p>
-      ))}
-    </div>
-  );
-};
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-white/20">
+      
+      {/* Decorative Global Background Glows */}
+      <div className="fixed top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-white opacity-[0.02] rounded-full blur-[120px] pointer-events-none" />
+      <div className="fixed bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-white opacity-[0.02] rounded-full blur-[120px] pointer-events-none" />
 
-export default function Dashboard() {
-  return (
-    <div className="space-y-6 max-w-[1600px] mx-auto">
-      {/* Page Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-          <p className="text-sm text-surface-400 mt-1">Healthcare intelligence overview — April 2025</p>
+      {/* Navigation */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${scrolled ? 'bg-black/80 backdrop-blur-xl border-white/[0.1] py-4' : 'bg-transparent border-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+              <Activity className="w-5 h-5 text-black" />
+            </div>
+            <span className="font-bold text-xl tracking-tight text-white">MediFlow<span className="text-white/40">Nexus</span></span>
+          </div>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/40">
+            <a href="#features" className="hover:text-white transition-colors">Platform</a>
+            <a href="#security" className="hover:text-white transition-colors">Security</a>
+            <a href="#enterprise" className="hover:text-white transition-colors">Enterprise</a>
+          </div>
+          <div className="flex items-center gap-4">
+            <button className="text-sm font-medium text-white/40 hover:text-white transition-colors hidden sm:block">Log in</button>
+            <a href="#workspaces" className="px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+              Enter Workspace
+            </a>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          <button className="btn-secondary text-xs">Export Report</button>
-          <button className="btn-primary text-xs">+ New Case</button>
-        </div>
-      </div>
+      </nav>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        {kpis.map((kpi, i) => (
+      <main className="pt-32 pb-24">
+        {/* Hero Section */}
+        <section className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-32 text-center">
           <motion.div
-            key={kpi.title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05, duration: 0.4 }}
-            className="glass-card kpi-card"
-            style={{ "--kpi-color": kpi.color } as any}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col items-center"
           >
-            <div className="flex items-center justify-between mb-3">
-              <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${kpi.gradient} flex items-center justify-center`}>
-                <kpi.icon size={18} style={{ color: kpi.color }} />
-              </div>
-              <div className={`flex items-center gap-1 text-xs font-semibold ${kpi.change >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                {kpi.change >= 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-                {Math.abs(kpi.change)}%
-              </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-medium text-white/60 mb-8">
+              <span className="flex h-2 w-2 rounded-full bg-white animate-pulse shadow-[0_0_8px_white]"></span>
+              MediFlow Nexus OS 2.0 is now live
             </div>
-            <p className="text-xl font-bold text-white">{kpi.value}</p>
-            <p className="text-xs text-surface-400 mt-1">{kpi.title}</p>
+            
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1] max-w-4xl">
+              The Intelligence Engine for <br className="hidden md:block"/>
+              <span className="text-white">
+                Modern Healthcare
+              </span>
+            </h1>
+            
+            <p className="text-xl text-white/40 max-w-2xl mx-auto mb-12 leading-relaxed">
+              Unify your clinic operations and accelerate your startup's go-to-market motion with our enterprise-grade revenue intelligence platform.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <a href="#workspaces" className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+                Launch Platform <ArrowRight className="w-4 h-4" />
+              </a>
+              <a href="#features" className="px-8 py-4 rounded-full bg-white/[0.03] border border-white/[0.1] text-white font-semibold hover:bg-white/[0.06] transition-all flex items-center gap-2">
+                Explore Features
+              </a>
+            </div>
           </motion.div>
-        ))}
-      </div>
+        </section>
 
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Revenue Trend */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="glass-card-static p-5 lg:col-span-2"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h3 className="text-sm font-semibold text-white">Revenue Trend</h3>
-              <p className="text-xs text-surface-400 mt-0.5">Actual vs Predicted Revenue</p>
-            </div>
-            <div className="flex items-center gap-4 text-xs">
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-blue-500" /> Actual</span>
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-violet-500" /> Predicted</span>
-              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-red-500" /> Leakage</span>
-            </div>
+        {/* Bento Box Features */}
+        <section id="features" className="max-w-7xl mx-auto px-6 lg:px-8 py-24 border-t border-white/[0.04]">
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Enterprise Capabilities</h2>
+            <p className="text-white/40 max-w-2xl">Built for scale, designed for speed. MediFlow Nexus handles the complexity of healthcare data so you can focus on growth.</p>
           </div>
-          <div className="h-64 chart-container">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={revenueChartData} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-                <defs>
-                  <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="purpleGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.2} />
-                    <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-                <XAxis dataKey="month" tick={{ fill: "#64748b", fontSize: 12 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "#64748b", fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(v) => `${v / 1000}K`} />
-                <Tooltip content={<CustomTooltip />} />
-                <Area type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={2} fill="url(#blueGrad)" name="Actual" />
-                <Area type="monotone" dataKey="predicted" stroke="#8b5cf6" strokeWidth={2} strokeDasharray="5 5" fill="url(#purpleGrad)" name="Predicted" />
-                <Area type="monotone" dataKey="leakage" stroke="#ef4444" strokeWidth={1.5} fill="none" name="Leakage" />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </motion.div>
 
-        {/* Denial Breakdown */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="glass-card-static p-5"
-        >
-          <h3 className="text-sm font-semibold text-white mb-1">Denial Breakdown</h3>
-          <p className="text-xs text-surface-400 mb-4">By reason category</p>
-          <div className="space-y-3">
-            {denialsByReason.map((d, i) => (
-              <div key={d.reason}>
-                <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="text-surface-300">{d.reason}</span>
-                  <span className="text-surface-400">{d.count} claims</span>
-                </div>
-                <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${(d.count / 45) * 100}%` }}
-                    transition={{ delay: 0.5 + i * 0.1, duration: 0.6 }}
-                    className="h-full rounded-full"
-                    style={{ background: `linear-gradient(90deg, #ef4444 0%, #f97316 100%)`, opacity: 1 - i * 0.12 }}
-                  />
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Feature 1 - Large */}
+            <div className="md:col-span-2 bg-white/[0.02] border border-white/[0.1] rounded-3xl p-8 hover:bg-white/[0.04] transition-colors relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[80px] -mr-32 -mt-32 transition-opacity group-hover:opacity-100 opacity-50" />
+              <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-6">
+                <BarChart3 className="w-6 h-6 text-white" />
               </div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
+              <h3 className="text-xl font-bold mb-3">AI Denials Prediction</h3>
+              <p className="text-white/40 max-w-md">Our machine learning models analyze historical claims to predict and prevent denials before they happen, recovering millions in lost revenue.</p>
+            </div>
 
-      {/* Pipeline + Activity Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Sales Pipeline */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="glass-card-static p-5"
-        >
-          <h3 className="text-sm font-semibold text-white mb-1">Sales Pipeline</h3>
-          <p className="text-xs text-surface-400 mb-4">Startup deal progression</p>
-          <div className="h-52 chart-container">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={pipelineStages} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-                <XAxis dataKey="name" tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="count" radius={[6, 6, 0, 0]} name="Deals">
-                  {pipelineStages.map((entry, index) => (
-                    <Cell key={index} fill={entry.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </motion.div>
-
-        {/* Recent Activity */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="glass-card-static p-5"
-        >
-          <h3 className="text-sm font-semibold text-white mb-1">Recent Activity</h3>
-          <p className="text-xs text-surface-400 mb-4">Platform-wide events</p>
-          <div className="space-y-3">
-            {recentActivity.map((item, i) => (
-              <div key={i} className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-white/[0.02] transition-colors">
-                <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
-                  item.type === "success" ? "bg-emerald-400" :
-                  item.type === "warning" ? "bg-amber-400" :
-                  item.type === "danger" ? "bg-red-400" : "bg-blue-400"
-                }`} />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-surface-200 leading-snug">{item.text}</p>
-                  <p className="text-xs text-surface-500 mt-0.5">{item.time}</p>
-                </div>
+            {/* Feature 2 */}
+            <div className="bg-white/[0.02] border border-white/[0.1] rounded-3xl p-8 hover:bg-white/[0.04] transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-6">
+                <Lock className="w-6 h-6 text-white" />
               </div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
+              <h3 className="text-xl font-bold mb-3">SOC2 & HIPAA</h3>
+              <p className="text-white/40">Bank-grade encryption and full compliance out of the box.</p>
+            </div>
 
-      {/* Marketplace Matches */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
-        className="glass-card-static p-5"
-      >
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h3 className="text-sm font-semibold text-white">Top Marketplace Matches</h3>
-            <p className="text-xs text-surface-400 mt-0.5">AI-powered startup ↔ clinic connections</p>
+            {/* Feature 3 */}
+            <div className="bg-white/[0.02] border border-white/[0.1] rounded-3xl p-8 hover:bg-white/[0.04] transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-6">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Patient Copilot</h3>
+              <p className="text-white/40">Automated intake and insurance verification workflows.</p>
+            </div>
+
+            {/* Feature 4 - Large */}
+            <div className="md:col-span-2 bg-white/[0.02] border border-white/[0.1] rounded-3xl p-8 hover:bg-white/[0.04] transition-colors relative overflow-hidden group">
+               <div className="absolute bottom-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[80px] -mr-32 -mb-32 transition-opacity group-hover:opacity-100 opacity-50" />
+              <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-6">
+                <Rocket className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Go-To-Market Automation</h3>
+              <p className="text-white/40 max-w-md">Instantly generate tailored outreach campaigns, calculate ROI, and sync seamlessly with Salesforce and Hubspot.</p>
+            </div>
           </div>
-          <button className="btn-ghost text-xs flex items-center gap-1">
-            View All <ArrowUpRight size={12} />
-          </button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-3">
-          {marketplaceMatches.map((match, i) => (
+        </section>
+
+        {/* Workspace Selector (The 2 Cards CTA) */}
+        <section id="workspaces" className="max-w-5xl mx-auto px-6 lg:px-8 py-32 relative">
+          
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Select your workspace</h2>
+            <p className="text-white/40 text-lg">Enter the environment tailored to your operational needs.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+            {/* Clinic Ops Card */}
             <motion.div
-              key={match.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8 + i * 0.05 }}
-              className="pipeline-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              className="group relative"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className={`badge ${
-                  match.status === "partnered" ? "badge-success" :
-                  match.status === "connected" ? "badge-info" :
-                  match.status === "in_discussion" ? "badge-warning" : "badge-neutral"
-                }`}>
-                  {match.status.replace("_", " ")}
-                </span>
-                <span className="text-sm font-bold text-emerald-400">{match.matchScore}%</span>
-              </div>
-              <p className="text-sm font-medium text-white truncate">{match.startupName}</p>
-              <p className="text-xs text-surface-400 truncate">↔ {match.clinicName}</p>
-              <div className="mt-2 flex flex-wrap gap-1">
-                {match.matchReasons.slice(0, 2).map((r) => (
-                  <span key={r} className="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] text-surface-400">
-                    {r}
-                  </span>
-                ))}
-              </div>
+              <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl blur-xl" />
+              <Link href="/dashboard" className="block h-full">
+                <div className="h-full bg-white/[0.02] backdrop-blur-xl border border-white/[0.1] group-hover:border-white rounded-3xl p-8 md:p-10 transition-all duration-300 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+                    <Building2 className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-white mb-3">Clinic Ops Intelligence</h3>
+                  <p className="text-white/40 leading-relaxed mb-8">
+                    Enterprise dashboard for healthcare providers. Manage patient intake, automate insurance verifications, and predict claim denials with AI.
+                  </p>
+                  
+                  <div className="flex items-center justify-between text-white font-semibold transition-colors mt-auto pt-8 border-t border-white/[0.1]">
+                    <span>Enter Workspace</span>
+                    <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
             </motion.div>
-          ))}
+
+            {/* Startup GTM Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              className="group relative"
+            >
+              <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl blur-xl" />
+              <Link href="/launch-engine" className="block h-full">
+                <div className="h-full bg-white/[0.02] backdrop-blur-xl border border-white/[0.1] group-hover:border-white rounded-3xl p-8 md:p-10 transition-all duration-300 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+                    <Rocket className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-white mb-3">Startup GTM Engine</h3>
+                  <p className="text-white/40 leading-relaxed mb-8">
+                    Commercialization suite for digital health startups. Build ICPs, generate personalized outreach, and calculate ROI for enterprise sales.
+                  </p>
+                  
+                  <div className="flex items-center justify-between text-white font-semibold transition-colors mt-auto pt-8 border-t border-white/[0.1]">
+                    <span>Enter Workspace</span>
+                    <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-white/[0.1] py-12 text-center text-sm text-white/20 font-mono">
+        <div className="max-w-7xl mx-auto px-6">
+          MEDIFLOW NEXUS OS // v2.0.0 ENTERPRISE // ALL SYSTEMS OPERATIONAL
         </div>
-      </motion.div>
+      </footer>
     </div>
   );
 }
