@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Target, Search, BarChart3, Users, Zap, Plus, Loader2, Save, History, ChevronRight } from "lucide-react";
 import GTMFileUpload, { type UploadedFile } from "@/components/gtm-file-upload";
 import GTMResults from "@/components/gtm-results";
+import { createClient } from "@/lib/supabase/client";
 import type { GTMStrategy } from "@/types/gtm";
 
 type Phase = "input" | "loading" | "result" | "error";
@@ -21,13 +23,33 @@ export default function GTMPage() {
   const [strategy, setStrategy] = useState<GTMStrategy | null>(null);
   const [error, setError] = useState<string>("");
   const [loadingStep, setLoadingStep] = useState(0);
+  const [startups, setStartups] = useState<any[]>([]);
+  const [selectedStartupId, setSelectedStartupId] = useState<string>("");
+  const [isSaving, setIsSaving] = useState(false);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const fetchStartups = async () => {
+      const { data } = await supabase.from('startup_profiles').select('id, name');
+      if (data) {
+        setStartups(data);
+        if (data.length > 0) setSelectedStartupId(data[0].id);
+      }
+    };
+    fetchStartups();
+  }, []);
 
   const handleGenerate = async (files: UploadedFile[], textContext: string) => {
+    if (!selectedStartupId) {
+      setError("Please select a startup first. Go to 'Onboarding' if you haven't created one.");
+      setPhase("error");
+      return;
+    }
+
     setPhase("loading");
     setError("");
     setLoadingStep(0);
 
-    // Cycle through loading steps for UX
     const stepInterval = setInterval(() => {
       setLoadingStep((s) => (s < LOADING_STEPS.length - 1 ? s + 1 : s));
     }, 4000);
@@ -55,8 +77,9 @@ export default function GTMPage() {
       if (data.strategy) {
         setStrategy(data.strategy);
         setPhase("result");
-      } else if (data.raw) {
-        throw new Error("AI returned unstructured output — try again or add more context.");
+        
+        // Auto-save to Supabase
+        await handleSaveStrategy(data.strategy);
       } else {
         throw new Error("Unexpected response from server");
       }
@@ -65,6 +88,21 @@ export default function GTMPage() {
       setError(err instanceof Error ? err.message : "Unknown error");
       setPhase("error");
     }
+  };
+
+  const handleSaveStrategy = async (strat: GTMStrategy) => {
+    setIsSaving(true);
+    const { error: saveError } = await supabase
+      .from('gtm_recommendations')
+      .insert([{
+        startup_id: selectedStartupId,
+        strategy_json: strat,
+        icp_data: strat.icp,
+        persona_data: strat.personas,
+        messaging_data: strat.messaging,
+        status: 'completed'
+      }]);
+    setIsSaving(false);
   };
 
   const handleReset = () => {
@@ -85,7 +123,30 @@ export default function GTMPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
+            className="space-y-6"
           >
+            <div className="glass-card p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.1] flex items-center justify-center">
+                  <Target size={20} className="text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-white/40 uppercase tracking-widest">Select Target Startup</p>
+                  <select 
+                    value={selectedStartupId} 
+                    onChange={(e) => setSelectedStartupId(e.target.value)}
+                    className="bg-transparent text-sm font-bold text-white outline-none cursor-pointer"
+                  >
+                    {startups.length === 0 && <option value="">No startups onboarded</option>}
+                    {startups.map(s => <option key={s.id} value={s.id} className="bg-[#0A0A0A]">{s.name}</option>)}
+                  </select>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button className="btn-secondary text-[10px] flex items-center gap-2"><History size={12} /> View History</button>
+              </div>
+            </div>
+
             <GTMFileUpload onGenerate={handleGenerate} isLoading={false} />
           </motion.div>
         )}

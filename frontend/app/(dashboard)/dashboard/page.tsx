@@ -241,6 +241,69 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      {/* Network Effect / Flywheel Visual */}
+      <div className="glass-card p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h3 className="text-[14px] font-bold text-white">Network Effect Score</h3>
+            <p className="text-[11px] text-white/20 uppercase tracking-wider font-bold mt-1">Platform Flywheel Metrics</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgb(52,211,153)] animate-pulse"></div>
+            <span className="text-[11px] text-white/40 font-medium">Live</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          {[
+            { label: "Startups Onboarded", value: "24", change: "+3 this week", metric: "startup" },
+            { label: "Buyer Matches Made", value: "156", change: "+18 this week", metric: "match" },
+            { label: "Clinics Active", value: "12", change: "+2 this month", metric: "clinic" },
+            { label: "AI Accuracy", value: "94.2%", change: "+1.8% from data", metric: "ai" },
+          ].map((item, i) => (
+            <div key={i} className="text-center p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl">
+              <p className="text-2xl font-extrabold text-white">{item.value}</p>
+              <p className="text-[11px] text-white/40 mt-1">{item.label}</p>
+              <p className="text-[10px] text-emerald-400/80 mt-1">{item.change}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Flywheel Loop */}
+        <div className="flex items-center justify-between gap-2 overflow-x-auto pb-2">
+          {[
+            { step: "More Startups", icon: "🚀" },
+            { step: "More Buyer Matches", icon: "🎯" },
+            { step: "More Clinics Join", icon: "🏥" },
+            { step: "More Data Generated", icon: "📊" },
+            { step: "AI Gets Smarter", icon: "🧠" },
+            { step: "More Startups", icon: "🔄" },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-2 flex-shrink-0">
+              <div className="text-center">
+                <div className="text-lg mb-1">{item.icon}</div>
+                <p className="text-[10px] text-white/40 font-medium whitespace-nowrap">{item.step}</p>
+              </div>
+              {i < 5 && (
+                <span className="text-white/10 text-lg font-bold flex-shrink-0">→</span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Flywheel Score Bar */}
+        <div className="mt-4 pt-4 border-t border-white/[0.04]">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[12px] text-white/40 font-medium">Network Effect Strength</span>
+            <span className="text-[12px] font-bold text-white">72/100</span>
+          </div>
+          <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
+            <div className="h-full rounded-full bg-gradient-to-r from-white/40 to-white transition-all duration-1000" style={{ width: "72%" }}></div>
+          </div>
+          <p className="text-[10px] text-white/20 mt-2">Score increases as more startups, clinics, and data flow through the platform.</p>
+        </div>
+      </div>
     </div>
   );
 }

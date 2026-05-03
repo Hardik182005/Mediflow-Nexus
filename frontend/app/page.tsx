@@ -201,6 +201,109 @@ export default function MarketingLanding() {
             </motion.div>
           </div>
         </section>
+
+        {/* Flywheel / Network Effects */}
+        <section className="max-w-5xl mx-auto px-6 lg:px-8 py-24 border-t border-white/[0.04]">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">The MediFlow Flywheel</h2>
+            <p className="text-white/40 max-w-2xl mx-auto">Every new user strengthens the platform for everyone. Data-driven network effects create compounding value.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[
+              { step: "01", title: "Startups Onboard", desc: "Healthcare startups register their products and define target markets." },
+              { step: "02", title: "AI Matches Buyers", desc: "Our engine cross-references startup data with 30+ hospital profiles." },
+              { step: "03", title: "Clinics Verify Faster", desc: "Hospitals use AI-powered VOB, reducing manual insurance calls by 90%." },
+              { step: "04", title: "Data Compounds", desc: "Every transaction improves match accuracy and denial predictions for all users." },
+            ].map((item, i) => (
+              <motion.div
+                key={item.step}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="relative bg-white/[0.02] border border-white/[0.1] rounded-2xl p-6 hover:bg-white/[0.04] transition-colors"
+              >
+                <div className="text-4xl font-black text-white/[0.06] mb-4">{item.step}</div>
+                <h4 className="text-lg font-bold text-white mb-2">{item.title}</h4>
+                <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
+                {i < 3 && (
+                  <div className="hidden md:block absolute top-1/2 -right-4 w-8 text-white/20 text-center font-bold">→</div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Security & Compliance */}
+        <section id="security" className="max-w-5xl mx-auto px-6 lg:px-8 py-24 border-t border-white/[0.04]">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Enterprise-Grade Security</h2>
+            <p className="text-white/40 max-w-2xl mx-auto">Built for the most regulated industry on earth. Compliance is not an afterthought — it&apos;s our foundation.</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { badge: "HIPAA", desc: "Health Insurance Portability and Accountability Act compliance" },
+              { badge: "SOC2", desc: "Type II certified infrastructure and access controls" },
+              { badge: "NABH", desc: "National Accreditation Board for Hospitals (India)" },
+              { badge: "JCI", desc: "Joint Commission International standards" },
+            ].map((item, i) => (
+              <motion.div
+                key={item.badge}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="text-center bg-white/[0.02] border border-white/[0.1] rounded-2xl p-6 hover:border-white/30 transition-colors"
+              >
+                <div className="text-2xl font-black text-white mb-2">{item.badge}</div>
+                <p className="text-xs text-white/40 leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Global Markets (ASEAN) */}
+        <section id="enterprise" className="max-w-5xl mx-auto px-6 lg:px-8 py-24 border-t border-white/[0.04]">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Built for Global Healthcare</h2>
+            <p className="text-white/40 max-w-2xl mx-auto">From India to Singapore to the UAE — MediFlow Nexus adapts to local payer systems, regulatory frameworks, and market dynamics.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { market: "India", insurers: "Star Health, ICICI Lombard, HDFC ERGO, New India Assurance", hospitals: "Apollo, Manipal, Fortis, Max Healthcare", regulatory: "NABH, IRDAI, DISHA" },
+              { market: "Singapore & ASEAN", insurers: "Great Eastern, AIA, Prudential, NTUC Income", hospitals: "Mount Elizabeth, Raffles, Gleneagles, Bumrungrad", regulatory: "PDPA, MOH, NHIS, JCI" },
+              { market: "Middle East", insurers: "Daman, Oman Insurance, ADNIC, Bupa Arabia", hospitals: "Cleveland Clinic AD, Mediclinic, NMC Healthcare", regulatory: "DHA, HAAD, JCI, Nabidh" },
+            ].map((item, i) => (
+              <motion.div
+                key={item.market}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white/[0.02] border border-white/[0.1] rounded-2xl p-6 hover:bg-white/[0.04] transition-colors"
+              >
+                <h4 className="text-xl font-bold text-white mb-4">{item.market}</h4>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-[10px] text-white/20 uppercase tracking-widest font-bold mb-1">Insurers</p>
+                    <p className="text-xs text-white/60">{item.insurers}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-white/20 uppercase tracking-widest font-bold mb-1">Hospital Networks</p>
+                    <p className="text-xs text-white/60">{item.hospitals}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-white/20 uppercase tracking-widest font-bold mb-1">Regulatory</p>
+                    <p className="text-xs text-white/60">{item.regulatory}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
       </main>
 
       {/* Footer */}

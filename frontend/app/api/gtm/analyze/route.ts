@@ -1,5 +1,7 @@
 import { GoogleGenerativeAI, Part } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 
 // ── MIME type map ─────────────────────────────────────────────
 const MIME_MAP: Record<string, string> = {
@@ -112,10 +114,65 @@ RULES:
 - Be specific, use healthcare-specific language
 - If data is missing, make reasonable expert assumptions
 - Output must be investor-ready quality
-- Return ONLY the JSON object, nothing else`;
+- Return ONLY the JSON object, nothing else
+- VERY IMPORTANT: For 'buyerDiscovery.sampleBuyerProfiles', YOU MUST ONLY select 3-5 organizations from the provided 'BUYER DATASET' in the context. Use their exact 'name' for 'orgName', 'type' for 'type', and provide a 'reason' explaining why they are an ideal fit based on their specific 'key_challenges' and 'specialties'.`;
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(req: NextRequest) {
   try {
+    const body = await req.json();
+    const { files, textContext, discoveryMode, startupId } = body;
+
+    // ── Discovery Mode ────────────────────────────────────
+    if (discoveryMode && startupId) {
+      const { data: startup } = await supabase
+        .from('startup_profiles')
+        .select('*')
+        .eq('id', startupId)
+        .single();
+
+      if (!startup) return NextResponse.json({ error: "Startup not found" }, { status: 404 });
+
+      const buyersPath = path.join(process.cwd(), "buyers.json");
+      const buyersData = JSON.parse(fs.readFileSync(buyersPath, "utf-8"));
+
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+      const prompt = `
+        You are a MedTech Market Analyst. 
+        Match this startup to the best 5 potential buyers from the provided dataset.
+        
+        STARTUP PROFILE:
+        - Name: ${startup.name}
+        - Description: ${startup.description}
+        - Solution Type: ${startup.solution_type}
+        - Target Market: ${startup.target_market}
+        
+        BUYER DATASET (Top 100 sample):
+        ${JSON.stringify(buyersData.slice(0, 100))}
+        
+        TASK:
+        1. Select 5 entities from the dataset that have the highest synergy with the startup's solution.
+        2. Assign a match score (0-100).
+        3. Provide a 1-sentence "AI Match Rationale" for each.
+        
+        RETURN JSON ONLY in this format:
+        {
+          "matches": [
+            { "name": "Contact Person", "organization": "Hospital Name", "score": 95, "reason": "Rationale here" }
+          ]
+        }
+      `;
+
+      const result = await model.generateContent(prompt);
+      const text = result.response.text().replace(/```json|```/g, "").trim();
+      return NextResponse.json(JSON.parse(text));
+    }
+
+    // ── Standard GTM Generation Mode ──────────────────────
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey || apiKey === "your_gemini_api_key_here") {
       return NextResponse.json(
@@ -169,6 +226,14 @@ export async function POST(req: NextRequest) {
     // Optional free-text context
     if (body.textContext?.trim()) {
       parts.push({ text: `--- ADDITIONAL CONTEXT ---\n${body.textContext.trim()}` });
+    }
+
+    try {
+      const buyersPath = path.join(process.cwd(), "..", "buyers.json");
+      const buyersData = fs.readFileSync(buyersPath, "utf8");
+      parts.push({ text: `\n\n--- BUYER DATASET (USE FOR sampleBuyerProfiles) ---\n${buyersData}\n--- END BUYER DATASET ---\n` });
+    } catch (err) {
+      console.warn("[GTM Analyze] Could not load buyers.json dataset", err);
     }
 
     const result = await model.generateContent({ contents: [{ role: "user", parts }] });

@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard, Building2, UserPlus, Shield, FileCheck, AlertTriangle,
   DollarSign, TrendingUp, Landmark, Rocket, Users, Search, Target,
   BarChart3, Store, FileBarChart, Bot, Settings, ChevronDown, ChevronRight,
-  Activity, Zap, Menu, X
+  Activity, Zap, Menu, X, LogOut, CreditCard
 } from "lucide-react";
+
+import { logout } from "@/app/login/actions";
 
 interface NavItem {
   label: string;
@@ -62,6 +65,7 @@ const navigation: { section: string; items: NavItem[] }[] = [
     items: [
       { label: "Marketplace", href: "/marketplace", icon: <Store size={16} /> },
       { label: "Reports", href: "/reports", icon: <FileBarChart size={16} /> },
+      { label: "Pricing", href: "/pricing", icon: <CreditCard size={16} /> },
       { label: "AI Copilot", href: "/copilot", icon: <Bot size={16} /> },
       { label: "Settings", href: "/settings", icon: <Settings size={16} /> },
     ],
@@ -72,6 +76,16 @@ export default function Sidebar() {
   const pathname = usePathname();
   const [expandedItems, setExpandedItems] = useState<string[]>(["Clinic Ops", "Launch Engine"]);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+  }, [supabase.auth]);
 
   const toggleExpand = (label: string) => {
     setExpandedItems((prev) =>
@@ -200,17 +214,26 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        {/* User */}
-        <div className="p-4 border-t border-white/[0.08]">
+        {/* User & Auth */}
+        <div className="p-4 border-t border-white/[0.08] flex flex-col gap-2">
           <div className="glass-card p-3 flex items-center gap-3 hover:bg-white/[0.08] transition-colors cursor-pointer border-transparent hover:border-white/[0.1]">
-            <div className="w-8 h-8 rounded-md bg-white border border-white/[0.1] flex items-center justify-center text-black text-[11px] font-bold">
-              HH
+            <div className="w-8 h-8 rounded-md bg-white border border-white/[0.1] flex items-center justify-center text-black text-[11px] font-bold uppercase">
+              {user?.user_metadata?.name?.[0] || user?.email?.[0] || 'U'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-semibold text-white truncate">Hardik Hinduja</p>
-              <p className="text-[11px] text-white/40 truncate">Enterprise Admin</p>
+              <p className="text-[13px] font-semibold text-white truncate">
+                {user?.user_metadata?.name || 'MediFlow User'}
+              </p>
+              <p className="text-[11px] text-white/40 truncate">{user?.email || 'Enterprise Admin'}</p>
             </div>
           </div>
+          
+          <form action={logout}>
+            <button type="submit" className="w-full flex items-center gap-2 px-3 py-2 text-[13px] font-medium text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors">
+              <LogOut size={14} />
+              <span>Sign Out</span>
+            </button>
+          </form>
         </div>
       </aside>
     </>

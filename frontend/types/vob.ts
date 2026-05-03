@@ -1,83 +1,49 @@
-// Types for the VOB / Insurance Intelligence output from Gemini API
-
-export interface InsuranceSummary {
-  patientName: string;
-  dob: string;
-  payerName: string;
-  memberId: string;
-  groupNumber: string;
-  planType: string;
-  coverageStatus: "Active" | "Inactive" | "Unknown";
-}
-
-export interface DataConfidence {
-  score: number; // 0-100
-  missingFields: string[];
-  conflicts: string[];
-  assumptions: string[];
-}
-
-export interface CoverageBenefits {
-  coverageStatus: "Active" | "Inactive" | "Unknown";
-  serviceEligibility: "Covered" | "Possibly Covered" | "Not Determined" | "Not Covered";
-  deductibleTotal: string;
-  deductibleRemaining: string;
-  copay: string;
-  coinsurance: string;
-  outOfPocketMax: string;
-  outOfPocketMet: string;
-  patientResponsibilityEstimate: string;
-  expectedReimbursement: string;
-  notes: string[];
-}
-
-export interface PriorAuth {
-  required: "Required" | "Possibly Required" | "Not Required" | "Unknown";
-  requiredDocuments: string[];
-  missingDocuments: string[];
-  submissionReadiness: "Ready" | "Missing Docs" | "Not Ready";
-  notes: string;
-}
-
-export interface DenialRisk {
-  level: "Low" | "Medium" | "High";
-  reasons: string[];
-  mitigationSteps: string[];
-}
-
-export interface RevenueIntelligence {
-  expectedReimbursementRange: string;
-  patientResponsibilityRange: string;
-  revenueAtRisk: "Low" | "Medium" | "High";
-  delayRisk: "Low" | "Medium" | "High";
-  revenueNotes: string[];
-}
-
-export interface OperationalRecommendation {
-  action: "Proceed with scheduling" | "Hold until prior auth" | "Require additional verification" | "Collect upfront payment estimate";
-  reasoning: string;
-  urgentActions: string[];
-}
-
-export interface PatientSummary {
-  estimatedCost: string;
-  whatInsuranceCovers: string;
-  nextSteps: string[];
-}
-
 export interface VOBReport {
-  insuranceSummary: InsuranceSummary;
-  dataConfidence: DataConfidence;
-  coverageBenefits: CoverageBenefits;
-  priorAuth: PriorAuth;
-  denialRisk: DenialRisk;
-  revenueIntelligence: RevenueIntelligence;
-  operationalRecommendation: OperationalRecommendation;
-  patientSummary: PatientSummary;
-}
-
-export interface VOBInput {
-  id: string;
-  type: "Insurance Card" | "Benefits PDF" | "Manual Form" | "Clinical Context";
-  content: string;
+  patient_info: {
+    name: string;
+    dob: string;
+    policy_number: string;
+    group_number: string;
+    insurance_company: string;
+    plan_name: string;
+    valid_from: string;
+    valid_to: string;
+  };
+  coverage_summary: {
+    sum_insured: string;
+    amount_used_ytd: string;
+    remaining_balance: string;
+    waiting_periods: string[];
+  };
+  hospitalization_benefits: {
+    inpatient_covered: boolean;
+    room_type_allowed: string;
+    room_rent_limit: string;
+    day_care_procedures: boolean;
+  };
+  financials: {
+    copayment_percent: string;
+    deductible: string;
+    surgery_sublimit: string;
+    diagnostics_sublimit: string;
+  };
+  exclusions: string[];
+  prior_auth: {
+    required: boolean;
+    procedures: string[];
+    contact_info: string;
+    tat_hours: string;
+  };
+  network_status: {
+    status: "IN-NETWORK" | "OUT-OF-NETWORK";
+    cashless_eligible: boolean;
+    limit: string;
+  };
+  ai_risk_assessment: {
+    risk_score: "Low" | "Medium" | "High";
+    risk_factors: string[];
+    denial_probability: string;
+    estimated_reimbursement: string;
+    recommendations: string[];
+  };
 }

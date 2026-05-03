@@ -1,73 +1,94 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, CheckCircle, AlertTriangle, Clock, DollarSign, Zap, Brain } from "lucide-react";
-import { insuranceCases } from "@/lib/demo-data";
+import { ShieldCheck, Search, Filter, ArrowUpRight, AlertTriangle, CheckCircle2, Clock, FileText, Upload, Loader2, X } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import VOBReportView from "@/components/vob-report-view";
+import type { VOBReport } from "@/types/vob";
 import { formatCurrency } from "@/lib/utils";
-import VOBInputPanel from "@/components/vob-input-panel";
-import VOBResults from "@/components/vob-results";
-import type { VOBInput, VOBReport } from "@/types/vob";
-
-type Tab = "records" | "analyzer";
-type Phase = "input" | "loading" | "result" | "error";
-
-const getStatusBadge = (_s: string) => "badge-neutral";
 
 export default function InsurancePage() {
-  const [tab, setTab] = useState<Tab>("records");
+  const [cases, setCases] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [activeReport, setActiveReport] = useState<VOBReport | null>(null);
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [patients, setPatients] = useState<any[]>([]);
+  const [selectedPatientId, setSelectedPatientId] = useState("");
+  const [treatmentType, setTreatmentType] = useState("");
+  
+  const supabase = createClient();
 
-  // Analyzer state
-  const [phase, setPhase] = useState<Phase>("input");
-  const [report, setReport] = useState<VOBReport | null>(null);
-  const [error, setError] = useState<string>("");
+  const fetchData = async () => {
+    setLoading(true);
+    const { data: caseData } = await supabase
+      .from('insurance_cases')
+      .select('*, patients(name)')
+      .order('created_at', { ascending: false });
+    
+    if (caseData) setCases(caseData);
 
-  const handleGenerate = async (inputs: VOBInput[]) => {
-    setPhase("loading");
-    setError("");
-    try {
-      const res = await fetch("/api/vob/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ inputs }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to generate report");
-      if (data.report) { setReport(data.report); setPhase("result"); }
-      else throw new Error(data.raw ? "AI returned unstructured output" : "Unexpected server response");
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Unknown error");
-      setPhase("error");
+    const { data: patientData } = await supabase.from('patients').select('id, name');
+    if (patientData) {
+      setPatients(patientData);
+      if (patientData.length > 0) setSelectedPatientId(patientData[0].id);
     }
+    setLoading(false);
   };
 
-  const handleReset = () => { setReport(null); setError(""); setPhase("input"); };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !selectedPatientId || !treatmentType) return;
+
+    setIsAnalyzing(true);
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      try {
+        const res = await fetch("/api/clinic/vob/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            documentBase64: reader.result,
+            treatmentType,
+            patientId: selectedPatientId
+          })
+        });
+        const data = await res.json();
+        if (data.report) {
+          setActiveReport(data.report);
+          setShowUploadModal(false);
+          fetchData();
+        }
+      } catch (err) {
+        console.error("VOB failed", err);
+      } finally {
+        setIsAnalyzing(false);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
-    <div className="space-y-6 max-w-[1600px] mx-auto">
-      {/* Header */}
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Insurance Intelligence (VOB)</h1>
-          <p className="text-sm text-white/40 mt-1">Benefits verification, eligibility tracking & cost transparency</p>
+            <Brain size={15} /> AI Analyzer
+          </button>
         </div>
-        <button className="btn-primary flex items-center gap-2" onClick={() => setTab("analyzer")}>
-          <Brain size={15} /> AI Analyzer
-        </button>
       </div>
 
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { label: "Active Coverages", value: "71", icon: CheckCircle },
-          { label: "Pending VOB", value: "18", icon: Clock },
-          { label: "Expiring Soon", value: "5", icon: AlertTriangle },
-          { label: "Avg Reimbursement", value: "$1,080", icon: DollarSign },
-        ].map((s, i) => (
+        {stats.map((s, i) => (
           <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="glass-card p-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center">
-                <s.icon size={18} className="text-white" />
+              <div className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/[0.1] flex items-center justify-center">
+                <s.icon size={18} className="text-white/60" />
               </div>
               <div>
                 <p className="text-lg font-bold text-white">{s.value}</p>
@@ -100,36 +121,75 @@ export default function InsurancePage() {
                 <table className="data-table">
                   <thead>
                     <tr>
-                      <th>Patient</th><th>Provider</th><th>CPT</th><th>Status</th>
-                      <th>Deductible</th><th>Copay</th><th>OOP Max</th><th>Expiry</th>
+                      <th>Patient</th>
+                      <th>CPT</th>
+                      <th>Status</th>
+                      <th>Deductible</th>
+                      <th>OOP Max</th>
+                      <th>Risk Score</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {insuranceCases.map((c, i) => (
-                      <motion.tr key={c.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.05 * i }}>
-                        <td>
-                          <p className="text-sm font-medium text-white">{c.patientName}</p>
-                          <p className="text-xs text-white/20">{c.policyNumber}</p>
+                    {loading ? (
+                      <tr>
+                        <td colSpan={6} className="text-center py-20">
+                          <Loader2 className="w-8 h-8 text-white/10 animate-spin mx-auto mb-2" />
+                          <p className="text-xs text-white/20">Loading insurance cases...</p>
                         </td>
-                        <td className="text-sm text-white/60">{c.insuranceProvider}</td>
-                        <td><code className="text-xs bg-white/[0.04] border border-white/[0.1] text-white/60 px-1.5 py-0.5 rounded">{c.cptCode}</code></td>
-                        <td><span className={`badge ${getStatusBadge(c.status)}`}>{c.status}</span></td>
-                        <td>
-                          <p className="text-sm text-white/60">{formatCurrency(c.deductibleMet)} / {formatCurrency(c.deductible)}</p>
-                          <div className="w-20 h-1.5 bg-white/[0.06] border border-white/[0.1] rounded-full mt-1 overflow-hidden">
-                            <div className="h-full rounded-full bg-white" style={{ width: `${(c.deductibleMet / c.deductible) * 100}%` }} />
-                          </div>
+                      </tr>
+                    ) : (
+                      <AnimatePresence>
+                        {cases.map((c, i) => (
+                          <motion.tr 
+                            key={c.id} 
+                            initial={{ opacity: 0, x: -10 }} 
+                            animate={{ opacity: 1, x: 0 }} 
+                            transition={{ delay: 0.03 * i }}
+                            className="group cursor-pointer"
+                          >
+                            <td>
+                              <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-[10px] font-bold text-white/40 group-hover:text-white transition-colors">
+                                  {c.patients?.first_name[0]}{c.patients?.last_name[0]}
+                                </div>
+                                <div>
+                                  <p className="text-sm font-medium text-white">{c.patients?.first_name} {c.patients?.last_name}</p>
+                                  <p className="text-[10px] text-white/20 uppercase tracking-widest">{c.insurance_provider}</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td><code className="text-xs bg-white/[0.04] border border-white/[0.1] text-white/60 px-1.5 py-0.5 rounded">{c.cpt_code}</code></td>
+                            <td><span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${getStatusBadge(c.status)}`}>{c.status}</span></td>
+                            <td>
+                              <p className="text-xs text-white/60">{formatCurrency(c.deductible_met)} / {formatCurrency(c.deductible)}</p>
+                              <div className="w-20 h-1 bg-white/[0.06] rounded-full mt-1.5 overflow-hidden">
+                                <div className="h-full rounded-full bg-white/40" style={{ width: `${(c.deductible_met / c.deductible) * 100}%` }} />
+                              </div>
+                            </td>
+                            <td>
+                              <p className="text-xs text-white/60">{formatCurrency(c.out_of_pocket_met)} / {formatCurrency(c.out_of_pocket_max)}</p>
+                              <div className="w-20 h-1 bg-white/[0.06] rounded-full mt-1.5 overflow-hidden">
+                                <div className="h-full rounded-full bg-white" style={{ width: `${(c.out_of_pocket_met / c.out_of_pocket_max) * 100}%` }} />
+                              </div>
+                            </td>
+                            <td>
+                              <div className="flex items-center gap-2">
+                                <span className={`text-xs font-bold ${c.denial_risk_score > 70 ? 'text-red-400' : 'text-emerald-400'}`}>
+                                  {c.denial_risk_score}%
+                                </span>
+                              </div>
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </AnimatePresence>
+                    )}
+                    {!loading && cases.length === 0 && (
+                      <tr>
+                        <td colSpan={6} className="text-center py-20 text-white/20 italic text-sm">
+                          No active insurance cases. Start an AI VOB analysis to generate records.
                         </td>
-                        <td className="text-sm text-white/60">{formatCurrency(c.copay)}</td>
-                        <td>
-                          <p className="text-sm text-white/60">{formatCurrency(c.outOfPocketMet)} / {formatCurrency(c.outOfPocketMax)}</p>
-                          <div className="w-20 h-1.5 bg-white/[0.06] border border-white/[0.1] rounded-full mt-1 overflow-hidden">
-                            <div className="h-full rounded-full bg-white/40" style={{ width: `${(c.outOfPocketMet / c.outOfPocketMax) * 100}%` }} />
-                          </div>
-                        </td>
-                        <td className="text-sm text-white/20">{c.expiryDate}</td>
-                      </motion.tr>
-                    ))}
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
