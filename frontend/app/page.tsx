@@ -4,17 +4,29 @@ import { motion } from "framer-motion";
 import { Building2, Rocket, ArrowRight, ShieldCheck, Zap, Activity, BarChart3, Users, ChevronRight, Lock } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { logout } from "./login/actions";
 
 export default function MarketingLanding() {
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const supabase = createClient();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
+    
+    // Check auth status
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    checkUser();
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [supabase]);
 
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-white/20">
@@ -38,9 +50,17 @@ export default function MarketingLanding() {
             <a href="#enterprise" className="hover:text-white transition-colors">Enterprise</a>
           </div>
           <div className="flex items-center gap-4">
-            <button className="text-sm font-medium text-white/40 hover:text-white transition-colors hidden sm:block">Log in</button>
+            {user ? (
+              <>
+                <form action={logout}>
+                  <button type="submit" className="text-sm font-medium text-red-400/60 hover:text-red-400 transition-colors">Sign Out</button>
+                </form>
+              </>
+            ) : (
+              <Link href="/login" className="text-sm font-medium text-white/40 hover:text-white transition-colors hidden sm:block">Log in</Link>
+            )}
             <a href="#workspaces" className="px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-              Enter Workspace
+              {user ? 'Enter Workspace' : 'Get Started'}
             </a>
           </div>
         </div>

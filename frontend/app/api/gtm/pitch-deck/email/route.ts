@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/server";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(req: Request) {
   try {
+    const supabase = await createClient();
     const { deck, buyerName, startupId } = await req.json();
 
     if (!process.env.GEMINI_API_KEY) {
@@ -22,7 +20,7 @@ export async function POST(req: Request) {
       .eq('id', startupId)
       .single();
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const prompt = `
       You are an expert in B2B healthcare sales outreach.
       Draft a personalized, high-conversion cold outreach email for the following scenario:

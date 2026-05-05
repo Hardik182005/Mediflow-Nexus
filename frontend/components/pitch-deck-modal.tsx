@@ -50,6 +50,16 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
   const nextSlide = () => setCurrentSlide((s) => (s < totalSlides ? s + 1 : s));
   const prevSlide = () => setCurrentSlide((s) => (s > 1 ? s - 1 : s));
 
+  const handleDownload = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(deck, null, 2));
+    const a = document.createElement('a');
+    a.href = dataStr;
+    a.download = `${buyerName.toLowerCase().replace(/\s+/g, "-")}-pitch-deck.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   const renderEmailView = () => (
     <div className="h-full flex flex-col space-y-6 max-w-3xl mx-auto py-4">
       <div className="flex items-center justify-between border-b border-white/5 pb-4">
@@ -297,7 +307,7 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
             <h3 className="text-sm font-bold text-white/60">{buyerName} Strategy Deck</h3>
           </div>
           <div className="flex items-center gap-2">
-            <button className="p-2 rounded-lg hover:bg-white/5 text-white/40 hover:text-white transition-all">
+            <button onClick={handleDownload} className="p-2 rounded-lg hover:bg-white/5 text-white/40 hover:text-white transition-all">
               <Download size={18} />
             </button>
             <button className="p-2 rounded-lg hover:bg-white/5 text-white/40 hover:text-white transition-all">

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, Send, Sparkles, Database, ShieldAlert, ArrowUpRight, Loader2, User } from "lucide-react";
+import { Bot, Send, Sparkles, Database, ShieldAlert, ArrowUpRight, Loader2, User, X, Table, Globe, FileText } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";
@@ -18,6 +18,7 @@ export default function Copilot() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showDataSources, setShowDataSources] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -83,6 +84,15 @@ export default function Copilot() {
     });
   };
 
+  const dataSources = [
+    { name: "Insurance Cases", table: "insurance_cases", icon: <ShieldAlert size={14} />, description: "Patient insurance verifications and PA cases" },
+    { name: "Startup Profiles", table: "startup_profiles", icon: <Globe size={14} />, description: "Onboarded healthtech startups" },
+    { name: "Sales Pipeline", table: "sales_pipeline", icon: <Table size={14} />, description: "Deal tracking and buyer pipeline" },
+    { name: "Marketplace Matches", table: "marketplace_matches", icon: <Sparkles size={14} />, description: "AI-matched buyer–startup connections" },
+    { name: "GTM Recommendations", table: "gtm_recommendations", icon: <FileText size={14} />, description: "AI-generated go-to-market strategies" },
+    { name: "Gemini 1.5 Pro API", table: "External API", icon: <Bot size={14} />, description: "LLM-powered analysis and generation" },
+  ];
+
   return (
     <div className="h-[calc(100vh-140px)] flex flex-col max-w-[1200px] mx-auto animate-fade-in">
       {/* Header */}
@@ -108,7 +118,10 @@ export default function Copilot() {
           >
             Clear Chat
           </button>
-          <button className="btn-ghost flex items-center gap-1 text-[12px]">
+          <button
+            onClick={() => setShowDataSources(true)}
+            className="btn-ghost flex items-center gap-1 text-[12px]"
+          >
             <Database size={14} /> Data Sources
           </button>
         </div>
@@ -227,6 +240,56 @@ export default function Copilot() {
           </div>
         </div>
       </div>
+
+      {/* Data Sources Modal */}
+      <AnimatePresence>
+        {showDataSources && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowDataSources(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg bg-[#0d0d15] border border-white/[0.1] rounded-2xl p-6"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-lg font-bold text-white">Connected Data Sources</h3>
+                  <p className="text-xs text-white/40 mt-1">Copilot can query these sources for intelligent answers.</p>
+                </div>
+                <button onClick={() => setShowDataSources(false)} className="text-white/30 hover:text-white"><X size={18} /></button>
+              </div>
+              <div className="space-y-2">
+                {dataSources.map((ds) => (
+                  <div key={ds.table} className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] transition-colors">
+                    <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-white/60">
+                      {ds.icon}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-white">{ds.name}</p>
+                      <p className="text-[11px] text-white/30">{ds.description}</p>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                      <span className="text-[10px] text-white/40 font-medium">Active</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] text-[11px] text-white/30 flex items-start gap-2">
+                <Database size={12} className="mt-0.5 flex-shrink-0" />
+                <span>All data is accessed in real-time from your Supabase database. No data is stored by the AI model.</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

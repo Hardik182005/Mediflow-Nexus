@@ -7,6 +7,7 @@ import GTMFileUpload, { type UploadedFile } from "@/components/gtm-file-upload";
 import GTMResults from "@/components/gtm-results";
 import { createClient } from "@/lib/supabase/client";
 import type { GTMStrategy } from "@/types/gtm";
+import { useLaunchEngineStore } from "@/store/useLaunchEngineStore";
 
 type Phase = "input" | "loading" | "result" | "error";
 
@@ -19,12 +20,10 @@ const LOADING_STEPS = [
 ];
 
 export default function GTMPage() {
-  const [phase, setPhase] = useState<Phase>("input");
-  const [strategy, setStrategy] = useState<GTMStrategy | null>(null);
+  const { gtmPhase: phase, setGtmPhase: setPhase, gtmStrategy: strategy, setGtmStrategy: setStrategy, selectedStartupId, setSelectedStartupId } = useLaunchEngineStore();
   const [error, setError] = useState<string>("");
   const [loadingStep, setLoadingStep] = useState(0);
   const [startups, setStartups] = useState<any[]>([]);
-  const [selectedStartupId, setSelectedStartupId] = useState<string>("");
   const [isSaving, setIsSaving] = useState(false);
   const supabase = createClient();
 
@@ -33,7 +32,9 @@ export default function GTMPage() {
       const { data } = await supabase.from('startup_profiles').select('id, name');
       if (data) {
         setStartups(data);
-        if (data.length > 0) setSelectedStartupId(data[0].id);
+        if (data.length > 0 && !useLaunchEngineStore.getState().selectedStartupId) {
+          setSelectedStartupId(data[0].id);
+        }
       }
     };
     fetchStartups();
@@ -90,6 +91,16 @@ export default function GTMPage() {
     }
   };
 
+  const [history, setHistory] = useState<any[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [notification, setNotification] = useState("");
+
+  const showToast = (msg: string) => {
+    setNotification(msg);
+    setTimeout(() => setNotification(""), 3000);
+  };
+
   const handleSaveStrategy = async (strat: GTMStrategy) => {
     setIsSaving(true);
     const { error: saveError } = await supabase
@@ -98,11 +109,36 @@ export default function GTMPage() {
         startup_id: selectedStartupId,
         strategy_json: strat,
         icp_data: strat.icp,
-        persona_data: strat.personas,
+        persona_data: strat.buyerPersona,
         messaging_data: strat.messaging,
         status: 'completed'
       }]);
     setIsSaving(false);
+  };
+
+  const fetchHistory = async () => {
+    setHistoryLoading(true);
+    const { data } = await supabase
+      .from('gtm_recommendations')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(10);
+    if (data) setHistory(data);
+    setHistoryLoading(false);
+  };
+
+  const toggleHistory = () => {
+    if (!showHistory) fetchHistory();
+    setShowHistory(!showHistory);
+  };
+
+  const loadHistoryItem = (item: any) => {
+    if (item.strategy_json) {
+      setStrategy(item.strategy_json);
+      setPhase("result");
+      setShowHistory(false);
+      showToast("📂 Loaded saved strategy");
+    }
   };
 
   const handleReset = () => {
@@ -143,9 +179,34 @@ export default function GTMPage() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <button className="btn-secondary text-[10px] flex items-center gap-2"><History size={12} /> View History</button>
+                <button onClick={toggleHistory} className={`btn-secondary text-[10px] flex items-center gap-2 ${showHistory ? 'bg-white/10' : ''}`}>
+                  <History size={12} /> View History
+                </button>
               </div>
             </div>
+
+            {showHistory && (
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="glass-card p-4 overflow-hidden border-t-0 rounded-t-none -mt-6 pt-8">
+                <h4 className="text-xs font-bold text-white/60 mb-3 uppercase tracking-wider">Recent Analyses</h4>
+                {historyLoading ? (
+                  <div className="flex items-center gap-2 text-white/40 text-xs py-4"><Loader2 size={14} className="animate-spin" /> Loading history...</div>
+                ) : history.length === 0 ? (
+                  <p className="text-white/40 text-xs py-4">No history found for this startup.</p>
+                ) : (
+                  <div className="space-y-2">
+                    {history.map((h) => (
+                      <button key={h.id} onClick={() => loadHistoryItem(h)} className="w-full flex items-center justify-between p-3 rounded-lg bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.05] transition-colors text-left group">
+                        <div>
+                          <p className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">Strategy generated on {new Date(h.created_at).toLocaleDateString()}</p>
+                          <p className="text-xs text-white/40 mt-1 line-clamp-1">{h.icp_data?.targetAccounts?.join(', ') || 'General Strategy'}</p>
+                        </div>
+                        <ChevronRight size={16} className="text-white/20 group-hover:text-blue-400 transition-colors" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            )}
 
             <GTMFileUpload onGenerate={handleGenerate} isLoading={false} />
           </motion.div>

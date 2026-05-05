@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
+import { useFormStatus } from 'react-dom';
 import { login, signup } from './actions';
 import { useSearchParams } from 'next/navigation';
 import { Loader2, Building2, Rocket, ArrowLeft } from 'lucide-react';
@@ -9,10 +10,18 @@ import Link from 'next/link';
 type UserRole = 'startup' | 'clinic' | null;
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-black"><Loader2 className="w-8 h-8 text-white/20 animate-spin" /></div>}>
+      <LoginContent />
+    </Suspense>
+  );
+}
+
+function LoginContent() {
+  console.log('[LoginContent] Rendering');
   const searchParams = useSearchParams();
   const message = searchParams.get('message');
   const [isLogin, setIsLogin] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState<UserRole>(null);
 
   // For login, we don't need role selection — role is already in their metadata
@@ -100,19 +109,12 @@ export default function LoginPage() {
 
               <form
                 className="space-y-4"
-                action={async (formData) => {
-                  setIsLoading(true);
-                  if (!isLogin && selectedRole) {
-                    formData.append('role', selectedRole);
-                  }
-                  if (isLogin) {
-                    await login(formData);
-                  } else {
-                    await signup(formData);
-                  }
-                  setIsLoading(false);
-                }}
+                action={isLogin ? login : signup}
               >
+                <input type="hidden" name="next" value={searchParams.get('next') || ''} />
+                {!isLogin && selectedRole && (
+                  <input type="hidden" name="role" value={selectedRole} />
+                )}
                 {!isLogin && (
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-zinc-300" htmlFor="name">
@@ -179,14 +181,7 @@ export default function LoginPage() {
                   </div>
                 )}
 
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full flex items-center justify-center bg-white text-black font-semibold py-3 px-4 rounded-lg hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-6"
-                >
-                  {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                  {isLogin ? 'Sign In' : 'Create Account'}
-                </button>
+                <SubmitButton isLogin={isLogin} />
               </form>
 
               <div className="mt-6 text-center">
@@ -203,5 +198,21 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function SubmitButton({ isLogin }: { isLogin: boolean }) {
+  const { pending } = useFormStatus();
+  console.log('[SubmitButton] Pending state:', pending);
+  
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="w-full flex items-center justify-center bg-white text-black font-semibold py-3 px-4 rounded-lg hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+    >
+      {pending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+      {isLogin ? 'Sign In' : 'Create Account'}
+    </button>
   );
 }

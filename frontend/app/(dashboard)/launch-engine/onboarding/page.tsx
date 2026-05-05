@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Rocket, Upload, Zap, Target, Globe, Users, X, Loader2, Plus, Info } from "lucide-react";
@@ -22,7 +24,9 @@ export default function OnboardingPage() {
     hq_location: "",
     team_size: 5,
     value_proposition: "",
-    icp: ""
+    icp: "",
+    target_market: "",
+    solution_type: ""
   });
 
   const fetchProfiles = async () => {
@@ -46,17 +50,29 @@ export default function OnboardingPage() {
     
     const { data: { user } } = await supabase.auth.getUser();
 
+    if (!user) {
+      alert("You must be signed in to onboard a startup.");
+      setIsSubmitting(false);
+      return;
+    }
+
     const { error } = await supabase
       .from('startup_profiles')
-      .insert([{
+      .upsert([{
         ...formData,
-        user_id: user?.id,
-        status: 'active'
-      }]);
+        user_id: user.id,
+        status: 'active',
+        updated_at: new Date().toISOString()
+      }], {
+        onConflict: 'user_id'
+      });
 
-    if (!error) {
+    if (error) {
+      console.error("Onboarding error:", error);
+      alert(`Failed to save: ${error.message}`);
+    } else {
       setShowModal(false);
-      setFormData({ name: "", category: "", description: "", stage: "MVP", funding_stage: "Seed", hq_location: "", team_size: 5, value_proposition: "", icp: "" });
+      setFormData({ name: "", category: "", description: "", stage: "MVP", funding_stage: "Seed", hq_location: "", team_size: 5, value_proposition: "", icp: "", target_market: "", solution_type: "" });
       fetchProfiles();
     }
     setIsSubmitting(false);
@@ -224,7 +240,7 @@ export default function OnboardingPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Team Size</label>
-                    <input type="number" className="input-field" value={formData.team_size} onChange={(e) => setFormData({...formData, team_size: parseInt(e.target.value)})} placeholder="10" />
+                    <input type="number" className="input-field" value={formData.team_size || ""} onChange={(e) => setFormData({...formData, team_size: parseInt(e.target.value) || 0})} placeholder="10" />
                   </div>
                 </div>
 
@@ -236,6 +252,17 @@ export default function OnboardingPage() {
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Ideal Customer Profile (ICP)</label>
                   <textarea rows={2} className="input-field resize-none py-3" value={formData.icp} onChange={(e) => setFormData({...formData, icp: e.target.value})} placeholder="Mid-sized oncology clinics with high claim denial rates..." />
+                </div>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Target Market</label>
+                    <input className="input-field" value={formData.target_market} onChange={(e) => setFormData({...formData, target_market: e.target.value})} placeholder="US Hospitals, Indian Clinics..." />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Solution Type</label>
+                    <input className="input-field" value={formData.solution_type} onChange={(e) => setFormData({...formData, solution_type: e.target.value})} placeholder="AI Diagnostics, RCM SaaS..." />
+                  </div>
                 </div>
 
                 <div className="pt-6 flex gap-4">

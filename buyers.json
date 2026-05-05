@@ -4,23 +4,60 @@
     "name": "Apollo Hospitals Group",
     "type": "Hospital Group",
     "headquarter": "Chennai",
-    "cities_present": ["Chennai", "Delhi", "Mumbai", "Hyderabad", "Bengaluru", "Kolkata"],
+    "cities_present": [
+      "Chennai",
+      "Delhi",
+      "Mumbai",
+      "Hyderabad",
+      "Bengaluru",
+      "Kolkata"
+    ],
     "total_beds": 10000,
     "annual_revenue_usd": "1.2B",
     "employee_count": "71,000+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Cardiology", "Oncology", "Neurology", "Orthopedics", "Transplant"],
-    "key_challenges": ["OPD wait time reduction", "AI diagnostics", "Revenue cycle automation", "Patient retention"],
+    "specialties": [
+      "Cardiology",
+      "Oncology",
+      "Neurology",
+      "Orthopedics",
+      "Transplant"
+    ],
+    "key_challenges": [
+      "OPD wait time reduction",
+      "AI diagnostics",
+      "Revenue cycle automation",
+      "Patient retention"
+    ],
     "tech_budget_inr": "₹500Cr+",
     "digital_maturity": "High",
-    "current_tech_stack": ["Epic HIS", "SAP ERP", "Salesforce CRM"],
+    "current_tech_stack": [
+      "Epic HIS",
+      "SAP ERP",
+      "Salesforce CRM"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. Krishnan Nair", "role": "Chief Digital Officer", "linkedin": "linkedin.com/in/krishnan-nair" },
-      { "name": "Sunita Reddy", "role": "Managing Director", "linkedin": "linkedin.com/in/sunita-reddy" }
+      {
+        "name": "Dr. Krishnan Nair",
+        "role": "Chief Digital Officer",
+        "linkedin": "linkedin.com/in/krishnan-nair",
+        "email": "krishnan.nair@apollohospitals.com"
+      },
+      {
+        "name": "Sunita Reddy",
+        "role": "Managing Director",
+        "linkedin": "linkedin.com/in/sunita-reddy",
+        "email": "sunita.reddy@apollohospitals.com"
+      }
     ],
-    "match_tags": ["AI Diagnostics", "Revenue Cycle", "Patient Ops", "Digital Transformation"],
+    "match_tags": [
+      "AI Diagnostics",
+      "Revenue Cycle",
+      "Patient Ops",
+      "Digital Transformation"
+    ],
     "website": "apollohospitals.com",
     "nse_listed": true
   },
@@ -29,23 +66,58 @@
     "name": "Fortis Healthcare",
     "type": "Hospital Group",
     "headquarter": "Gurugram",
-    "cities_present": ["Delhi", "Gurugram", "Mumbai", "Bengaluru", "Chandigarh", "Noida"],
+    "cities_present": [
+      "Delhi",
+      "Gurugram",
+      "Mumbai",
+      "Bengaluru",
+      "Chandigarh",
+      "Noida"
+    ],
     "total_beds": 4000,
     "annual_revenue_usd": "400M",
     "employee_count": "23,000+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Cardiology", "Orthopedics", "Neurosciences", "Renal Sciences"],
-    "key_challenges": ["Insurance denial management", "Prior auth delays", "OPD overflow", "Staff productivity"],
+    "specialties": [
+      "Cardiology",
+      "Orthopedics",
+      "Neurosciences",
+      "Renal Sciences"
+    ],
+    "key_challenges": [
+      "Insurance denial management",
+      "Prior auth delays",
+      "OPD overflow",
+      "Staff productivity"
+    ],
     "tech_budget_inr": "₹150Cr",
     "digital_maturity": "Medium-High",
-    "current_tech_stack": ["Meditech HIS", "Oracle Finance"],
+    "current_tech_stack": [
+      "Meditech HIS",
+      "Oracle Finance"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Anita Sharma", "role": "VP Technology", "linkedin": "linkedin.com/in/anita-sharma-fortis" },
-      { "name": "Vivek Goyal", "role": "CFO", "linkedin": "linkedin.com/in/vivek-goyal-fortis" }
+      {
+        "name": "Anita Sharma",
+        "role": "VP Technology",
+        "linkedin": "linkedin.com/in/anita-sharma-fortis",
+        "email": "anita.sharma@fortishealthcare.com"
+      },
+      {
+        "name": "Vivek Goyal",
+        "role": "CFO",
+        "linkedin": "linkedin.com/in/vivek-goyal-fortis",
+        "email": "vivek.goyal@fortishealthcare.com"
+      }
     ],
-    "match_tags": ["Denial Management", "Revenue Intelligence", "Prior Auth", "Payer Intel"],
+    "match_tags": [
+      "Denial Management",
+      "Revenue Intelligence",
+      "Prior Auth",
+      "Payer Intel"
+    ],
     "website": "fortishealthcare.com",
     "nse_listed": true
   },
@@ -54,23 +126,60 @@
     "name": "Manipal Hospitals",
     "type": "Hospital Group",
     "headquarter": "Bengaluru",
-    "cities_present": ["Bengaluru", "Mangaluru", "Vijayawada", "Goa", "Salem", "Jaipur"],
+    "cities_present": [
+      "Bengaluru",
+      "Mangaluru",
+      "Vijayawada",
+      "Goa",
+      "Salem",
+      "Jaipur"
+    ],
     "total_beds": 7000,
     "annual_revenue_usd": "600M",
     "employee_count": "18,000+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Oncology", "Transplant", "Cardiology", "Neurosciences", "Pediatrics"],
-    "key_challenges": ["Clinical trial recruitment", "AI diagnostics integration", "Telemedicine scaling", "Referral intelligence"],
+    "specialties": [
+      "Oncology",
+      "Transplant",
+      "Cardiology",
+      "Neurosciences",
+      "Pediatrics"
+    ],
+    "key_challenges": [
+      "Clinical trial recruitment",
+      "AI diagnostics integration",
+      "Telemedicine scaling",
+      "Referral intelligence"
+    ],
     "tech_budget_inr": "₹200Cr",
     "digital_maturity": "High",
-    "current_tech_stack": ["Cerner HIS", "Philips PACS", "Oracle Finance"],
+    "current_tech_stack": [
+      "Cerner HIS",
+      "Philips PACS",
+      "Oracle Finance"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Rajesh Menon", "role": "CTO", "linkedin": "linkedin.com/in/rajesh-menon-manipal" },
-      { "name": "Dr. Dilip Mathai", "role": "MD & CEO", "linkedin": "linkedin.com/in/dilip-mathai" }
+      {
+        "name": "Rajesh Menon",
+        "role": "CTO",
+        "linkedin": "linkedin.com/in/rajesh-menon-manipal",
+        "email": "rajesh.menon@manipalhospitals.com"
+      },
+      {
+        "name": "Dr. Dilip Mathai",
+        "role": "MD & CEO",
+        "linkedin": "linkedin.com/in/dilip-mathai",
+        "email": "dilip.mathai@manipalhospitals.com"
+      }
     ],
-    "match_tags": ["Clinical Trials", "AI Diagnostics", "Referral Intelligence", "Telemedicine"],
+    "match_tags": [
+      "Clinical Trials",
+      "AI Diagnostics",
+      "Referral Intelligence",
+      "Telemedicine"
+    ],
     "website": "manipalhospitals.com",
     "nse_listed": false
   },
@@ -79,23 +188,59 @@
     "name": "Narayana Health",
     "type": "Hospital Group",
     "headquarter": "Bengaluru",
-    "cities_present": ["Bengaluru", "Kolkata", "Ahmedabad", "Jaipur", "Mysuru", "Gurugram"],
+    "cities_present": [
+      "Bengaluru",
+      "Kolkata",
+      "Ahmedabad",
+      "Jaipur",
+      "Mysuru",
+      "Gurugram"
+    ],
     "total_beds": 6000,
     "annual_revenue_usd": "350M",
     "employee_count": "14,000+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Cardiac Sciences", "Oncology", "Renal", "Neurosciences", "Orthopedics"],
-    "key_challenges": ["Cost reduction at scale", "Patient drop-off prevention", "Insurance claim speed", "Rural outreach"],
+    "specialties": [
+      "Cardiac Sciences",
+      "Oncology",
+      "Renal",
+      "Neurosciences",
+      "Orthopedics"
+    ],
+    "key_challenges": [
+      "Cost reduction at scale",
+      "Patient drop-off prevention",
+      "Insurance claim speed",
+      "Rural outreach"
+    ],
     "tech_budget_inr": "₹80Cr",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["In-house HIS", "Tally ERP"],
+    "current_tech_stack": [
+      "In-house HIS",
+      "Tally ERP"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Priya Nambiar", "role": "CMO", "linkedin": "linkedin.com/in/priya-nambiar-nh" },
-      { "name": "Emmanuel Rupert", "role": "CEO", "linkedin": "linkedin.com/in/emmanuel-rupert" }
+      {
+        "name": "Priya Nambiar",
+        "role": "CMO",
+        "linkedin": "linkedin.com/in/priya-nambiar-nh",
+        "email": "priya.nambiar@narayanahealth.org"
+      },
+      {
+        "name": "Emmanuel Rupert",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/emmanuel-rupert",
+        "email": "emmanuel.rupert@narayanahealth.org"
+      }
     ],
-    "match_tags": ["Revenue Leakage", "Patient Retention", "Insurance Claims", "Cost Reduction"],
+    "match_tags": [
+      "Revenue Leakage",
+      "Patient Retention",
+      "Insurance Claims",
+      "Cost Reduction"
+    ],
     "website": "narayanahealth.org",
     "nse_listed": true
   },
@@ -104,23 +249,60 @@
     "name": "Max Healthcare",
     "type": "Hospital Group",
     "headquarter": "Delhi",
-    "cities_present": ["Delhi", "Noida", "Gurugram", "Patparganj", "Saket", "Mohali"],
+    "cities_present": [
+      "Delhi",
+      "Noida",
+      "Gurugram",
+      "Patparganj",
+      "Saket",
+      "Mohali"
+    ],
     "total_beds": 3500,
     "annual_revenue_usd": "500M",
     "employee_count": "13,000+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Oncology", "Cardiology", "Neurosciences", "Orthopedics", "Organ Transplant"],
-    "key_challenges": ["Payer contract intelligence", "AI-assisted diagnosis", "Patient intake digitization", "Reimbursement prediction"],
+    "specialties": [
+      "Oncology",
+      "Cardiology",
+      "Neurosciences",
+      "Orthopedics",
+      "Organ Transplant"
+    ],
+    "key_challenges": [
+      "Payer contract intelligence",
+      "AI-assisted diagnosis",
+      "Patient intake digitization",
+      "Reimbursement prediction"
+    ],
     "tech_budget_inr": "₹120Cr",
     "digital_maturity": "High",
-    "current_tech_stack": ["SAP HIS", "Siemens Imaging", "Salesforce"],
+    "current_tech_stack": [
+      "SAP HIS",
+      "Siemens Imaging",
+      "Salesforce"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Yogesh Sareen", "role": "CFO", "linkedin": "linkedin.com/in/yogesh-sareen-max" },
-      { "name": "Sujay Shetty", "role": "CIO", "linkedin": "linkedin.com/in/sujay-shetty-max" }
+      {
+        "name": "Yogesh Sareen",
+        "role": "CFO",
+        "linkedin": "linkedin.com/in/yogesh-sareen-max",
+        "email": "yogesh.sareen@maxhealthcare.in"
+      },
+      {
+        "name": "Sujay Shetty",
+        "role": "CIO",
+        "linkedin": "linkedin.com/in/sujay-shetty-max",
+        "email": "sujay.shetty@maxhealthcare.in"
+      }
     ],
-    "match_tags": ["Payer Intelligence", "AI Diagnostics", "Patient Intake", "Reimbursement"],
+    "match_tags": [
+      "Payer Intelligence",
+      "AI Diagnostics",
+      "Patient Intake",
+      "Reimbursement"
+    ],
     "website": "maxhealthcare.in",
     "nse_listed": true
   },
@@ -129,23 +311,58 @@
     "name": "Aster DM Healthcare",
     "type": "Hospital Group",
     "headquarter": "Kochi",
-    "cities_present": ["Kochi", "Bengaluru", "Hyderabad", "Kozhikode", "Thrissur", "Dubai"],
+    "cities_present": [
+      "Kochi",
+      "Bengaluru",
+      "Hyderabad",
+      "Kozhikode",
+      "Thrissur",
+      "Dubai"
+    ],
     "total_beds": 5000,
     "annual_revenue_usd": "420M",
     "employee_count": "20,000+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Multi-specialty", "Primary Care", "Pharmacy", "Diagnostics"],
-    "key_challenges": ["Multi-geography coordination", "Insurance VOB automation", "Referral network intelligence", "Digital patient engagement"],
+    "specialties": [
+      "Multi-specialty",
+      "Primary Care",
+      "Pharmacy",
+      "Diagnostics"
+    ],
+    "key_challenges": [
+      "Multi-geography coordination",
+      "Insurance VOB automation",
+      "Referral network intelligence",
+      "Digital patient engagement"
+    ],
     "tech_budget_inr": "₹100Cr",
     "digital_maturity": "Medium-High",
-    "current_tech_stack": ["Cerner", "Microsoft Azure"],
+    "current_tech_stack": [
+      "Cerner",
+      "Microsoft Azure"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Nitish Shetty", "role": "CEO India", "linkedin": "linkedin.com/in/nitish-shetty-aster" },
-      { "name": "Manu Mathew", "role": "CTO", "linkedin": "linkedin.com/in/manu-mathew-aster" }
+      {
+        "name": "Nitish Shetty",
+        "role": "CEO India",
+        "linkedin": "linkedin.com/in/nitish-shetty-aster",
+        "email": "nitish.shetty@asterhospitals.in"
+      },
+      {
+        "name": "Manu Mathew",
+        "role": "CTO",
+        "linkedin": "linkedin.com/in/manu-mathew-aster",
+        "email": "manu.mathew@asterhospitals.in"
+      }
     ],
-    "match_tags": ["Insurance VOB", "Referral Intelligence", "Multi-geography", "Patient Engagement"],
+    "match_tags": [
+      "Insurance VOB",
+      "Referral Intelligence",
+      "Multi-geography",
+      "Patient Engagement"
+    ],
     "website": "asterhospitals.in",
     "nse_listed": true
   },
@@ -154,23 +371,58 @@
     "name": "Medanta – The Medicity",
     "type": "Hospital Group",
     "headquarter": "Gurugram",
-    "cities_present": ["Gurugram", "Lucknow", "Patna", "Indore", "Ranchi"],
+    "cities_present": [
+      "Gurugram",
+      "Lucknow",
+      "Patna",
+      "Indore",
+      "Ranchi"
+    ],
     "total_beds": 1500,
     "annual_revenue_usd": "250M",
     "employee_count": "8,000+",
     "size": "Mid-Market",
     "ownership": "Private",
-    "specialties": ["Cardiac Surgery", "Neurosciences", "Orthopedics", "Oncology", "Liver Transplant"],
-    "key_challenges": ["International patient coordination", "Clinical decision support", "Appeal generation automation", "Bed management"],
+    "specialties": [
+      "Cardiac Surgery",
+      "Neurosciences",
+      "Orthopedics",
+      "Oncology",
+      "Liver Transplant"
+    ],
+    "key_challenges": [
+      "International patient coordination",
+      "Clinical decision support",
+      "Appeal generation automation",
+      "Bed management"
+    ],
     "tech_budget_inr": "₹60Cr",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["Meditech", "Philips EMR"],
+    "current_tech_stack": [
+      "Meditech",
+      "Philips EMR"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. Naresh Trehan", "role": "Chairman & MD", "linkedin": "linkedin.com/in/naresh-trehan" },
-      { "name": "Aditya Gaur", "role": "COO", "linkedin": "linkedin.com/in/aditya-gaur-medanta" }
+      {
+        "name": "Dr. Naresh Trehan",
+        "role": "Chairman & MD",
+        "linkedin": "linkedin.com/in/naresh-trehan",
+        "email": "naresh.trehan@medanta.org"
+      },
+      {
+        "name": "Aditya Gaur",
+        "role": "COO",
+        "linkedin": "linkedin.com/in/aditya-gaur-medanta",
+        "email": "aditya.gaur@medanta.org"
+      }
     ],
-    "match_tags": ["Clinical Decision Support", "Denial Appeals", "Bed Management", "International Patients"],
+    "match_tags": [
+      "Clinical Decision Support",
+      "Denial Appeals",
+      "Bed Management",
+      "International Patients"
+    ],
     "website": "medanta.org",
     "nse_listed": false
   },
@@ -179,23 +431,57 @@
     "name": "HCG Oncology",
     "type": "Specialty Hospital Chain",
     "headquarter": "Bengaluru",
-    "cities_present": ["Bengaluru", "Ahmedabad", "Mumbai", "Hyderabad", "Kolkata", "Nagpur"],
+    "cities_present": [
+      "Bengaluru",
+      "Ahmedabad",
+      "Mumbai",
+      "Hyderabad",
+      "Kolkata",
+      "Nagpur"
+    ],
     "total_beds": 1200,
     "annual_revenue_usd": "180M",
     "employee_count": "5,000+",
     "size": "Mid-Market",
     "ownership": "Private",
-    "specialties": ["Oncology", "Radiation Therapy", "Stem Cell Transplant"],
-    "key_challenges": ["Clinical trial matching", "Treatment protocol AI", "Patient drop-off in chemo cycles", "Insurance pre-auth for oncology"],
+    "specialties": [
+      "Oncology",
+      "Radiation Therapy",
+      "Stem Cell Transplant"
+    ],
+    "key_challenges": [
+      "Clinical trial matching",
+      "Treatment protocol AI",
+      "Patient drop-off in chemo cycles",
+      "Insurance pre-auth for oncology"
+    ],
     "tech_budget_inr": "₹40Cr",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["Varian Oncology Suite", "Custom HIS"],
+    "current_tech_stack": [
+      "Varian Oncology Suite",
+      "Custom HIS"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. Vishal Rao", "role": "Head of Oncology", "linkedin": "linkedin.com/in/vishal-rao-hcg" },
-      { "name": "Srinivasa Raghavan", "role": "CFO", "linkedin": "linkedin.com/in/srinivasa-raghavan-hcg" }
+      {
+        "name": "Dr. Vishal Rao",
+        "role": "Head of Oncology",
+        "linkedin": "linkedin.com/in/vishal-rao-hcg",
+        "email": "vishal.rao@hcgoncology.com"
+      },
+      {
+        "name": "Srinivasa Raghavan",
+        "role": "CFO",
+        "linkedin": "linkedin.com/in/srinivasa-raghavan-hcg",
+        "email": "srinivasa.raghavan@hcgoncology.com"
+      }
     ],
-    "match_tags": ["Clinical Trials", "Prior Auth", "Patient Drop-off", "Oncology AI"],
+    "match_tags": [
+      "Clinical Trials",
+      "Prior Auth",
+      "Patient Drop-off",
+      "Oncology AI"
+    ],
     "website": "hcgoncology.com",
     "nse_listed": true
   },
@@ -204,23 +490,58 @@
     "name": "Cloudnine Hospitals",
     "type": "Specialty Hospital Chain",
     "headquarter": "Bengaluru",
-    "cities_present": ["Bengaluru", "Chennai", "Delhi", "Mumbai", "Hyderabad", "Pune"],
+    "cities_present": [
+      "Bengaluru",
+      "Chennai",
+      "Delhi",
+      "Mumbai",
+      "Hyderabad",
+      "Pune"
+    ],
     "total_beds": 800,
     "annual_revenue_usd": "80M",
     "employee_count": "3,500+",
     "size": "Mid-Market",
     "ownership": "Private",
-    "specialties": ["Maternity", "Pediatrics", "Neonatology", "Fertility"],
-    "key_challenges": ["Patient intake digitization", "Insurance claim automation", "Predictive neonatal risk", "Post-discharge follow-up"],
+    "specialties": [
+      "Maternity",
+      "Pediatrics",
+      "Neonatology",
+      "Fertility"
+    ],
+    "key_challenges": [
+      "Patient intake digitization",
+      "Insurance claim automation",
+      "Predictive neonatal risk",
+      "Post-discharge follow-up"
+    ],
     "tech_budget_inr": "₹15Cr",
     "digital_maturity": "Low-Medium",
-    "current_tech_stack": ["Custom EMR", "Tally"],
+    "current_tech_stack": [
+      "Custom EMR",
+      "Tally"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Kishore Kumar", "role": "CEO", "linkedin": "linkedin.com/in/kishore-kumar-cloudnine" },
-      { "name": "Vikram Thaploo", "role": "CTO", "linkedin": "linkedin.com/in/vikram-thaploo" }
+      {
+        "name": "Kishore Kumar",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/kishore-kumar-cloudnine",
+        "email": "kishore.kumar@cloudninecare.com"
+      },
+      {
+        "name": "Vikram Thaploo",
+        "role": "CTO",
+        "linkedin": "linkedin.com/in/vikram-thaploo",
+        "email": "vikram.thaploo@cloudninecare.com"
+      }
     ],
-    "match_tags": ["Patient Intake", "Insurance Claims", "Post-Discharge", "Predictive Analytics"],
+    "match_tags": [
+      "Patient Intake",
+      "Insurance Claims",
+      "Post-Discharge",
+      "Predictive Analytics"
+    ],
     "website": "cloudninecare.com",
     "nse_listed": false
   },
@@ -229,23 +550,56 @@
     "name": "Yashoda Hospitals",
     "type": "Hospital Group",
     "headquarter": "Hyderabad",
-    "cities_present": ["Hyderabad", "Secunderabad", "Somajiguda"],
+    "cities_present": [
+      "Hyderabad",
+      "Secunderabad",
+      "Somajiguda"
+    ],
     "total_beds": 2000,
     "annual_revenue_usd": "150M",
     "employee_count": "6,000+",
     "size": "Mid-Market",
     "ownership": "Private",
-    "specialties": ["Cardiology", "Neurology", "Gastroenterology", "Oncology", "Orthopedics"],
-    "key_challenges": ["Revenue leakage detection", "OPD digital transformation", "Payer negotiation intelligence", "Staff efficiency"],
+    "specialties": [
+      "Cardiology",
+      "Neurology",
+      "Gastroenterology",
+      "Oncology",
+      "Orthopedics"
+    ],
+    "key_challenges": [
+      "Revenue leakage detection",
+      "OPD digital transformation",
+      "Payer negotiation intelligence",
+      "Staff efficiency"
+    ],
     "tech_budget_inr": "₹30Cr",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["In-house HIS", "SAP"],
+    "current_tech_stack": [
+      "In-house HIS",
+      "SAP"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Ravi Shankara Reddy", "role": "MD", "linkedin": "linkedin.com/in/ravi-shankara-reddy" },
-      { "name": "Pradeep Kumar", "role": "CIO", "linkedin": "linkedin.com/in/pradeep-kumar-yashoda" }
+      {
+        "name": "Ravi Shankara Reddy",
+        "role": "MD",
+        "linkedin": "linkedin.com/in/ravi-shankara-reddy",
+        "email": "ravi.shankara.reddy@yashodahospitals.com"
+      },
+      {
+        "name": "Pradeep Kumar",
+        "role": "CIO",
+        "linkedin": "linkedin.com/in/pradeep-kumar-yashoda",
+        "email": "pradeep.kumar@yashodahospitals.com"
+      }
     ],
-    "match_tags": ["Revenue Leakage", "OPD Ops", "Payer Intel", "Staff Efficiency"],
+    "match_tags": [
+      "Revenue Leakage",
+      "OPD Ops",
+      "Payer Intel",
+      "Staff Efficiency"
+    ],
     "website": "yashodahospitals.com",
     "nse_listed": false
   },
@@ -254,23 +608,58 @@
     "name": "Star Health and Allied Insurance",
     "type": "Health Insurance",
     "headquarter": "Chennai",
-    "cities_present": ["Chennai", "Mumbai", "Delhi", "Bengaluru", "Hyderabad", "Kolkata"],
+    "cities_present": [
+      "Chennai",
+      "Mumbai",
+      "Delhi",
+      "Bengaluru",
+      "Hyderabad",
+      "Kolkata"
+    ],
     "total_beds": null,
     "annual_revenue_usd": "1.1B",
     "employee_count": "14,000+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Health Insurance", "Accident Insurance", "Travel Insurance"],
-    "key_challenges": ["Claims fraud detection", "AI-based risk scoring", "Hospital network management", "Prior auth automation"],
+    "specialties": [
+      "Health Insurance",
+      "Accident Insurance",
+      "Travel Insurance"
+    ],
+    "key_challenges": [
+      "Claims fraud detection",
+      "AI-based risk scoring",
+      "Hospital network management",
+      "Prior auth automation"
+    ],
     "tech_budget_inr": "₹200Cr",
     "digital_maturity": "High",
-    "current_tech_stack": ["Guidewire", "AWS", "Salesforce"],
+    "current_tech_stack": [
+      "Guidewire",
+      "AWS",
+      "Salesforce"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Anand Roy", "role": "MD & CEO", "linkedin": "linkedin.com/in/anand-roy-star" },
-      { "name": "Vikram Patel", "role": "CTO", "linkedin": "linkedin.com/in/vikram-patel-starhealth" }
+      {
+        "name": "Anand Roy",
+        "role": "MD & CEO",
+        "linkedin": "linkedin.com/in/anand-roy-star",
+        "email": "anand.roy@starhealth.in"
+      },
+      {
+        "name": "Vikram Patel",
+        "role": "CTO",
+        "linkedin": "linkedin.com/in/vikram-patel-starhealth",
+        "email": "vikram.patel@starhealth.in"
+      }
     ],
-    "match_tags": ["Fraud Detection", "Risk Scoring", "Prior Auth", "Claims AI"],
+    "match_tags": [
+      "Fraud Detection",
+      "Risk Scoring",
+      "Prior Auth",
+      "Claims AI"
+    ],
     "website": "starhealth.in",
     "nse_listed": true
   },
@@ -279,23 +668,58 @@
     "name": "Niva Bupa Health Insurance",
     "type": "Health Insurance",
     "headquarter": "Delhi",
-    "cities_present": ["Delhi", "Mumbai", "Bengaluru", "Hyderabad", "Chennai", "Pune"],
+    "cities_present": [
+      "Delhi",
+      "Mumbai",
+      "Bengaluru",
+      "Hyderabad",
+      "Chennai",
+      "Pune"
+    ],
     "total_beds": null,
     "annual_revenue_usd": "400M",
     "employee_count": "5,000+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Health Insurance", "Critical Illness", "Group Health"],
-    "key_challenges": ["Denial rate reduction", "Real-time claim processing", "Provider network intelligence", "Customer retention AI"],
+    "specialties": [
+      "Health Insurance",
+      "Critical Illness",
+      "Group Health"
+    ],
+    "key_challenges": [
+      "Denial rate reduction",
+      "Real-time claim processing",
+      "Provider network intelligence",
+      "Customer retention AI"
+    ],
     "tech_budget_inr": "₹80Cr",
     "digital_maturity": "High",
-    "current_tech_stack": ["Guidewire", "Azure ML", "Pega"],
+    "current_tech_stack": [
+      "Guidewire",
+      "Azure ML",
+      "Pega"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Krishnan Ramachandran", "role": "MD & CEO", "linkedin": "linkedin.com/in/krishnan-ramachandran" },
-      { "name": "Sanjiv Sondhi", "role": "COO", "linkedin": "linkedin.com/in/sanjiv-sondhi" }
+      {
+        "name": "Krishnan Ramachandran",
+        "role": "MD & CEO",
+        "linkedin": "linkedin.com/in/krishnan-ramachandran",
+        "email": "krishnan.ramachandran@nivabupa.com"
+      },
+      {
+        "name": "Sanjiv Sondhi",
+        "role": "COO",
+        "linkedin": "linkedin.com/in/sanjiv-sondhi",
+        "email": "sanjiv.sondhi@nivabupa.com"
+      }
     ],
-    "match_tags": ["Denial Intelligence", "Claims Automation", "Provider Intel", "AI Underwriting"],
+    "match_tags": [
+      "Denial Intelligence",
+      "Claims Automation",
+      "Provider Intel",
+      "AI Underwriting"
+    ],
     "website": "nivabupa.com",
     "nse_listed": true
   },
@@ -304,23 +728,56 @@
     "name": "Sahyadri Hospitals",
     "type": "Hospital Group",
     "headquarter": "Pune",
-    "cities_present": ["Pune", "Nashik", "Karad", "Hadapsar"],
+    "cities_present": [
+      "Pune",
+      "Nashik",
+      "Karad",
+      "Hadapsar"
+    ],
     "total_beds": 1500,
     "annual_revenue_usd": "90M",
     "employee_count": "4,000+",
     "size": "Mid-Market",
     "ownership": "Private",
-    "specialties": ["Multi-specialty", "Cardiac", "Orthopedics", "Neurology"],
-    "key_challenges": ["Insurance verification automation", "Revenue cycle optimization", "Digital patient intake", "Referral tracking"],
+    "specialties": [
+      "Multi-specialty",
+      "Cardiac",
+      "Orthopedics",
+      "Neurology"
+    ],
+    "key_challenges": [
+      "Insurance verification automation",
+      "Revenue cycle optimization",
+      "Digital patient intake",
+      "Referral tracking"
+    ],
     "tech_budget_inr": "₹20Cr",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["Meditech", "Tally"],
+    "current_tech_stack": [
+      "Meditech",
+      "Tally"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Charudutt Apte", "role": "CEO", "linkedin": "linkedin.com/in/charudutt-apte" },
-      { "name": "Nikhil Sane", "role": "CIO", "linkedin": "linkedin.com/in/nikhil-sane-sahyadri" }
+      {
+        "name": "Charudutt Apte",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/charudutt-apte",
+        "email": "charudutt.apte@sahyadrihospital.com"
+      },
+      {
+        "name": "Nikhil Sane",
+        "role": "CIO",
+        "linkedin": "linkedin.com/in/nikhil-sane-sahyadri",
+        "email": "nikhil.sane@sahyadrihospital.com"
+      }
     ],
-    "match_tags": ["Insurance VOB", "Revenue Cycle", "Patient Intake", "Referral Intel"],
+    "match_tags": [
+      "Insurance VOB",
+      "Revenue Cycle",
+      "Patient Intake",
+      "Referral Intel"
+    ],
     "website": "sahyadrihospital.com",
     "nse_listed": false
   },
@@ -329,24 +786,59 @@
     "name": "Parkway Pantai (Singapore)",
     "type": "Hospital Group",
     "headquarter": "Singapore",
-    "cities_present": ["Singapore", "Kuala Lumpur", "Penang", "Jakarta", "Brunei"],
+    "cities_present": [
+      "Singapore",
+      "Kuala Lumpur",
+      "Penang",
+      "Jakarta",
+      "Brunei"
+    ],
     "total_beds": 3500,
     "annual_revenue_usd": "900M",
     "employee_count": "17,000+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Multi-specialty", "Oncology", "Cardiology", "Orthopedics"],
-    "key_challenges": ["ASEAN digital health expansion", "Cross-border patient management", "AI clinical decision support", "Predictive readmission"],
+    "specialties": [
+      "Multi-specialty",
+      "Oncology",
+      "Cardiology",
+      "Orthopedics"
+    ],
+    "key_challenges": [
+      "ASEAN digital health expansion",
+      "Cross-border patient management",
+      "AI clinical decision support",
+      "Predictive readmission"
+    ],
     "tech_budget_inr": null,
     "tech_budget_sgd": "SGD 80M",
     "digital_maturity": "High",
-    "current_tech_stack": ["Epic", "AWS", "Microsoft Azure"],
+    "current_tech_stack": [
+      "Epic",
+      "AWS",
+      "Microsoft Azure"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Alan Chen", "role": "Head of Digital Health", "linkedin": "linkedin.com/in/alan-chen-parkway" },
-      { "name": "Lim Eng Loy", "role": "CEO", "linkedin": "linkedin.com/in/lim-eng-loy" }
+      {
+        "name": "Alan Chen",
+        "role": "Head of Digital Health",
+        "linkedin": "linkedin.com/in/alan-chen-parkway",
+        "email": "alan.chen@parkwaypantai.com"
+      },
+      {
+        "name": "Lim Eng Loy",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/lim-eng-loy",
+        "email": "lim.eng.loy@parkwaypantai.com"
+      }
     ],
-    "match_tags": ["ASEAN Expansion", "AI Diagnostics", "Cross-border", "Readmission Prediction"],
+    "match_tags": [
+      "ASEAN Expansion",
+      "AI Diagnostics",
+      "Cross-border",
+      "Readmission Prediction"
+    ],
     "website": "parkwaypantai.com",
     "nse_listed": false
   },
@@ -355,24 +847,54 @@
     "name": "Bumrungrad International Hospital (Thailand)",
     "type": "Hospital Group",
     "headquarter": "Bangkok",
-    "cities_present": ["Bangkok"],
+    "cities_present": [
+      "Bangkok"
+    ],
     "total_beds": 580,
     "annual_revenue_usd": "500M",
     "employee_count": "6,500+",
     "size": "Enterprise",
     "ownership": "Private",
-    "specialties": ["Multi-specialty", "International Patients", "Medical Tourism"],
-    "key_challenges": ["Multi-language patient intake", "International insurance processing", "AI triage at scale", "Predictive capacity planning"],
+    "specialties": [
+      "Multi-specialty",
+      "International Patients",
+      "Medical Tourism"
+    ],
+    "key_challenges": [
+      "Multi-language patient intake",
+      "International insurance processing",
+      "AI triage at scale",
+      "Predictive capacity planning"
+    ],
     "tech_budget_inr": null,
     "tech_budget_thb": "THB 800M",
     "digital_maturity": "Very High",
-    "current_tech_stack": ["Epic", "Oracle", "AWS"],
+    "current_tech_stack": [
+      "Epic",
+      "Oracle",
+      "AWS"
+    ],
     "open_to_pilots": false,
     "decision_makers": [
-      { "name": "John Chelvanayagam", "role": "CEO", "linkedin": "linkedin.com/in/john-chelvanayagam" },
-      { "name": "Praew Tanatreeroj", "role": "Chief Digital Officer", "linkedin": "linkedin.com/in/praew-tanatreeroj" }
+      {
+        "name": "John Chelvanayagam",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/john-chelvanayagam",
+        "email": "john.chelvanayagam@bumrungrad.com"
+      },
+      {
+        "name": "Praew Tanatreeroj",
+        "role": "Chief Digital Officer",
+        "linkedin": "linkedin.com/in/praew-tanatreeroj",
+        "email": "praew.tanatreeroj@bumrungrad.com"
+      }
     ],
-    "match_tags": ["International Patients", "Insurance Processing", "Capacity Planning", "AI Triage"],
+    "match_tags": [
+      "International Patients",
+      "Insurance Processing",
+      "Capacity Planning",
+      "AI Triage"
+    ],
     "website": "bumrungrad.com",
     "nse_listed": true
   },
@@ -381,23 +903,58 @@
     "name": "Columbia Asia Hospitals",
     "type": "Hospital Group",
     "headquarter": "Bengaluru",
-    "cities_present": ["Bengaluru", "Mysuru", "Pune", "Ahmedabad", "Kolkata", "Patiala"],
+    "cities_present": [
+      "Bengaluru",
+      "Mysuru",
+      "Pune",
+      "Ahmedabad",
+      "Kolkata",
+      "Patiala"
+    ],
     "total_beds": 1200,
     "annual_revenue_usd": "110M",
     "employee_count": "4,500+",
     "size": "Mid-Market",
     "ownership": "Private (Integrated Health Systems)",
-    "specialties": ["Emergency Care", "Orthopedics", "Maternity", "General Surgery"],
-    "key_challenges": ["Standardizing care protocols across locations", "Revenue cycle uniformity", "Insurance claim accuracy", "Digital triage"],
+    "specialties": [
+      "Emergency Care",
+      "Orthopedics",
+      "Maternity",
+      "General Surgery"
+    ],
+    "key_challenges": [
+      "Standardizing care protocols across locations",
+      "Revenue cycle uniformity",
+      "Insurance claim accuracy",
+      "Digital triage"
+    ],
     "tech_budget_inr": "₹25Cr",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["Cerner", "SAP"],
+    "current_tech_stack": [
+      "Cerner",
+      "SAP"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Nandakumar Nair", "role": "CEO", "linkedin": "linkedin.com/in/nandakumar-nair-columbia" },
-      { "name": "Deepak Singh", "role": "CIO", "linkedin": "linkedin.com/in/deepak-singh-columbia" }
+      {
+        "name": "Nandakumar Nair",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/nandakumar-nair-columbia",
+        "email": "nandakumar.nair@columbiaasia.com"
+      },
+      {
+        "name": "Deepak Singh",
+        "role": "CIO",
+        "linkedin": "linkedin.com/in/deepak-singh-columbia",
+        "email": "deepak.singh@columbiaasia.com"
+      }
     ],
-    "match_tags": ["Revenue Cycle", "Insurance Accuracy", "Digital Triage", "Protocol Standardization"],
+    "match_tags": [
+      "Revenue Cycle",
+      "Insurance Accuracy",
+      "Digital Triage",
+      "Protocol Standardization"
+    ],
     "website": "columbiaasia.com",
     "nse_listed": false
   },
@@ -406,23 +963,55 @@
     "name": "Kokilaben Dhirubhai Ambani Hospital",
     "type": "Specialty Hospital",
     "headquarter": "Mumbai",
-    "cities_present": ["Mumbai", "Navi Mumbai"],
+    "cities_present": [
+      "Mumbai",
+      "Navi Mumbai"
+    ],
     "total_beds": 750,
     "annual_revenue_usd": "120M",
     "employee_count": "3,200+",
     "size": "Mid-Market",
     "ownership": "Private (Reliance Group)",
-    "specialties": ["Cardiac Surgery", "Neuro Surgery", "Robotic Surgery", "Oncology"],
-    "key_challenges": ["High-value patient experience", "Robotic surgery outcome AI", "Insurance pre-certification", "Referral intelligence"],
+    "specialties": [
+      "Cardiac Surgery",
+      "Neuro Surgery",
+      "Robotic Surgery",
+      "Oncology"
+    ],
+    "key_challenges": [
+      "High-value patient experience",
+      "Robotic surgery outcome AI",
+      "Insurance pre-certification",
+      "Referral intelligence"
+    ],
     "tech_budget_inr": "₹50Cr",
     "digital_maturity": "High",
-    "current_tech_stack": ["Epic", "Siemens", "IBM Watson Health"],
+    "current_tech_stack": [
+      "Epic",
+      "Siemens",
+      "IBM Watson Health"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. Santosh Shetty", "role": "CEO", "linkedin": "linkedin.com/in/santosh-shetty-kdah" },
-      { "name": "Harish Pillai", "role": "CTO", "linkedin": "linkedin.com/in/harish-pillai-kdah" }
+      {
+        "name": "Dr. Santosh Shetty",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/santosh-shetty-kdah",
+        "email": "santosh.shetty@kokilabenhospital.com"
+      },
+      {
+        "name": "Harish Pillai",
+        "role": "CTO",
+        "linkedin": "linkedin.com/in/harish-pillai-kdah",
+        "email": "harish.pillai@kokilabenhospital.com"
+      }
     ],
-    "match_tags": ["Surgical AI", "Pre-certification", "Referral Intel", "Outcome Analytics"],
+    "match_tags": [
+      "Surgical AI",
+      "Pre-certification",
+      "Referral Intel",
+      "Outcome Analytics"
+    ],
     "website": "kokilabenhospital.com",
     "nse_listed": false
   },
@@ -431,22 +1020,46 @@
     "name": "Lilavati Hospital",
     "type": "Specialty Hospital",
     "headquarter": "Mumbai",
-    "cities_present": ["Mumbai"],
+    "cities_present": [
+      "Mumbai"
+    ],
     "total_beds": 323,
     "annual_revenue_usd": "60M",
     "employee_count": "1,500+",
     "size": "SMB",
     "ownership": "Trust",
-    "specialties": ["Cardiac", "Orthopedics", "Gastroenterology", "Oncology"],
-    "key_challenges": ["Revenue leakage", "Patient intake modernization", "Insurance claim speed", "Digital reporting"],
+    "specialties": [
+      "Cardiac",
+      "Orthopedics",
+      "Gastroenterology",
+      "Oncology"
+    ],
+    "key_challenges": [
+      "Revenue leakage",
+      "Patient intake modernization",
+      "Insurance claim speed",
+      "Digital reporting"
+    ],
     "tech_budget_inr": "₹8Cr",
     "digital_maturity": "Low-Medium",
-    "current_tech_stack": ["Custom HIS", "Tally"],
+    "current_tech_stack": [
+      "Custom HIS",
+      "Tally"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. Vivek Talaulikar", "role": "Medical Director", "linkedin": "linkedin.com/in/vivek-talaulikar" }
+      {
+        "name": "Dr. Vivek Talaulikar",
+        "role": "Medical Director",
+        "linkedin": "linkedin.com/in/vivek-talaulikar",
+        "email": "vivek.talaulikar@lilavatihospital.com"
+      }
     ],
-    "match_tags": ["Revenue Leakage", "Patient Intake", "Digitization"],
+    "match_tags": [
+      "Revenue Leakage",
+      "Patient Intake",
+      "Digitization"
+    ],
     "website": "lilavatihospital.com",
     "nse_listed": false
   },
@@ -455,23 +1068,58 @@
     "name": "Care Hospitals",
     "type": "Hospital Group",
     "headquarter": "Hyderabad",
-    "cities_present": ["Hyderabad", "Bhubaneswar", "Nagpur", "Raipur", "Visakhapatnam"],
+    "cities_present": [
+      "Hyderabad",
+      "Bhubaneswar",
+      "Nagpur",
+      "Raipur",
+      "Visakhapatnam"
+    ],
     "total_beds": 2200,
     "annual_revenue_usd": "130M",
     "employee_count": "5,500+",
     "size": "Mid-Market",
     "ownership": "Private (Quality Care India)",
-    "specialties": ["Cardiology", "Oncology", "Neurology", "Orthopedics", "Transplant"],
-    "key_challenges": ["Denial prediction and prevention", "Payer contract analysis", "Patient engagement post-discharge", "OPD wait time"],
+    "specialties": [
+      "Cardiology",
+      "Oncology",
+      "Neurology",
+      "Orthopedics",
+      "Transplant"
+    ],
+    "key_challenges": [
+      "Denial prediction and prevention",
+      "Payer contract analysis",
+      "Patient engagement post-discharge",
+      "OPD wait time"
+    ],
     "tech_budget_inr": "₹22Cr",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["Meditech", "Oracle Finance"],
+    "current_tech_stack": [
+      "Meditech",
+      "Oracle Finance"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Jasdeep Singh", "role": "CEO", "linkedin": "linkedin.com/in/jasdeep-singh-care" },
-      { "name": "Ravi Kumar", "role": "CFO", "linkedin": "linkedin.com/in/ravi-kumar-care-hospitals" }
+      {
+        "name": "Jasdeep Singh",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/jasdeep-singh-care",
+        "email": "jasdeep.singh@carehospitals.com"
+      },
+      {
+        "name": "Ravi Kumar",
+        "role": "CFO",
+        "linkedin": "linkedin.com/in/ravi-kumar-care-hospitals",
+        "email": "ravi.kumar@carehospitals.com"
+      }
     ],
-    "match_tags": ["Denial Prediction", "Payer Intel", "Post-Discharge", "OPD Ops"],
+    "match_tags": [
+      "Denial Prediction",
+      "Payer Intel",
+      "Post-Discharge",
+      "OPD Ops"
+    ],
     "website": "carehospitals.com",
     "nse_listed": false
   },
@@ -480,23 +1128,57 @@
     "name": "Rainbow Children's Hospital",
     "type": "Specialty Hospital Chain",
     "headquarter": "Hyderabad",
-    "cities_present": ["Hyderabad", "Bengaluru", "Delhi", "Vijayawada", "Chennai"],
+    "cities_present": [
+      "Hyderabad",
+      "Bengaluru",
+      "Delhi",
+      "Vijayawada",
+      "Chennai"
+    ],
     "total_beds": 1500,
     "annual_revenue_usd": "100M",
     "employee_count": "3,800+",
     "size": "Mid-Market",
     "ownership": "Private",
-    "specialties": ["Pediatrics", "Neonatology", "Pediatric Surgery", "Pediatric Cardiology"],
-    "key_challenges": ["Neonatal risk AI prediction", "Insurance pre-auth for pediatric procedures", "Parent engagement platform", "ICU occupancy optimization"],
+    "specialties": [
+      "Pediatrics",
+      "Neonatology",
+      "Pediatric Surgery",
+      "Pediatric Cardiology"
+    ],
+    "key_challenges": [
+      "Neonatal risk AI prediction",
+      "Insurance pre-auth for pediatric procedures",
+      "Parent engagement platform",
+      "ICU occupancy optimization"
+    ],
     "tech_budget_inr": "₹18Cr",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["Cerner Pediatrics", "Custom EMR"],
+    "current_tech_stack": [
+      "Cerner Pediatrics",
+      "Custom EMR"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. Ramesh Kancharla", "role": "Chairman & CEO", "linkedin": "linkedin.com/in/ramesh-kancharla" },
-      { "name": "Mahesh Reddy", "role": "CTO", "linkedin": "linkedin.com/in/mahesh-reddy-rainbow" }
+      {
+        "name": "Dr. Ramesh Kancharla",
+        "role": "Chairman & CEO",
+        "linkedin": "linkedin.com/in/ramesh-kancharla",
+        "email": "ramesh.kancharla@rainbowhospitals.in"
+      },
+      {
+        "name": "Mahesh Reddy",
+        "role": "CTO",
+        "linkedin": "linkedin.com/in/mahesh-reddy-rainbow",
+        "email": "mahesh.reddy@rainbowhospitals.in"
+      }
     ],
-    "match_tags": ["Predictive Analytics", "Prior Auth", "Parent Engagement", "ICU Optimization"],
+    "match_tags": [
+      "Predictive Analytics",
+      "Prior Auth",
+      "Parent Engagement",
+      "ICU Optimization"
+    ],
     "website": "rainbowhospitals.in",
     "nse_listed": true
   },
@@ -505,23 +1187,55 @@
     "name": "SRL Diagnostics",
     "type": "Diagnostics Chain",
     "headquarter": "Gurugram",
-    "cities_present": ["Pan India", "700+ collection centers"],
+    "cities_present": [
+      "Pan India",
+      "700+ collection centers"
+    ],
     "total_beds": null,
     "annual_revenue_usd": "200M",
     "employee_count": "7,000+",
     "size": "Enterprise",
     "ownership": "Private (Fortis)",
-    "specialties": ["Pathology", "Radiology", "Genomics", "Molecular Diagnostics"],
-    "key_challenges": ["Lab report AI interpretation", "Sample tracking automation", "Doctor referral intelligence", "B2B clinic network expansion"],
+    "specialties": [
+      "Pathology",
+      "Radiology",
+      "Genomics",
+      "Molecular Diagnostics"
+    ],
+    "key_challenges": [
+      "Lab report AI interpretation",
+      "Sample tracking automation",
+      "Doctor referral intelligence",
+      "B2B clinic network expansion"
+    ],
     "tech_budget_inr": "₹40Cr",
     "digital_maturity": "High",
-    "current_tech_stack": ["LIS (Lab Information System)", "AWS", "Salesforce"],
+    "current_tech_stack": [
+      "LIS (Lab Information System)",
+      "AWS",
+      "Salesforce"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Anand K", "role": "CEO", "linkedin": "linkedin.com/in/anand-k-srl" },
-      { "name": "Prashant Singh", "role": "CTO", "linkedin": "linkedin.com/in/prashant-singh-srl" }
+      {
+        "name": "Anand K",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/anand-k-srl",
+        "email": "anand.k@srldiagnostics.com"
+      },
+      {
+        "name": "Prashant Singh",
+        "role": "CTO",
+        "linkedin": "linkedin.com/in/prashant-singh-srl",
+        "email": "prashant.singh@srldiagnostics.com"
+      }
     ],
-    "match_tags": ["AI Diagnostics", "Referral Intel", "B2B Expansion", "Lab Automation"],
+    "match_tags": [
+      "AI Diagnostics",
+      "Referral Intel",
+      "B2B Expansion",
+      "Lab Automation"
+    ],
     "website": "srldiagnostics.com",
     "nse_listed": false
   },
@@ -530,23 +1244,53 @@
     "name": "Thyrocare Technologies",
     "type": "Diagnostics Chain",
     "headquarter": "Mumbai",
-    "cities_present": ["Pan India", "2000+ collection points"],
+    "cities_present": [
+      "Pan India",
+      "2000+ collection points"
+    ],
     "total_beds": null,
     "annual_revenue_usd": "80M",
     "employee_count": "2,500+",
     "size": "Mid-Market",
     "ownership": "Private (PharmEasy Group)",
-    "specialties": ["Preventive Diagnostics", "Wellness", "Pathology"],
-    "key_challenges": ["B2B clinic acquisition", "AI-driven wellness recommendations", "Insurance-linked diagnostics", "Report interpretation AI"],
+    "specialties": [
+      "Preventive Diagnostics",
+      "Wellness",
+      "Pathology"
+    ],
+    "key_challenges": [
+      "B2B clinic acquisition",
+      "AI-driven wellness recommendations",
+      "Insurance-linked diagnostics",
+      "Report interpretation AI"
+    ],
     "tech_budget_inr": "₹20Cr",
     "digital_maturity": "Medium-High",
-    "current_tech_stack": ["Custom LIS", "AWS"],
+    "current_tech_stack": [
+      "Custom LIS",
+      "AWS"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "A. Velumani", "role": "Founder", "linkedin": "linkedin.com/in/a-velumani" },
-      { "name": "Rahul Guha", "role": "CEO", "linkedin": "linkedin.com/in/rahul-guha-thyrocare" }
+      {
+        "name": "A. Velumani",
+        "role": "Founder",
+        "linkedin": "linkedin.com/in/a-velumani",
+        "email": "a.velumani@thyrocare.com"
+      },
+      {
+        "name": "Rahul Guha",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/rahul-guha-thyrocare",
+        "email": "rahul.guha@thyrocare.com"
+      }
     ],
-    "match_tags": ["B2B Diagnostics", "Wellness AI", "Report Interpretation", "Insurance"],
+    "match_tags": [
+      "B2B Diagnostics",
+      "Wellness AI",
+      "Report Interpretation",
+      "Insurance"
+    ],
     "website": "thyrocare.com",
     "nse_listed": true
   },
@@ -555,23 +1299,57 @@
     "name": "Practo",
     "type": "Healthcare Platform",
     "headquarter": "Bengaluru",
-    "cities_present": ["Pan India", "Singapore", "Philippines", "Brazil"],
+    "cities_present": [
+      "Pan India",
+      "Singapore",
+      "Philippines",
+      "Brazil"
+    ],
     "total_beds": null,
     "annual_revenue_usd": "50M",
     "employee_count": "3,000+",
     "size": "Mid-Market",
     "ownership": "Private (VC-backed)",
-    "specialties": ["Telemedicine", "Doctor Listings", "Clinic Software", "Health Records"],
-    "key_challenges": ["Monetizing clinic software at scale", "Insurance integrations", "AI-driven triage before consultation", "Patient retention"],
+    "specialties": [
+      "Telemedicine",
+      "Doctor Listings",
+      "Clinic Software",
+      "Health Records"
+    ],
+    "key_challenges": [
+      "Monetizing clinic software at scale",
+      "Insurance integrations",
+      "AI-driven triage before consultation",
+      "Patient retention"
+    ],
     "tech_budget_inr": "₹30Cr",
     "digital_maturity": "Very High",
-    "current_tech_stack": ["AWS", "Python/ML stack", "Kubernetes"],
+    "current_tech_stack": [
+      "AWS",
+      "Python/ML stack",
+      "Kubernetes"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Shashank ND", "role": "CEO & Co-founder", "linkedin": "linkedin.com/in/shashanknd" },
-      { "name": "Abhinav Lal", "role": "CTO", "linkedin": "linkedin.com/in/abhinavlal" }
+      {
+        "name": "Shashank ND",
+        "role": "CEO & Co-founder",
+        "linkedin": "linkedin.com/in/shashanknd",
+        "email": "shashank.nd@practo.com"
+      },
+      {
+        "name": "Abhinav Lal",
+        "role": "CTO",
+        "linkedin": "linkedin.com/in/abhinavlal",
+        "email": "abhinav.lal@practo.com"
+      }
     ],
-    "match_tags": ["Telemedicine", "Insurance Integration", "AI Triage", "Clinic Software"],
+    "match_tags": [
+      "Telemedicine",
+      "Insurance Integration",
+      "AI Triage",
+      "Clinic Software"
+    ],
     "website": "practo.com",
     "nse_listed": false
   },
@@ -580,23 +1358,54 @@
     "name": "1mg (Tata Health)",
     "type": "Healthcare Platform",
     "headquarter": "Gurugram",
-    "cities_present": ["Pan India"],
+    "cities_present": [
+      "Pan India"
+    ],
     "total_beds": null,
     "annual_revenue_usd": "120M",
     "employee_count": "4,500+",
     "size": "Enterprise",
     "ownership": "Private (Tata Digital)",
-    "specialties": ["Online Pharmacy", "Diagnostics", "Telemedicine", "Health Insurance"],
-    "key_challenges": ["Chronic disease management", "Insurance claim integration", "AI drug interaction checker", "Patient adherence platform"],
+    "specialties": [
+      "Online Pharmacy",
+      "Diagnostics",
+      "Telemedicine",
+      "Health Insurance"
+    ],
+    "key_challenges": [
+      "Chronic disease management",
+      "Insurance claim integration",
+      "AI drug interaction checker",
+      "Patient adherence platform"
+    ],
     "tech_budget_inr": "₹60Cr",
     "digital_maturity": "Very High",
-    "current_tech_stack": ["AWS", "React Native", "ML Platform"],
+    "current_tech_stack": [
+      "AWS",
+      "React Native",
+      "ML Platform"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Prashant Tandon", "role": "CEO", "linkedin": "linkedin.com/in/prashant-tandon-1mg" },
-      { "name": "Gaurav Agarwal", "role": "CTO", "linkedin": "linkedin.com/in/gaurav-agarwal-1mg" }
+      {
+        "name": "Prashant Tandon",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/prashant-tandon-1mg",
+        "email": "prashant.tandon@1mg.com"
+      },
+      {
+        "name": "Gaurav Agarwal",
+        "role": "CTO",
+        "linkedin": "linkedin.com/in/gaurav-agarwal-1mg",
+        "email": "gaurav.agarwal@1mg.com"
+      }
     ],
-    "match_tags": ["Drug Interaction AI", "Insurance Claims", "Chronic Disease", "Patient Adherence"],
+    "match_tags": [
+      "Drug Interaction AI",
+      "Insurance Claims",
+      "Chronic Disease",
+      "Patient Adherence"
+    ],
     "website": "1mg.com",
     "nse_listed": false
   },
@@ -605,23 +1414,52 @@
     "name": "AIIMS Delhi",
     "type": "Government Hospital",
     "headquarter": "New Delhi",
-    "cities_present": ["New Delhi"],
+    "cities_present": [
+      "New Delhi"
+    ],
     "total_beds": 2500,
     "annual_revenue_usd": "N/A (Government)",
     "employee_count": "17,000+",
     "size": "Enterprise",
     "ownership": "Government",
-    "specialties": ["All specialties", "Research", "Medical Education"],
-    "key_challenges": ["Massive OPD patient load (10,000+/day)", "Queue management AI", "Research trial recruitment", "EMR digitization"],
+    "specialties": [
+      "All specialties",
+      "Research",
+      "Medical Education"
+    ],
+    "key_challenges": [
+      "Massive OPD patient load (10,000+/day)",
+      "Queue management AI",
+      "Research trial recruitment",
+      "EMR digitization"
+    ],
     "tech_budget_inr": "₹300Cr (govt allocation)",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["HMIS (Govt)", "Custom EMR"],
+    "current_tech_stack": [
+      "HMIS (Govt)",
+      "Custom EMR"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. M. Srinivas", "role": "Director, AIIMS Delhi", "linkedin": "linkedin.com/in/m-srinivas-aiims" },
-      { "name": "Prof. Rama Joshi", "role": "Head of Medical Informatics", "linkedin": "linkedin.com/in/rama-joshi-aiims" }
+      {
+        "name": "Dr. M. Srinivas",
+        "role": "Director, AIIMS Delhi",
+        "linkedin": "linkedin.com/in/m-srinivas-aiims",
+        "email": "m.srinivas@aiims.edu"
+      },
+      {
+        "name": "Prof. Rama Joshi",
+        "role": "Head of Medical Informatics",
+        "linkedin": "linkedin.com/in/rama-joshi-aiims",
+        "email": "rama.joshi@aiims.edu"
+      }
     ],
-    "match_tags": ["OPD AI", "Clinical Trials", "Queue Management", "Research"],
+    "match_tags": [
+      "OPD AI",
+      "Clinical Trials",
+      "Queue Management",
+      "Research"
+    ],
     "website": "aiims.edu",
     "nse_listed": false
   },
@@ -630,23 +1468,57 @@
     "name": "KIMS Hospitals",
     "type": "Hospital Group",
     "headquarter": "Hyderabad",
-    "cities_present": ["Hyderabad", "Secunderabad", "Kondapur", "Suchitra"],
+    "cities_present": [
+      "Hyderabad",
+      "Secunderabad",
+      "Kondapur",
+      "Suchitra"
+    ],
     "total_beds": 1800,
     "annual_revenue_usd": "110M",
     "employee_count": "4,800+",
     "size": "Mid-Market",
     "ownership": "Private",
-    "specialties": ["Cardiology", "Oncology", "Orthopedics", "Nephrology", "Liver Transplant"],
-    "key_challenges": ["Revenue cycle leakage", "Payer contract tracking", "Prior auth bottleneck", "Digital patient intake"],
+    "specialties": [
+      "Cardiology",
+      "Oncology",
+      "Orthopedics",
+      "Nephrology",
+      "Liver Transplant"
+    ],
+    "key_challenges": [
+      "Revenue cycle leakage",
+      "Payer contract tracking",
+      "Prior auth bottleneck",
+      "Digital patient intake"
+    ],
     "tech_budget_inr": "₹25Cr",
     "digital_maturity": "Medium",
-    "current_tech_stack": ["In-house HIS", "Oracle Finance"],
+    "current_tech_stack": [
+      "In-house HIS",
+      "Oracle Finance"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. Bollineni Rajendra Prasad", "role": "Chairman", "linkedin": "linkedin.com/in/bollineni-rajendra" },
-      { "name": "Suresh Babu", "role": "CIO", "linkedin": "linkedin.com/in/suresh-babu-kims" }
+      {
+        "name": "Dr. Bollineni Rajendra Prasad",
+        "role": "Chairman",
+        "linkedin": "linkedin.com/in/bollineni-rajendra",
+        "email": "bollineni.rajendra.prasad@kimshospitals.com"
+      },
+      {
+        "name": "Suresh Babu",
+        "role": "CIO",
+        "linkedin": "linkedin.com/in/suresh-babu-kims",
+        "email": "suresh.babu@kimshospitals.com"
+      }
     ],
-    "match_tags": ["Revenue Cycle", "Payer Intel", "Prior Auth", "Patient Intake"],
+    "match_tags": [
+      "Revenue Cycle",
+      "Payer Intel",
+      "Prior Auth",
+      "Patient Intake"
+    ],
     "website": "kimshospitals.com",
     "nse_listed": true
   },
@@ -655,22 +1527,46 @@
     "name": "Meenakshi Mission Hospital",
     "type": "Specialty Hospital",
     "headquarter": "Madurai",
-    "cities_present": ["Madurai"],
+    "cities_present": [
+      "Madurai"
+    ],
     "total_beds": 1200,
     "annual_revenue_usd": "45M",
     "employee_count": "2,500+",
     "size": "SMB",
     "ownership": "Trust",
-    "specialties": ["Ophthalmology", "Cardiac", "Orthopedics", "Neurology"],
-    "key_challenges": ["Eye care diagnostics AI", "Rural patient outreach", "Insurance verification", "Telemedicine expansion"],
+    "specialties": [
+      "Ophthalmology",
+      "Cardiac",
+      "Orthopedics",
+      "Neurology"
+    ],
+    "key_challenges": [
+      "Eye care diagnostics AI",
+      "Rural patient outreach",
+      "Insurance verification",
+      "Telemedicine expansion"
+    ],
     "tech_budget_inr": "₹6Cr",
     "digital_maturity": "Low",
-    "current_tech_stack": ["Custom HIS"],
+    "current_tech_stack": [
+      "Custom HIS"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. G. Balasubramanian", "role": "MD", "linkedin": "linkedin.com/in/g-balasubramanian-mmhrc" }
+      {
+        "name": "Dr. G. Balasubramanian",
+        "role": "MD",
+        "linkedin": "linkedin.com/in/g-balasubramanian-mmhrc",
+        "email": "g.balasubramanian@mmhrc.com"
+      }
     ],
-    "match_tags": ["AI Diagnostics", "Rural Health", "Insurance VOB", "Telemedicine"],
+    "match_tags": [
+      "AI Diagnostics",
+      "Rural Health",
+      "Insurance VOB",
+      "Telemedicine"
+    ],
     "website": "mmhrc.com",
     "nse_listed": false
   },
@@ -679,22 +1575,48 @@
     "name": "Aakash Healthcare",
     "type": "Hospital Group",
     "headquarter": "New Delhi",
-    "cities_present": ["Delhi", "Dwarka", "Noida"],
+    "cities_present": [
+      "Delhi",
+      "Dwarka",
+      "Noida"
+    ],
     "total_beds": 600,
     "annual_revenue_usd": "35M",
     "employee_count": "1,200+",
     "size": "SMB",
     "ownership": "Private",
-    "specialties": ["Multi-specialty", "Maternity", "Pediatrics", "Orthopedics"],
-    "key_challenges": ["Patient intake digitization", "Insurance claim rejections", "OPD flow automation", "Appointment no-show prediction"],
+    "specialties": [
+      "Multi-specialty",
+      "Maternity",
+      "Pediatrics",
+      "Orthopedics"
+    ],
+    "key_challenges": [
+      "Patient intake digitization",
+      "Insurance claim rejections",
+      "OPD flow automation",
+      "Appointment no-show prediction"
+    ],
     "tech_budget_inr": "₹4Cr",
     "digital_maturity": "Low-Medium",
-    "current_tech_stack": ["Meditech (basic)"],
+    "current_tech_stack": [
+      "Meditech (basic)"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. Karan Thakur", "role": "CEO & MD", "linkedin": "linkedin.com/in/karan-thakur-aakash" }
+      {
+        "name": "Dr. Karan Thakur",
+        "role": "CEO & MD",
+        "linkedin": "linkedin.com/in/karan-thakur-aakash",
+        "email": "karan.thakur@aakashhealthcare.com"
+      }
     ],
-    "match_tags": ["Patient Intake", "Insurance Claims", "OPD Automation", "No-show Prediction"],
+    "match_tags": [
+      "Patient Intake",
+      "Insurance Claims",
+      "OPD Automation",
+      "No-show Prediction"
+    ],
     "website": "aakashhealthcare.com",
     "nse_listed": false
   },
@@ -703,22 +1625,47 @@
     "name": "Vikram Hospitals",
     "type": "Hospital Group",
     "headquarter": "Bengaluru",
-    "cities_present": ["Bengaluru", "Mysuru"],
+    "cities_present": [
+      "Bengaluru",
+      "Mysuru"
+    ],
     "total_beds": 500,
     "annual_revenue_usd": "30M",
     "employee_count": "1,000+",
     "size": "SMB",
     "ownership": "Private",
-    "specialties": ["Orthopedics", "Cardiology", "Neurology", "Oncology"],
-    "key_challenges": ["Revenue leakage at billing", "Denial tracking", "Patient referral capture", "AI clinical notes"],
+    "specialties": [
+      "Orthopedics",
+      "Cardiology",
+      "Neurology",
+      "Oncology"
+    ],
+    "key_challenges": [
+      "Revenue leakage at billing",
+      "Denial tracking",
+      "Patient referral capture",
+      "AI clinical notes"
+    ],
     "tech_budget_inr": "₹3Cr",
     "digital_maturity": "Low",
-    "current_tech_stack": ["Custom HIS"],
+    "current_tech_stack": [
+      "Custom HIS"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Dr. Vikram Shetty", "role": "Chairman", "linkedin": "linkedin.com/in/vikram-shetty-vikram-hospitals" }
+      {
+        "name": "Dr. Vikram Shetty",
+        "role": "Chairman",
+        "linkedin": "linkedin.com/in/vikram-shetty-vikram-hospitals",
+        "email": "vikram.shetty@vikramhospitals.com"
+      }
     ],
-    "match_tags": ["Revenue Leakage", "Denial Tracking", "Clinical Notes AI", "Referral Capture"],
+    "match_tags": [
+      "Revenue Leakage",
+      "Denial Tracking",
+      "Clinical Notes AI",
+      "Referral Capture"
+    ],
     "website": "vikramhospitals.com",
     "nse_listed": false
   },
@@ -727,23 +1674,57 @@
     "name": "Motherhood Hospitals",
     "type": "Specialty Hospital Chain",
     "headquarter": "Bengaluru",
-    "cities_present": ["Bengaluru", "Chennai", "Hyderabad", "Noida", "Mohali"],
+    "cities_present": [
+      "Bengaluru",
+      "Chennai",
+      "Hyderabad",
+      "Noida",
+      "Mohali"
+    ],
     "total_beds": 600,
     "annual_revenue_usd": "40M",
     "employee_count": "1,800+",
     "size": "SMB",
     "ownership": "Private",
-    "specialties": ["Maternity", "Gynecology", "Neonatology", "Pediatrics"],
-    "key_challenges": ["Post-discharge maternal care follow-up", "Insurance pre-auth for deliveries", "Newborn risk prediction", "Patient satisfaction AI"],
+    "specialties": [
+      "Maternity",
+      "Gynecology",
+      "Neonatology",
+      "Pediatrics"
+    ],
+    "key_challenges": [
+      "Post-discharge maternal care follow-up",
+      "Insurance pre-auth for deliveries",
+      "Newborn risk prediction",
+      "Patient satisfaction AI"
+    ],
     "tech_budget_inr": "₹5Cr",
     "digital_maturity": "Low-Medium",
-    "current_tech_stack": ["Custom EMR", "Tally"],
+    "current_tech_stack": [
+      "Custom EMR",
+      "Tally"
+    ],
     "open_to_pilots": true,
     "decision_makers": [
-      { "name": "Suresh Soni", "role": "CEO", "linkedin": "linkedin.com/in/suresh-soni-motherhood" },
-      { "name": "Deepa Krishnan", "role": "Head of Technology", "linkedin": "linkedin.com/in/deepa-krishnan-motherhood" }
+      {
+        "name": "Suresh Soni",
+        "role": "CEO",
+        "linkedin": "linkedin.com/in/suresh-soni-motherhood",
+        "email": "suresh.soni@motherhoodindia.com"
+      },
+      {
+        "name": "Deepa Krishnan",
+        "role": "Head of Technology",
+        "linkedin": "linkedin.com/in/deepa-krishnan-motherhood",
+        "email": "deepa.krishnan@motherhoodindia.com"
+      }
     ],
-    "match_tags": ["Post-Discharge Care", "Prior Auth", "Neonatal AI", "Patient Satisfaction"],
+    "match_tags": [
+      "Post-Discharge Care",
+      "Prior Auth",
+      "Neonatal AI",
+      "Patient Satisfaction"
+    ],
     "website": "motherhoodindia.com",
     "nse_listed": false
   }

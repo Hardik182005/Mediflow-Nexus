@@ -1,3 +1,9 @@
+export interface VOBInput {
+  id: string;
+  type: "Insurance Card" | "Benefits PDF" | "Manual Form" | "Clinical Context";
+  content: string;
+}
+
 export interface VOBReport {
   patient_info: {
     name: string;

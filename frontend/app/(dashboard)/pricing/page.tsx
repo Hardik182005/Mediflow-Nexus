@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check, Zap, Building2, Rocket, ArrowRight, HelpCircle, Shield } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const tiers = [
   {
@@ -22,6 +22,7 @@ const tiers = [
       "Community Access",
     ],
     cta: "Start Free Trial",
+    action: "trial",
     icon: Zap,
   },
   {
@@ -45,6 +46,7 @@ const tiers = [
       "API Access",
     ],
     cta: "Start Free Trial",
+    action: "trial",
     icon: Building2,
   },
   {
@@ -68,6 +70,7 @@ const tiers = [
       "99.9% SLA guarantee",
     ],
     cta: "Contact Sales",
+    action: "contact",
     icon: Rocket,
   },
 ];
@@ -81,6 +84,16 @@ const faqs = [
 ];
 
 export default function PricingPage() {
+  const router = useRouter();
+
+  const handleCTA = (action: string) => {
+    if (action === "trial") {
+      router.push("/launch-engine/onboarding");
+    } else if (action === "contact") {
+      window.location.href = "mailto:sales@mediflownexus.com?subject=Enterprise%20Inquiry";
+    }
+  };
+
   return (
     <div className="space-y-8 max-w-[1400px] mx-auto pb-16 animate-fade-in">
       {/* Header */}
@@ -154,7 +167,9 @@ export default function PricingPage() {
               ))}
             </div>
 
-            <button className={`w-full py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
+            <button
+              onClick={() => handleCTA(tier.action)}
+              className={`w-full py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
               tier.highlight
                 ? "bg-black text-white hover:bg-black/90"
                 : "bg-white/[0.06] border border-white/[0.1] text-white hover:bg-white/[0.1]"
@@ -176,7 +191,10 @@ export default function PricingPage() {
         <p className="text-white/40 text-sm max-w-lg mx-auto mb-6">
           We offer white-label, on-premise, and custom API integrations for hospital networks and health systems across India, Singapore, and ASEAN markets.
         </p>
-        <button className="btn-primary">
+        <button
+          onClick={() => window.location.href = "mailto:sales@mediflownexus.com?subject=Enterprise%20Custom%20Deployment"}
+          className="btn-primary"
+        >
           Talk to Sales <ArrowRight size={14} className="ml-2 inline" />
         </button>
       </motion.div>

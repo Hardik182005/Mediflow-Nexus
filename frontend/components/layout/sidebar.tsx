@@ -216,20 +216,20 @@ export default function Sidebar() {
 
         {/* User & Auth */}
         <div className="p-4 border-t border-white/[0.08] flex flex-col gap-2">
-          <div className="glass-card p-3 flex items-center gap-3 hover:bg-white/[0.08] transition-colors cursor-pointer border-transparent hover:border-white/[0.1]">
-            <div className="w-8 h-8 rounded-md bg-white border border-white/[0.1] flex items-center justify-center text-black text-[11px] font-bold uppercase">
+          <div className="glass-card p-3 flex items-center gap-3 hover:bg-white/[0.04] transition-all cursor-pointer border-white/[0.05] hover:border-white/20">
+            <div className="w-8 h-8 rounded-lg bg-white border border-white/[0.2] flex items-center justify-center text-black text-[11px] font-bold uppercase shadow-[0_0_15px_rgba(255,255,255,0.1)]">
               {user?.user_metadata?.name?.[0] || user?.email?.[0] || 'U'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-semibold text-white truncate">
+              <p className="text-[13px] font-bold text-white truncate tracking-tight">
                 {user?.user_metadata?.name || 'MediFlow User'}
               </p>
-              <p className="text-[11px] text-white/40 truncate">{user?.email || 'Enterprise Admin'}</p>
+              <p className="text-[11px] text-white/30 truncate font-medium">{user?.email || 'Enterprise Admin'}</p>
             </div>
           </div>
           
           <form action={logout}>
-            <button type="submit" className="w-full flex items-center gap-2 px-3 py-2 text-[13px] font-medium text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors">
+            <button type="submit" className="w-full flex items-center gap-2 px-3 py-2 text-[13px] font-medium text-white/40 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
               <LogOut size={14} />
               <span>Sign Out</span>
             </button>

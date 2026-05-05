@@ -32,24 +32,32 @@ export interface UploadedFile {
   mimeType: string;
 }
 
-const FILE_LABELS: Record<string, string> = {
-  pdf: "Pitch Deck / Document",
-  ppt: "Presentation",
-  pptx: "Presentation",
-  mp4: "Demo Video",
-  mov: "Demo Video",
-  webm: "Demo Video",
-  mp3: "Audio",
-  wav: "Audio",
-  png: "Image / Slide",
-  jpg: "Image / Slide",
-  jpeg: "Image / Slide",
-  webp: "Image / Slide",
-  txt: "Text Document",
-  md: "Text Document",
-  csv: "Data File",
-  html: "Web Content",
-};
+function guessDocumentType(name: string, ext: string): string {
+  const lowerName = name.toLowerCase();
+  
+  // Extension-based detection
+  if (["mp4", "mov", "webm", "avi"].includes(ext)) return "Demo Video";
+  if (["mp3", "wav", "ogg", "aac"].includes(ext)) return "Audio Recording";
+  if (["png", "jpg", "jpeg", "webp", "gif"].includes(ext)) return "Image / Slide";
+  if (["csv"].includes(ext)) return "Data File";
+  if (["html"].includes(ext)) return "Website Content";
+  if (["ppt", "pptx"].includes(ext)) return "Pitch Deck"; // PPT is inherently a presentation
+  
+  if (["txt", "md"].includes(ext)) {
+    if (lowerName.includes("transcript")) return "Video Transcript";
+    return "Text Document";
+  }
+  
+  // Ambiguous extension (PDF) -> fallback to Name-based detection
+  if (["pdf"].includes(ext)) {
+    if (lowerName.includes("pitch") || lowerName.includes("deck") || lowerName.includes("presentation")) return "Pitch Deck";
+    if (lowerName.includes("brochure") || lowerName.includes("one-pager") || lowerName.includes("onepager")) return "Brochure";
+    if (lowerName.includes("profile") || lowerName.includes("product") || lowerName.includes("overview") || lowerName.includes("solution")) return "Product Document";
+    return "Product Document"; // Safe default for generic PDFs
+  }
+  
+  return "Product Document";
+}
 
 function FileIcon({ ext, size = 18 }: { ext: string; size?: number }) {
   const cls = "flex-shrink-0";
@@ -116,7 +124,7 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
         name: file.name,
         ext,
         base64,
-        label: FILE_LABELS[ext] ?? "Document",
+        label: guessDocumentType(file.name, ext),
         sizeKB: Math.round(file.size / 1024),
         mimeType: file.type,
       });

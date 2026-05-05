@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check, ChevronDown } from "lucide-react";
+import { 
+  Copy, Check, ChevronDown, Cpu, Target, User, Lightbulb, 
+  Megaphone, PlayCircle, Search, BarChart3, PieChart, Hospital 
+} from "lucide-react";
 import type { GTMStrategy } from "@/types/gtm";
 
 function CopyButton({ text }: { text: string }) {
@@ -18,13 +21,13 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-function Section({ title, icon, children, defaultOpen = false }: { title: string; icon: string; children: React.ReactNode; defaultOpen?: boolean }) {
+function Section({ title, icon: Icon, children, defaultOpen = false }: { title: string; icon: any; children: React.ReactNode; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="glass-card overflow-hidden">
       <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-4 text-left hover:bg-white/[0.02] transition-colors">
         <div className="flex items-center gap-3">
-          <span className="text-base">{icon}</span>
+          <Icon size={16} className="text-white/40" />
           <span className="text-sm font-semibold text-white">{title}</span>
         </div>
         <ChevronDown size={14} className={`text-white/30 transition-transform ${open ? "rotate-180" : ""}`} />
@@ -82,7 +85,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </div>
 
       {/* Section 2: Product Intelligence */}
-      <Section title="Product Intelligence" icon="🔬" defaultOpen>
+      <Section title="Product Intelligence" icon={Cpu} defaultOpen>
         <div className="pt-3 space-y-3">
           <Row label="Problem" value={pi.problemStatement} />
           <Row label="Solution" value={pi.solutionDescription} />
@@ -104,7 +107,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </Section>
 
       {/* Section 3: ICP */}
-      <Section title="Ideal Customer Profile" icon="🎯">
+      <Section title="Ideal Customer Profile" icon={Target}>
         <div className="pt-3 space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <Row label="Org Size" value={icp.organizationSize} />
@@ -124,7 +127,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </Section>
 
       {/* Section 4: Buyer Persona */}
-      <Section title="Buyer Persona" icon="👤">
+      <Section title="Buyer Persona" icon={User}>
         <div className="pt-3 space-y-3">
           <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.08]">
             <p className="text-xs font-semibold text-white mb-1">Primary Buyer: {bp.primaryBuyer.title}</p>
@@ -150,7 +153,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </Section>
 
       {/* Section 5: Value Proposition */}
-      <Section title="Value Proposition" icon="💡">
+      <Section title="Value Proposition" icon={Lightbulb}>
         <div className="pt-3 space-y-3">
           <div className="p-4 rounded-lg bg-white/[0.04] border border-white/[0.1] text-center">
             <p className="text-base font-bold text-white">"{vp.headline}"</p>
@@ -171,7 +174,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </Section>
 
       {/* Section 6: Messaging */}
-      <Section title="Messaging Engine" icon="📣">
+      <Section title="Messaging Engine" icon={Megaphone}>
         <div className="pt-3 space-y-3">
           <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
             <div className="flex items-center justify-between mb-1">
@@ -224,7 +227,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </Section>
 
       {/* Section 7: Demo Strategy */}
-      <Section title="Demo Strategy" icon="🎬">
+      <Section title="Demo Strategy" icon={PlayCircle}>
         <div className="pt-3 space-y-3">
           <div>
             <p className="text-[10px] text-white/30 uppercase tracking-wider font-bold mb-2">Workflow Steps</p>
@@ -252,7 +255,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </Section>
 
       {/* Section 8: Buyer Discovery */}
-      <Section title="Buyer Discovery" icon="🔍">
+      <Section title="Buyer Discovery" icon={Search}>
         <div className="pt-3 space-y-3">
           <div>
             <p className="text-[10px] text-white/30 uppercase tracking-wider font-bold mb-2">Target Clinic Types</p>
@@ -286,7 +289,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </Section>
 
       {/* Section 9: Sales Strategy */}
-      <Section title="Sales Strategy" icon="📈">
+      <Section title="Sales Strategy" icon={BarChart3}>
         <div className="pt-3 space-y-3">
           <Row label="Sales Approach" value={salesStrategy.approach} />
           <div>
@@ -315,7 +318,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </Section>
 
       {/* Section 10: ROI Impact */}
-      <Section title="ROI & Business Impact" icon="💰">
+      <Section title="ROI & Business Impact" icon={PieChart}>
         <div className="pt-3 space-y-3">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
@@ -338,7 +341,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       </Section>
 
       {/* Section 11: Marketplace Match */}
-      <Section title="Marketplace Match" icon="🏥">
+      <Section title="Marketplace Match" icon={Hospital}>
         <div className="pt-3 space-y-3">
           <div className="space-y-2">
             {marketplaceMatch.idealMatches.map((match, i) => (

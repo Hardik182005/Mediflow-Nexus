@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Store, Zap, Shield, Search, Star, ArrowUpRight, Filter, Building2, Rocket, CheckCircle2, Mail, X, Clock, Users } from "lucide-react";
+import { Store, Zap, Shield, Search, Star, ArrowUpRight, Filter, Building2, Rocket, CheckCircle2, Mail, X, Clock, Users, Loader2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 type MarketplaceItem = {
   name: string;
@@ -33,6 +34,8 @@ export default function Marketplace() {
   const [introSent, setIntroSent] = useState<string[]>([]);
   const [introEmail, setIntroEmail] = useState("");
   const [introMessage, setIntroMessage] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const supabase = createClient();
 
   const categories = ["All", "Startup Solution", "Integration", "Data Source", "Service Partner", "Buyer Network"];
 
@@ -44,12 +47,28 @@ export default function Marketplace() {
     return matchesSearch && matchesCategory;
   });
 
-  const handleRequestIntro = () => {
-    if (!introEmail.trim()) return;
-    setIntroSent([...introSent, introModal!.name]);
+  const handleRequestIntro = async () => {
+    if (!introEmail.trim() || !introModal) return;
+    setIsSaving(true);
+
+    try {
+      // Save intro request to marketplace_matches table
+      await supabase.from('marketplace_matches').insert([{
+        startup_name: introModal.name,
+        clinic_name: introEmail, // using email as identifier for now
+        match_score: introModal.rating * 20,
+        match_reasons: [introModal.category, ...introModal.tags, introMessage].filter(Boolean),
+        status: 'connected'
+      }]);
+    } catch (err) {
+      console.error('Failed to save intro request:', err);
+    }
+
+    setIntroSent([...introSent, introModal.name]);
     setIntroModal(null);
     setIntroEmail("");
     setIntroMessage("");
+    setIsSaving(false);
   };
 
   return (
@@ -245,10 +264,10 @@ export default function Marketplace() {
 
                 <button
                   onClick={handleRequestIntro}
-                  disabled={!introEmail.trim()}
+                  disabled={!introEmail.trim() || isSaving}
                   className="w-full btn-primary py-3 flex items-center justify-center gap-2 disabled:opacity-30"
                 >
-                  <Mail size={14} /> Send Introduction Request
+                  {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} />} {isSaving ? 'Sending...' : 'Send Introduction Request'}
                 </button>
               </div>
             </motion.div>
