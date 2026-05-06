@@ -2,6 +2,8 @@
   <img src="https://img.shields.io/badge/MediFlow-Nexus-black?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBvbHlsaW5lIHBvaW50cz0iMjIgMTIgMTggMTIgMTUgMjEgOSAzIDYgMTIgMiAxMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="MediFlow Nexus" />
   <br/>
   <strong>The Intelligence Engine for Modern Healthcare</strong>
+  <br/>
+  <a href="https://mediflow-nexus-2026.web.app">Live URL: mediflow-nexus-2026.web.app</a>
 </p>
 
 <p align="center">
@@ -267,12 +269,12 @@ The Next.js framework integration will detect your setup, build the production a
 
 ## 🎨 Design System
 
-MediFlow Nexus uses the **"Obsidian Glass"** design language:
+MediFlow Nexus uses the **"Stitch White"** design language:
 
-- **Palette**: Monochrome black & white with opacity layers
-- **Glassmorphism**: `backdrop-blur-xl`, `bg-white/[0.03]`, `border-white/10`
-- **Typography**: DM Sans (Google Fonts)
-- **Animations**: Staggered reveals, smooth modals, live loading states
+- **Palette**: High-contrast monochrome (Obsidian Black text on Pure White backgrounds)
+- **Aesthetics**: Premium, professional, and accessible light theme
+- **Typography**: Playfair Display (Serif Headings) & Plus Jakarta Sans (Functional UI)
+- **Animations**: Staggered reveals, smooth modals, and live loading states
 - **Responsive**: Mobile-first adaptive layouts
 
 ---
