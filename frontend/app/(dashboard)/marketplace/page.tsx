@@ -52,10 +52,9 @@ export default function Marketplace() {
     setIsSaving(true);
 
     try {
-      // Save intro request to marketplace_matches table
       await supabase.from('marketplace_matches').insert([{
         startup_name: introModal.name,
-        clinic_name: introEmail, // using email as identifier for now
+        clinic_name: introEmail,
         match_score: introModal.rating * 20,
         match_reasons: [introModal.category, ...introModal.tags, introMessage].filter(Boolean),
         status: 'connected'
@@ -76,18 +75,18 @@ export default function Marketplace() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-[20px] font-bold text-white tracking-tight">Marketplace</h1>
-          <p className="text-[13px] text-white/40 mt-1">Discover integrations, startups, and enterprise buyers.</p>
+          <h1 className="text-[24px] font-bold text-black tracking-tight font-serif">Marketplace</h1>
+          <p className="text-[13px] text-black/40 font-medium">Discover integrations, startups, and enterprise buyers.</p>
         </div>
         <div className="flex gap-3">
           <div className="relative w-64">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-black/20" />
             <input
               type="text"
               placeholder="Search marketplace..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white/[0.03] border border-white/[0.06] text-white text-[13px] rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:border-white/40 transition-all placeholder-white/20"
+              className="w-full bg-black/[0.02] border border-black/[0.05] text-black text-[13px] rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:border-black/20 transition-all placeholder-black/20"
             />
           </div>
         </div>
@@ -99,10 +98,10 @@ export default function Marketplace() {
           <button
             key={cat}
             onClick={() => setSelectedFilter(cat)}
-            className={`px-3 py-1.5 text-[12px] font-medium rounded-lg transition-all ${
+            className={`px-4 py-2 text-[12px] font-bold rounded-full transition-all border ${
               selectedFilter === cat
-                ? "bg-white text-black"
-                : "bg-white/[0.03] border border-white/[0.06] text-white/40 hover:text-white hover:bg-white/[0.06]"
+                ? "bg-black text-white border-black"
+                : "bg-white border-black/[0.05] text-black/40 hover:text-black hover:border-black/20"
             }`}
           >
             {cat}
@@ -111,25 +110,25 @@ export default function Marketplace() {
       </div>
 
       {/* How It Works */}
-      <div className="glass-card p-4 flex items-center gap-6 text-[12px]">
-        <div className="flex items-center gap-2 text-white/60">
-          <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold text-white">1</div>
+      <div className="bg-black/[0.02] border border-black/[0.05] rounded-2xl p-6 flex flex-wrap items-center gap-x-8 gap-y-4 text-[12px] font-bold uppercase tracking-wider">
+        <div className="flex items-center gap-3 text-black/60">
+          <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-[11px] font-bold text-white shadow-lg">1</div>
           <span>Browse solutions</span>
         </div>
-        <ArrowUpRight size={12} className="text-white/20" />
-        <div className="flex items-center gap-2 text-white/60">
-          <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold text-white">2</div>
+        <ArrowUpRight size={14} className="text-black/10 hidden md:block" />
+        <div className="flex items-center gap-3 text-black/60">
+          <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-[11px] font-bold text-white shadow-lg">2</div>
           <span>Request Introduction</span>
         </div>
-        <ArrowUpRight size={12} className="text-white/20" />
-        <div className="flex items-center gap-2 text-white/60">
-          <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold text-white">3</div>
-          <span>Both parties notified via email</span>
+        <ArrowUpRight size={14} className="text-black/10 hidden md:block" />
+        <div className="flex items-center gap-3 text-black/60">
+          <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-[11px] font-bold text-white shadow-lg">3</div>
+          <span>Email parties</span>
         </div>
-        <ArrowUpRight size={12} className="text-white/20" />
-        <div className="flex items-center gap-2 text-white/60">
-          <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold text-white">4</div>
-          <span>Match logged in pipeline</span>
+        <ArrowUpRight size={14} className="text-black/10 hidden md:block" />
+        <div className="flex items-center gap-3 text-black/60">
+          <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-[11px] font-bold text-white shadow-lg">4</div>
+          <span>Match logged</span>
         </div>
       </div>
 
@@ -141,51 +140,51 @@ export default function Marketplace() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
-            className="pipeline-card group"
+            className="bg-white border border-black/[0.05] rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all group"
           >
-            <div className="flex justify-between items-start mb-4">
-              <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/[0.1] flex items-center justify-center text-white">
+            <div className="flex justify-between items-start mb-6">
+              <div className="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-white shadow-xl">
                 {item.icon}
               </div>
               <div className="flex items-center gap-2">
                 {item.verified && (
-                  <span className="badge badge-info">Verified</span>
+                  <span className="bg-black/5 text-black text-[10px] font-bold px-2 py-1 rounded uppercase tracking-tight">Verified</span>
                 )}
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/40">{item.category}</span>
+                <span className="text-[10px] font-bold text-black/30 uppercase tracking-widest">{item.category}</span>
               </div>
             </div>
             
-            <h3 className="text-[16px] font-bold text-white tracking-tight">{item.name}</h3>
-            <p className="text-[12px] text-white/40 mt-1 leading-relaxed line-clamp-2">{item.description}</p>
+            <h3 className="text-[18px] font-bold text-black tracking-tight font-serif">{item.name}</h3>
+            <p className="text-[13px] text-black/60 mt-2 leading-relaxed line-clamp-2 font-medium">{item.description}</p>
 
             {/* Tags */}
-            <div className="flex flex-wrap gap-1.5 mt-3">
+            <div className="flex flex-wrap gap-1.5 mt-4">
               {item.tags.map((tag) => (
-                <span key={tag} className="text-[10px] px-2 py-0.5 rounded bg-white/[0.04] text-white/30 font-medium">{tag}</span>
+                <span key={tag} className="text-[10px] px-2 py-1 rounded-md bg-black/[0.02] border border-black/[0.05] text-black/40 font-bold uppercase">{tag}</span>
               ))}
             </div>
             
-            <div className="mt-6 flex items-center justify-between border-t border-white/[0.04] pt-4">
+            <div className="mt-8 flex items-center justify-between border-t border-black/[0.05] pt-5">
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1 text-[12px] font-medium text-white">
-                  <Star size={12} className="text-white fill-white/20" />
+                <div className="flex items-center gap-1 text-[13px] font-bold text-black">
+                  <Star size={14} className="text-black fill-black" />
                   {item.rating}
                 </div>
-                <div className="text-[12px] text-white/20 flex items-center gap-1">
-                  <Users size={10} /> {item.users}
+                <div className="text-[12px] text-black/30 font-bold flex items-center gap-1 uppercase tracking-tighter">
+                  <Users size={12} /> {item.users}
                 </div>
               </div>
               
               {introSent.includes(item.name) ? (
-                <span className="text-[12px] font-semibold text-emerald-400 flex items-center gap-1">
-                  <CheckCircle2 size={14} /> Intro Sent
+                <span className="text-[12px] font-bold text-black flex items-center gap-1.5">
+                  <CheckCircle2 size={16} /> Intro Sent
                 </span>
               ) : (
                 <button
                   onClick={() => setIntroModal(item)}
-                  className="text-[12px] font-semibold text-white/60 hover:text-white transition-colors flex items-center gap-1"
+                  className="bg-black text-white text-[12px] font-bold py-2 px-4 rounded-xl hover:bg-black/90 transition-all shadow-lg flex items-center gap-2"
                 >
-                  Request Intro <ArrowUpRight size={14} />
+                  Connect <ArrowUpRight size={14} />
                 </button>
               )}
             </div>
@@ -194,10 +193,10 @@ export default function Marketplace() {
       </div>
 
       {filtered.length === 0 && (
-        <div className="text-center py-20 text-white/30">
-          <Search size={32} className="mx-auto mb-4 opacity-40" />
-          <p className="text-lg font-medium">No results found</p>
-          <p className="text-sm mt-1">Try adjusting your search or filters</p>
+        <div className="text-center py-32 text-black/20">
+          <Search size={48} className="mx-auto mb-6 opacity-20" />
+          <p className="text-xl font-bold font-serif text-black">No solutions found</p>
+          <p className="text-sm font-medium mt-2">Try adjusting your search filters</p>
         </div>
       )}
 
@@ -208,7 +207,7 @@ export default function Marketplace() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setIntroModal(null)}
           >
             <motion.div
@@ -216,58 +215,58 @@ export default function Marketplace() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-md bg-[#0d0d15] border border-white/[0.1] rounded-2xl p-6"
+              className="w-full max-w-md bg-white border border-black/10 rounded-3xl p-8 shadow-2xl"
             >
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-bold text-white">Request Introduction</h3>
-                <button onClick={() => setIntroModal(null)} className="text-white/30 hover:text-white transition-colors">
-                  <X size={18} />
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-xl font-bold text-black font-serif">Request Intro</h3>
+                <button onClick={() => setIntroModal(null)} className="text-black/30 hover:text-black transition-colors">
+                  <X size={20} />
                 </button>
               </div>
 
-              <div className="glass-card p-4 mb-6 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.1] flex items-center justify-center text-white">
+              <div className="bg-black/[0.02] border border-black/[0.05] p-5 rounded-2xl mb-8 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center text-white shadow-lg">
                   {introModal.icon}
                 </div>
                 <div>
-                  <p className="text-[14px] font-bold text-white">{introModal.name}</p>
-                  <p className="text-[11px] text-white/40">{introModal.category}</p>
+                  <p className="text-[15px] font-bold text-black">{introModal.name}</p>
+                  <p className="text-[12px] text-black/40 font-bold uppercase tracking-wider">{introModal.category}</p>
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div>
-                  <label className="text-[12px] font-medium text-white/60 mb-1 block">Your Email</label>
+                  <label className="text-[12px] font-bold text-black/40 uppercase tracking-widest mb-2 block">Your Enterprise Email</label>
                   <input
                     type="email"
                     value={introEmail}
                     onChange={(e) => setIntroEmail(e.target.value)}
-                    className="input-field"
-                    placeholder="you@company.com"
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-[14px] text-black focus:outline-none focus:ring-2 focus:ring-black/5"
+                    placeholder="name@organization.com"
                   />
                 </div>
                 <div>
-                  <label className="text-[12px] font-medium text-white/60 mb-1 block">Message (Optional)</label>
+                  <label className="text-[12px] font-bold text-black/40 uppercase tracking-widest mb-2 block">Message</label>
                   <textarea
                     value={introMessage}
                     onChange={(e) => setIntroMessage(e.target.value)}
-                    className="input-field min-h-[80px] resize-none"
-                    placeholder="Tell them why you're interested..."
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-[14px] text-black focus:outline-none focus:ring-2 focus:ring-black/5 min-h-[100px] resize-none"
+                    placeholder="Tell them about your interest..."
                     rows={3}
                   />
                 </div>
 
-                <div className="glass-card p-3 text-[11px] text-white/40 flex items-start gap-2">
-                  <Mail size={14} className="mt-0.5 flex-shrink-0" />
-                  <span>Both you and {introModal.name} will receive an email notification. Your contact details will be shared with them.</span>
+                <div className="flex items-start gap-3 text-[11px] text-black/40 font-medium leading-relaxed bg-black/[0.02] p-4 rounded-xl">
+                  <Mail size={16} className="mt-0.5 flex-shrink-0 text-black/20" />
+                  <span>MediFlow will facilitate a direct introduction. Your enterprise profile and contact details will be shared with {introModal.name}.</span>
                 </div>
 
                 <button
                   onClick={handleRequestIntro}
                   disabled={!introEmail.trim() || isSaving}
-                  className="w-full btn-primary py-3 flex items-center justify-center gap-2 disabled:opacity-30"
+                  className="w-full bg-black text-white py-4 rounded-2xl font-bold text-[14px] shadow-xl hover:bg-black/90 transition-all flex items-center justify-center gap-2 disabled:opacity-30"
                 >
-                  {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} />} {isSaving ? 'Sending...' : 'Send Introduction Request'}
+                  {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Mail size={16} />} {isSaving ? 'Sending Request...' : 'Send Introduction Request'}
                 </button>
               </div>
             </motion.div>

@@ -1,0 +1,3 @@
+{
+  "/api/voice/generate/route": "app/api/voice/generate/route.js"
+}

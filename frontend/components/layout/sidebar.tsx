@@ -105,13 +105,13 @@ export default function Sidebar() {
         onClick={() => setMobileOpen(!mobileOpen)}
         className="fixed top-4 left-4 z-[60] md:hidden btn-ghost p-2"
       >
-        {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+        {mobileOpen ? <X size={18} className="text-black" /> : <Menu size={18} className="text-black" />}
       </button>
 
       {/* Overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black/80 z-40 md:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/20 z-40 md:hidden backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -119,19 +119,19 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "sidebar fixed top-0 left-0 h-screen w-[280px] z-50 flex flex-col overflow-hidden",
+          "sidebar fixed top-0 left-0 h-screen w-[280px] z-50 flex flex-col overflow-hidden bg-white border-r border-black/5",
           "md:relative md:translate-x-0",
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
       >
         {/* Logo */}
-        <div className="flex items-center gap-3 px-6 py-6 border-b border-white/[0.08]">
-          <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-            <Activity size={16} className="text-black" />
+        <div className="flex items-center gap-3 px-6 py-6 border-b border-black/[0.05]">
+          <div className="w-8 h-8 rounded-lg bg-black flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.1)]">
+            <Activity size={16} className="text-white" />
           </div>
           <div>
-            <h1 className="text-[14px] font-bold text-white tracking-tight">MediFlow Nexus</h1>
-            <p className="text-[10px] text-white/40 font-semibold tracking-widest uppercase mt-0.5">Intelligence</p>
+            <h1 className="text-[14px] font-bold text-black tracking-tight font-serif">MediFlow Nexus</h1>
+            <p className="text-[10px] text-black/40 font-semibold tracking-widest uppercase mt-0.5">Intelligence</p>
           </div>
         </div>
 
@@ -145,7 +145,7 @@ export default function Sidebar() {
             return true;
           }).map((group) => (
             <div key={group.section} className="mb-4">
-              <div className="sidebar-section-title">{group.section}</div>
+              <div className="text-[10px] font-bold text-black/30 uppercase tracking-widest mb-2 px-3">{group.section}</div>
               <div className="space-y-0.5">
                 {group.items.map((item) => {
                   const isStartup = pathname.startsWith('/launch-engine');
@@ -162,8 +162,8 @@ export default function Sidebar() {
                           <button
                             onClick={() => toggleExpand(item.label)}
                             className={cn(
-                              "sidebar-item w-full justify-between",
-                              isActive(item.href) && "active"
+                              "sidebar-item w-full justify-between hover:bg-black/5",
+                              isActive(item.href) && "active bg-black/5 text-black"
                             )}
                           >
                             <span className="flex items-center gap-2.5">
@@ -171,20 +171,20 @@ export default function Sidebar() {
                               {item.label}
                             </span>
                             {expandedItems.includes(item.label) ? (
-                              <ChevronDown size={14} className="text-white/30" />
+                              <ChevronDown size={14} className="text-black/30" />
                             ) : (
-                              <ChevronRight size={14} className="text-white/30" />
+                              <ChevronRight size={14} className="text-black/30" />
                             )}
                           </button>
                           {expandedItems.includes(item.label) && (
-                            <div className="ml-4 mt-1 space-y-0.5 pl-3 border-l border-white/[0.06]">
+                            <div className="ml-4 mt-1 space-y-0.5 pl-3 border-l border-black/[0.06]">
                               {item.children.map((child) => (
                                 <Link
                                   key={child.href}
                                   href={child.href}
                                   className={cn(
-                                    "sidebar-item text-[12px] py-1.5",
-                                    isActive(child.href) && "active"
+                                    "sidebar-item text-[12px] py-1.5 hover:bg-black/5",
+                                    isActive(child.href) && "active bg-black/5 text-black"
                                   )}
                                   onClick={() => setMobileOpen(false)}
                                 >
@@ -199,8 +199,8 @@ export default function Sidebar() {
                         <Link
                           href={itemHref}
                           className={cn(
-                            "sidebar-item",
-                            isActive(itemHref) && "active"
+                            "sidebar-item hover:bg-black/5",
+                            isActive(itemHref) && "active bg-black/5 text-black"
                           )}
                           onClick={() => setMobileOpen(false)}
                         >
@@ -217,21 +217,21 @@ export default function Sidebar() {
         </nav>
 
         {/* User & Auth */}
-        <div className="p-4 border-t border-white/[0.08] flex flex-col gap-2">
-          <div className="glass-card p-3 flex items-center gap-3 hover:bg-white/[0.04] transition-all cursor-pointer border-white/[0.05] hover:border-white/20">
-            <div className="w-8 h-8 rounded-lg bg-white border border-white/[0.2] flex items-center justify-center text-black text-[11px] font-bold uppercase shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+        <div className="p-4 border-t border-black/[0.05] flex flex-col gap-2">
+          <div className="glass-card p-3 flex items-center gap-3 hover:bg-black/[0.02] transition-all cursor-pointer border-black/[0.05] hover:border-black/10">
+            <div className="w-8 h-8 rounded-lg bg-black border border-black/[0.1] flex items-center justify-center text-white text-[11px] font-bold uppercase shadow-[0_0_15px_rgba(0,0,0,0.1)]">
               {user?.user_metadata?.name?.[0] || user?.email?.[0] || 'U'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-bold text-white truncate tracking-tight">
+              <p className="text-[13px] font-bold text-black truncate tracking-tight">
                 {user?.user_metadata?.name || 'MediFlow User'}
               </p>
-              <p className="text-[11px] text-white/30 truncate font-medium">{user?.email || 'Enterprise Admin'}</p>
+              <p className="text-[11px] text-black/30 truncate font-medium">{user?.email || 'Enterprise Admin'}</p>
             </div>
           </div>
           
           <form action={logout}>
-            <button type="submit" className="w-full flex items-center gap-2 px-3 py-2 text-[13px] font-medium text-white/40 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
+            <button type="submit" className="w-full flex items-center gap-2 px-3 py-2 text-[13px] font-semibold text-black/40 hover:text-black hover:bg-black/5 rounded-lg transition-colors">
               <LogOut size={14} />
               <span>Sign Out</span>
             </button>
