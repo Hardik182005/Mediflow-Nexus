@@ -144,13 +144,23 @@ export async function POST(req: Request) {
     try {
       const result = await geminiWithTimeout(model.generateContent([prompt, ...fileParts]));
       const text = (result as any).response.text().replace(/```json|```/g, "").trim();
-      
-      // Save the pitch deck to the match record best-effort (Skipped because pitch_deck_json doesn't exist in DB yet)
-
       return NextResponse.json({ pitchDeck: JSON.parse(text) });
     } catch (timeoutErr) {
-      console.warn("Gemini timeout/error — using fallback pitch deck");
-      return NextResponse.json({ pitchDeck: fallbackDeck });
+      console.warn("Gemini timeout/error — falling back to Groq");
+      try {
+        const Groq = (await import("groq-sdk")).default;
+        const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
+        const groqCompletion = await groq.chat.completions.create({
+          messages: [{ role: "user", content: prompt }],
+          model: "llama3-70b-8192",
+          temperature: 0.2,
+        });
+        const groqText = groqCompletion.choices[0]?.message?.content?.replace(/```json|```/g, "").trim() || "";
+        return NextResponse.json({ pitchDeck: JSON.parse(groqText) });
+      } catch (groqErr) {
+        console.warn("Groq also failed — using fallback pitch deck", groqErr);
+        return NextResponse.json({ pitchDeck: fallbackDeck });
+      }
     }
   } catch (error: any) {
     console.error("Pitch generation error:", error);

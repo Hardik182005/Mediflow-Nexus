@@ -1,0 +1,17 @@
+{
+  "node": {
+    "00c2a7834ddf73c8c94f31a3af8e12f7d6328c3f66": {
+      "workers": {
+        "app/(dashboard)/clinic-ops/insurance/page": {
+          "moduleId": 30753,
+          "async": false,
+          "exportedName": "logout",
+          "filename": "OneDrive/Desktop/Mediflow Nexus/Mediflow-Nexus/frontend/app/login/actions.ts"
+        }
+      },
+      "exportedName": "logout",
+      "filename": "OneDrive/Desktop/Mediflow Nexus/Mediflow-Nexus/frontend/app/login/actions.ts"
+    }
+  },
+  "edge": {}
+}

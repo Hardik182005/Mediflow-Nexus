@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(dashboard)/layout,_N_T_/(dashboard)/launch-engine/layout,_N_T_/(dashboard)/launch-engine/gtm/layout,_N_T_/(dashboard)/launch-engine/gtm/page,_N_T_/launch-engine/gtm"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGRhc2hib2FyZCk/launch-engine/gtm/__PAGE__",
+    "/!KGRhc2hib2FyZCk/launch-engine/gtm",
+    "/!KGRhc2hib2FyZCk/launch-engine",
+    "/!KGRhc2hib2FyZCk",
+    "/_index",
+    "/_head"
+  ]
+}

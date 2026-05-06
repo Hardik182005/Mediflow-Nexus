@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Mail, Star, Loader2, ArrowRight, ShieldCheck, Zap, Presentation, FileText, X, SlidersHorizontal, Copy, ExternalLink, Check, Sparkles } from "lucide-react";
+import { Search, MapPin, Mail, Star, Loader2, ArrowRight, ShieldCheck, Zap, Presentation, FileText, X, SlidersHorizontal, Copy, ExternalLink, Check, Sparkles, Mic } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import PitchDeckModal from "@/components/pitch-deck-modal";
 import ContextFileUpload from "@/components/context-file-upload";
+import RoleplayModal from "@/components/roleplay-modal";
 import type { PitchDeck } from "@/types/pitch-deck";
 import { useLaunchEngineStore } from "@/store/useLaunchEngineStore";
 
@@ -48,6 +49,15 @@ export default function BuyerDiscoveryPage() {
   const [isGeneratingEmail, setIsGeneratingEmail] = useState(false);
   const [generatedEmail, setGeneratedEmail] = useState<{ subject: string; body: string; recipientName: string; hospitalName: string; wordCount: number } | null>(null);
   const [emailCopied, setEmailCopied] = useState(false);
+
+  // Roleplay State
+  const [roleplayModalOpen, setRoleplayModalOpen] = useState(false);
+  const [roleplayBuyer, setRoleplayBuyer] = useState<any | null>(null);
+
+  const openRoleplayModal = (buyer: any) => {
+    setRoleplayBuyer(buyer);
+    setRoleplayModalOpen(true);
+  };
 
   const supabase = createClient();
 
@@ -335,7 +345,7 @@ export default function BuyerDiscoveryPage() {
           <FileText size={16} className="text-white" />
           Supplemental Product Context (Optional)
         </h2>
-        <ContextFileUpload onChange={setProductFiles} />
+        <ContextFileUpload onChange={(files: any) => setProductFiles(files)} />
       </div>
 
       {/* Metrics Row */}
@@ -479,12 +489,21 @@ export default function BuyerDiscoveryPage() {
                         ✓ Connected
                       </span>
                     ) : (
-                      <button
-                        onClick={() => openOutreachModal(b)}
-                        className="btn-primary text-[10px] py-2 px-4 uppercase font-bold tracking-widest flex items-center gap-2"
-                      >
-                        Send Outreach <ArrowRight size={12} />
-                      </button>
+                      <>
+                        <button
+                          onClick={() => openRoleplayModal(b)}
+                          className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.1] text-white/40 hover:text-white hover:bg-white/[0.06] transition-all flex items-center gap-2"
+                        >
+                          <Mic size={14} />
+                          <span className="text-[10px] font-bold uppercase tracking-widest hidden xl:block">Mock Pitch</span>
+                        </button>
+                        <button
+                          onClick={() => openOutreachModal(b)}
+                          className="btn-primary text-[10px] py-2 px-4 uppercase font-bold tracking-widest flex items-center gap-2"
+                        >
+                          Send Outreach <ArrowRight size={12} />
+                        </button>
+                      </>
                     )}
                   </div>
                 </div>
@@ -498,6 +517,15 @@ export default function BuyerDiscoveryPage() {
               onClose={() => setDeckModalOpen(false)}
               deck={activeDeck}
               buyerName={selectedBuyerName}
+              startupId={selectedStartupId}
+            />
+          )}
+
+          {roleplayBuyer && (
+            <RoleplayModal
+              isOpen={roleplayModalOpen}
+              onClose={() => setRoleplayModalOpen(false)}
+              buyerOrg={roleplayBuyer.buyer_org}
               startupId={selectedStartupId}
             />
           )}

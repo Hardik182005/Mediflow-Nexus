@@ -29,7 +29,7 @@ export default function MarketingLanding() {
   }, [supabase]);
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-white/20">
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-white/20 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:24px_24px]">
       
       {/* Decorative Global Background Glows */}
       <div className="fixed top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-white opacity-[0.02] rounded-full blur-[120px] pointer-events-none" />

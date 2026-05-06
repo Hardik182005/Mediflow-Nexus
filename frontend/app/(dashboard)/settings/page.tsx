@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { User, Building, Shield, Bell, Key, CreditCard, ChevronRight, Loader2, Check, X, Eye, EyeOff, Copy } from "lucide-react";
+import { useState, useEffect } from "react";
+import { User, Building, Shield, Bell, Key, CreditCard, ChevronRight, Loader2, Check, X, Eye, EyeOff, Copy, MessageSquareText, Mic, Send } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -11,11 +11,25 @@ export default function Settings() {
   const [activeTab, setActiveTab] = useState<SettingsTab>("profile");
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [firstName, setFirstName] = useState("Hardik");
-  const [lastName, setLastName] = useState("Hinduja");
-  const [role, setRole] = useState("Enterprise Admin");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
   const [notification, setNotification] = useState("");
   const supabase = createClient();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setFirstName(user.user_metadata?.first_name || user.user_metadata?.name?.split(' ')[0] || "");
+        setLastName(user.user_metadata?.last_name || user.user_metadata?.name?.split(' ').slice(1).join(' ') || "");
+        setRole(user.user_metadata?.role || "Enterprise Admin");
+        setEmail(user.email || "");
+      }
+    };
+    fetchUser();
+  }, [supabase.auth]);
 
   // Password modal state
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -119,6 +133,7 @@ export default function Settings() {
     { id: "notifications" as SettingsTab, label: "Notifications", icon: <Bell size={16} /> },
     { id: "api-keys" as SettingsTab, label: "API Keys", icon: <Key size={16} /> },
     { id: "billing" as SettingsTab, label: "Billing", icon: <CreditCard size={16} /> },
+    { id: "support" as any, label: "AI Support", icon: <MessageSquareText size={16} /> },
   ];
 
   return (
@@ -192,7 +207,7 @@ export default function Settings() {
                   </div>
                   <div className="space-y-2 md:col-span-2">
                     <label className="text-[12px] font-bold text-white">Email Address</label>
-                    <input type="email" defaultValue="hardik@mediflownexus.com" className="input-field" disabled />
+                    <input type="email" value={email} className="input-field" disabled />
                     <p className="text-[11px] text-white/20 mt-1">To change your email, please contact support.</p>
                   </div>
                   <div className="space-y-2 md:col-span-2">
@@ -318,6 +333,39 @@ export default function Settings() {
               <h2 className="text-[16px] font-bold text-white mb-1">Billing</h2>
               <p className="text-[12px] text-white/40 mb-6">View invoices and manage payment methods.</p>
               <p className="text-sm text-white/40 italic">No invoices yet. Your 14-day trial is active.</p>
+            </div>
+          )}
+
+          {activeTab === ("support" as any) && (
+            <div className="glass-card p-6">
+              <h2 className="text-[16px] font-bold text-white mb-1">AI Support Agent</h2>
+              <p className="text-[12px] text-white/40 mb-6">Powered by Gemini and ElevenLabs Voice Agents.</p>
+              <div className="flex flex-col space-y-4">
+                <div className="flex-1 p-4 rounded-xl bg-black/[0.2] border border-white/[0.05] min-h-[300px] flex flex-col justify-end">
+                  <div className="space-y-4 mb-4">
+                    <div className="flex gap-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                        <MessageSquareText size={14} />
+                      </div>
+                      <div className="bg-blue-500/10 border border-blue-500/20 text-blue-100 p-3 rounded-2xl rounded-tl-sm text-sm">
+                        Hi! I am the Mediflow Nexus AI Support Assistant. How can I help you today?
+                      </div>
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <input type="text" placeholder="Type your message..." className="w-full bg-white/[0.03] border border-white/[0.1] rounded-xl py-3 pl-4 pr-24 text-sm text-white focus:outline-none focus:border-white/20" />
+                    <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                      <button className="p-2 text-white/40 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                        <Mic size={14} />
+                      </button>
+                      <button className="p-2 text-black bg-white rounded-lg hover:bg-white/90 transition-all">
+                        <Send size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-[10px] text-white/20 text-center">Audio interactions are processed using ElevenLabs TTS.</p>
+              </div>
             </div>
           )}
         </div>

@@ -177,7 +177,17 @@ Create a `.env.local` file in the `frontend/` directory:
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 GEMINI_API_KEY=your_gemini_api_key
+GROQ_API_KEY=your_groq_api_key
+ELEVENLABS_API_KEY=your_elevenlabs_api_key
+RESEND_API_KEY=your_resend_api_key
 ```
+
+### Advanced Voice & Inference Agents
+
+MediFlow Nexus now supports:
+- **ElevenLabs Integration:** Live Mock Pitch Simulator and AI Outreach Voice Memos.
+- **Groq Llama-3 Fallback:** High-performance fallback for heavy analytical tasks if the primary LLM goes down.
+- **Firebase/Cloud Run Deployment:** Configured out-of-the-box for serverless edge deployment using Firebase Web Frameworks.
 
 ### Database Setup
 
@@ -195,6 +205,39 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+---
+
+## ☁️ Deployment (Firebase Hosting & Cloud Run)
+
+MediFlow Nexus is fully configured for serverless deployment using Firebase Web Frameworks. This setup automatically deploys the Next.js frontend to **Firebase Hosting** and provisions the backend API routes and SSR logic on **Google Cloud Run** via Firebase Cloud Functions (2nd Gen).
+
+### 1. Authenticate with Firebase & Google Cloud
+```bash
+# Login to Firebase
+firebase login
+
+# Login to Google Cloud
+gcloud auth login
+```
+
+### 2. Set Up Firebase Project
+```bash
+cd frontend
+
+# Ensure you have a valid project in .firebaserc
+# E.g., "default": "mediflow-nexus-2026"
+
+# Verify environment variables in .env are set correctly.
+```
+
+### 3. Deploy
+```bash
+# Deploy to Firebase Hosting and Cloud Run automatically
+firebase deploy --only hosting
+```
+
+The Next.js framework integration will detect your setup, build the production application, and automatically push your SSR and API routes to Cloud Run while hosting static assets on Firebase.
 
 ---
 

@@ -149,6 +149,8 @@ export default function Sidebar() {
               <div className="space-y-0.5">
                 {group.items.map((item) => {
                   const isStartup = pathname.startsWith('/launch-engine');
+                  if (isStartup && item.label === "Reports") return null;
+
                   const itemHref = item.label === "Dashboard" 
                     ? (isStartup ? "/launch-engine" : "/dashboard")
                     : item.href;

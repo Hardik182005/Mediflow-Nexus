@@ -131,7 +131,7 @@ export async function POST(req: Request) {
       to: email, // If using the free tier, this MUST be your verified email address
       subject: "New Outreach from MediFlow Nexus",
       text: message, // You can also provide html: for styled emails
-      attachments: attachments.length > 0 ? attachments : undefined,
+      attachments: attachments.length > 0 ? (attachments as any) : undefined,
     });
 
     if (error) {
