@@ -1,3 +1,0 @@
-module.exports=[15964,(a,b,c)=>{"use strict";Object.defineProperty(c,"__esModule",{value:!0}),Object.defineProperty(c,"InvariantError",{enumerable:!0,get:function(){return d}});class d extends Error{constructor(a,b){super(`Invariant: ${a.endsWith(".")?a:a+"."} This is a bug in Next.js.`,b),this.name="InvariantError"}}},2834,a=>{"use strict";var b=a.i(95495);a.s([],9137),a.i(9137),a.s(["00c2a7834ddf73c8c94f31a3af8e12f7d6328c3f66",()=>b.logout],2834)}];
-
-//# sourceMappingURL=OneDrive_Desktop_Mediflow%20Nexus_Mediflow-Nexus_frontend_0xp1wr5._.js.map
