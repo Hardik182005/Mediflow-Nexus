@@ -1,0 +1,5 @@
+deploy: switch to Cloud Build for reliable deployment with build-time env vars
+
+- Added cloudbuild.yaml for structured build and deploy
+- Updated Dockerfile to support build arguments (NEXT_PUBLIC_*)
+- Removed Firebase hosting configuration files as requested

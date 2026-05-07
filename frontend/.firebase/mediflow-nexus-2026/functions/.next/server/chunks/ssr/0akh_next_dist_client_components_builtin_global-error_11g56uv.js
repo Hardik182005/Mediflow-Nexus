@@ -1,3 +1,0 @@
-module.exports=[87674,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(78131);a.n(d("[project]/OneDrive/Desktop/Mediflow Nexus/Mediflow-Nexus/frontend/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},41939,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(78131);a.n(d("[project]/OneDrive/Desktop/Mediflow Nexus/Mediflow-Nexus/frontend/node_modules/next/dist/client/components/builtin/global-error.js"))},24549,a=>{"use strict";a.i(87674);var b=a.i(41939);a.n(b)},54438,a=>{a.n(a.i(24549))}];
-
-//# sourceMappingURL=0akh_next_dist_client_components_builtin_global-error_11g56uv.js.map
