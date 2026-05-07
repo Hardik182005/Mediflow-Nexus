@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -161,13 +161,13 @@ export default function GTMPage() {
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <div className="glass-card p-4 flex items-center justify-between">
+            <div className="bg-white border border-black/[0.07] rounded-2xl p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.1] flex items-center justify-center">
-                  <Target size={20} className="text-white" />
+                <div className="w-10 h-10 rounded-lg bg-black/[0.02] border border-black/[0.08] flex items-center justify-center">
+                  <Target size={20} className="text-black" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-white/40 uppercase tracking-widest">Select Target Startup</p>
+                  <p className="text-xs font-bold text-black/40 uppercase tracking-widest">Select Target Startup</p>
                   <select 
                     value={selectedStartupId} 
                     onChange={(e) => setSelectedStartupId(e.target.value)}
@@ -186,21 +186,21 @@ export default function GTMPage() {
             </div>
 
             {showHistory && (
-              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="glass-card p-4 overflow-hidden border-t-0 rounded-t-none -mt-6 pt-8">
-                <h4 className="text-xs font-bold text-white/60 mb-3 uppercase tracking-wider">Recent Analyses</h4>
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="bg-white border border-black/[0.07] rounded-2xl p-4 overflow-hidden border-t-0 rounded-t-none -mt-6 pt-8">
+                <h4 className="text-xs font-bold text-black/60 mb-3 uppercase tracking-wider">Recent Analyses</h4>
                 {historyLoading ? (
-                  <div className="flex items-center gap-2 text-white/40 text-xs py-4"><Loader2 size={14} className="animate-spin" /> Loading history...</div>
+                  <div className="flex items-center gap-2 text-black/40 text-xs py-4"><Loader2 size={14} className="animate-spin" /> Loading history...</div>
                 ) : history.length === 0 ? (
-                  <p className="text-white/40 text-xs py-4">No history found for this startup.</p>
+                  <p className="text-black/40 text-xs py-4">No history found for this startup.</p>
                 ) : (
                   <div className="space-y-2">
                     {history.map((h) => (
-                      <button key={h.id} onClick={() => loadHistoryItem(h)} className="w-full flex items-center justify-between p-3 rounded-lg bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.05] transition-colors text-left group">
+                      <button key={h.id} onClick={() => loadHistoryItem(h)} className="w-full flex items-center justify-between p-3 rounded-lg bg-black/[0.02] hover:bg-black/[0.04] border border-white/[0.05] transition-colors text-left group">
                         <div>
                           <p className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">Strategy generated on {new Date(h.created_at).toLocaleDateString()}</p>
-                          <p className="text-xs text-white/40 mt-1 line-clamp-1">{h.icp_data?.targetAccounts?.join(', ') || 'General Strategy'}</p>
+                          <p className="text-xs text-black/40 mt-1 line-clamp-1">{h.icp_data?.targetAccounts?.join(', ') || 'General Strategy'}</p>
                         </div>
-                        <ChevronRight size={16} className="text-white/20 group-hover:text-blue-400 transition-colors" />
+                        <ChevronRight size={16} className="text-black/20 group-hover:text-blue-400 transition-colors" />
                       </button>
                     ))}
                   </div>
@@ -223,7 +223,7 @@ export default function GTMPage() {
           >
             {/* Animated ring */}
             <div className="relative w-20 h-20">
-              <div className="absolute inset-0 rounded-full border-2 border-white/[0.06] animate-ping" style={{ animationDuration: "2s" }} />
+              <div className="absolute inset-0 rounded-full border-2 border-black/[0.06] animate-ping" style={{ animationDuration: "2s" }} />
               <div className="absolute inset-0 rounded-full border-2 border-t-white border-white/10 animate-spin" style={{ animationDuration: "1.2s" }} />
               <div className="absolute inset-3 rounded-full border border-white/10 animate-spin" style={{ animationDuration: "2.5s", animationDirection: "reverse" }} />
             </div>
@@ -235,11 +235,11 @@ export default function GTMPage() {
                 key={loadingStep}
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-white/40 text-xs"
+                className="text-black/40 text-xs"
               >
                 {LOADING_STEPS[loadingStep]}
               </motion.p>
-              <p className="text-white/20 text-[11px]">This may take 20–40 seconds for large files</p>
+              <p className="text-black/20 text-[11px]">This may take 20–40 seconds for large files</p>
             </div>
 
             {/* Step dots */}
@@ -274,16 +274,16 @@ export default function GTMPage() {
             key="error"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass-card p-6 space-y-4 max-w-lg mx-auto mt-20"
+            className="bg-white border border-black/[0.07] rounded-2xl p-6 space-y-4 max-w-lg mx-auto mt-20"
           >
             <div className="flex items-start gap-3">
               <span className="text-xl">⚠</span>
               <div>
                 <p className="text-sm font-semibold text-white mb-1">Analysis Failed</p>
-                <p className="text-xs text-white/50 leading-relaxed">{error}</p>
+                <p className="text-xs text-black/50 leading-relaxed">{error}</p>
               </div>
             </div>
-            <div className="text-xs text-white/30 space-y-1 pt-1 border-t border-white/[0.06]">
+            <div className="text-xs text-black/30 space-y-1 pt-1 border-t border-black/[0.06]">
               <p>Possible causes:</p>
               <p>· GEMINI_API_KEY not set in .env.local</p>
               <p>· File too large or format unsupported</p>

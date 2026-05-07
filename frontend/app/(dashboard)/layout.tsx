@@ -7,12 +7,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen overflow-hidden bg-white text-black font-sans">
+    <div className="flex h-screen overflow-hidden bg-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
       <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden border-l border-neutral-100">
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         <Header />
-        <main className="flex-1 overflow-y-auto bg-[#fafafa]">
-          <div className="p-8">
+        <main className="flex-1 overflow-y-auto bg-[#f9f9f9]">
+          <div className="p-6 lg:p-8">
             {children}
           </div>
         </main>

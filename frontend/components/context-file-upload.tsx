@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Upload, X, FileText, Film, Music, Image, File, Plus } from "lucide-react";
@@ -121,17 +121,17 @@ export default function ContextFileUpload({ onChange }: Props) {
         onClick={() => inputRef.current?.click()}
         className={`relative border border-dashed rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all ${
           dragging
-            ? "border-white/40 bg-white/[0.06]"
-            : "border-white/[0.12] bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.04]"
+            ? "border-white/40 bg-black/[0.04]"
+            : "border-white/[0.12] bg-black/[0.02] hover:border-white/25 hover:bg-black/[0.03]"
         }`}
       >
         <input ref={inputRef} type="file" multiple accept={ALL_EXTS} onChange={onInputChange} className="hidden" />
-        <Upload size={20} className={dragging ? "text-white/60" : "text-white/30"} />
+        <Upload size={20} className={dragging ? "text-black/60" : "text-black/30"} />
         <div className="text-center">
-          <p className="text-sm font-medium text-white/80">
+          <p className="text-sm font-medium text-black/80">
             {dragging ? "Drop files here" : "Add Product Context (PDF, Video, etc.)"}
           </p>
-          <p className="text-xs text-white/30 mt-0.5">Drag & drop or click to upload</p>
+          <p className="text-xs text-black/30 mt-0.5">Drag & drop or click to upload</p>
         </div>
       </div>
 
@@ -148,16 +148,16 @@ export default function ContextFileUpload({ onChange }: Props) {
       {files.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {files.map((file) => (
-            <div key={file.id} className="p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-between">
+            <div key={file.id} className="p-2.5 rounded-lg bg-black/[0.03] border border-white/[0.08] flex items-center justify-between">
               <div className="flex items-center gap-3 overflow-hidden">
                 <FileIcon ext={file.ext} size={16} />
                 <div className="truncate">
                   <p className="text-xs text-white truncate">{file.name}</p>
-                  <p className="text-[10px] text-white/40">{formatSize(file.sizeKB)}</p>
+                  <p className="text-[10px] text-black/40">{formatSize(file.sizeKB)}</p>
                 </div>
               </div>
               <button onClick={(e) => { e.stopPropagation(); removeFile(file.id); }} className="p-1 hover:bg-white/10 rounded">
-                <X size={14} className="text-white/40 hover:text-white/80" />
+                <X size={14} className="text-black/40 hover:text-black/80" />
               </button>
             </div>
           ))}

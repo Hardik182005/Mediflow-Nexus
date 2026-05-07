@@ -42,15 +42,12 @@ export default function Copilot() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: newMessages }),
       });
-
       const data = await res.json();
-
-      if (data.reply) {
-        setMessages([...newMessages, { role: "assistant", content: data.reply }]);
-      } else {
-        setMessages([...newMessages, { role: "assistant", content: "I encountered an issue processing your request. Please try again." }]);
-      }
-    } catch (err) {
+      setMessages([...newMessages, {
+        role: "assistant",
+        content: data.reply || "I encountered an issue processing your request. Please try again."
+      }]);
+    } catch {
       setMessages([...newMessages, { role: "assistant", content: "Connection error. Please check your network and try again." }]);
     } finally {
       setIsLoading(false);
@@ -59,28 +56,17 @@ export default function Copilot() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); }
   };
 
-  const handleSuggestion = (text: string) => {
-    setInput(text);
-    setTimeout(() => handleSend(), 100);
-  };
-
-  // Simple markdown-like renderer
   const renderContent = (text: string) => {
     return text.split("\n").map((line, i) => {
-      // Bold
-      line = line.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
-      // Bullet points
+      line = line.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-black">$1</strong>');
       if (line.startsWith("- ") || line.startsWith("• ")) {
-        return <p key={i} className="pl-4 text-[13px] leading-relaxed" dangerouslySetInnerHTML={{ __html: `<span class="text-white/20 mr-2">•</span>${line.slice(2)}` }} />;
+        return <p key={i} className="pl-4 text-[13.5px] leading-relaxed text-black/70" dangerouslySetInnerHTML={{ __html: `<span class="text-black/30 mr-2">•</span>${line.slice(2)}` }} />;
       }
       if (line.trim() === "") return <br key={i} />;
-      return <p key={i} className="text-[13px] leading-relaxed" dangerouslySetInnerHTML={{ __html: line }} />;
+      return <p key={i} className="text-[13.5px] leading-relaxed text-black/70" dangerouslySetInnerHTML={{ __html: line }} />;
     });
   };
 
@@ -94,19 +80,19 @@ export default function Copilot() {
   ];
 
   return (
-    <div className="h-[calc(100vh-140px)] flex flex-col max-w-[1200px] mx-auto animate-fade-in">
+    <div className="h-[calc(100vh-140px)] flex flex-col max-w-[1100px] mx-auto animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-            <Bot size={20} className="text-black" />
+          <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center shadow-md">
+            <Bot size={18} className="text-white" />
           </div>
           <div>
-            <h1 className="text-[20px] font-bold text-white tracking-tight">AI Copilot</h1>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-[12px] text-white/40 font-medium flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgb(52,211,153)]"></span>
-                {isLoading ? "Thinking..." : "Connected to Gemini 1.5 Pro"}
+            <h1 className="text-[18px] font-bold text-black tracking-tight">AI Copilot</h1>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span className="text-[11.5px] text-black/40 font-medium">
+                {isLoading ? "Thinking…" : "Connected · Gemini 1.5 Pro"}
               </span>
             </div>
           </div>
@@ -114,51 +100,56 @@ export default function Copilot() {
         <div className="flex gap-2">
           <button
             onClick={() => setMessages([{ role: "assistant", content: "Chat cleared. How can I help you?" }])}
-            className="btn-ghost flex items-center gap-1 text-[12px]"
+            className="btn-ghost text-[12.5px]"
           >
-            Clear Chat
+            Clear
           </button>
           <button
             onClick={() => setShowDataSources(true)}
-            className="btn-ghost flex items-center gap-1 text-[12px]"
+            className="btn-secondary flex items-center gap-1.5 text-[12.5px] py-1.5 px-3"
           >
-            <Database size={14} /> Data Sources
+            <Database size={13} /> Data Sources
           </button>
         </div>
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 glass-card overflow-hidden flex flex-col relative border-white/[0.08]">
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 z-10 relative">
-          <div className="flex justify-center mb-4">
-            <div className="px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.1] text-[11px] text-white/20 font-medium">
+      <div className="flex-1 bg-white border border-black/[0.07] rounded-2xl overflow-hidden flex flex-col">
+        <div className="flex-1 overflow-y-auto p-6 space-y-5">
+          <div className="flex justify-center mb-2">
+            <div className="px-3 py-1 rounded-full bg-black/[0.03] border border-black/[0.06] text-[11px] text-black/30 font-medium">
               Today
             </div>
           </div>
-          
+
           <AnimatePresence>
             {messages.map((msg, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2 }}
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <div className="flex gap-3 max-w-[80%]">
+                <div className="flex gap-3 max-w-[82%]">
                   {msg.role === 'assistant' && (
-                    <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.1] flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-8 h-8 rounded-lg bg-black flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
                       <Bot size={14} className="text-white" />
                     </div>
                   )}
-                  
-                  <div className={msg.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-assistant'}>
-                    {renderContent(msg.content)}
+                  <div className={
+                    msg.role === 'user'
+                      ? "bg-black text-white px-4 py-3 rounded-2xl rounded-br-sm text-[13.5px] leading-relaxed font-medium"
+                      : "bg-[#fafafa] border border-black/[0.07] px-4 py-3 rounded-2xl rounded-bl-sm space-y-1"
+                  }>
+                    {msg.role === 'user'
+                      ? <p className="text-[13.5px] leading-relaxed">{msg.content}</p>
+                      : renderContent(msg.content)
+                    }
                   </div>
-                  
                   {msg.role === 'user' && (
-                    <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.1] flex items-center justify-center flex-shrink-0 mt-1 text-white text-[10px] font-bold">
-                      <User size={14} />
+                    <div className="w-8 h-8 rounded-lg bg-black/[0.06] border border-black/[0.08] flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <User size={14} className="text-black/50" />
                     </div>
                   )}
                 </div>
@@ -166,56 +157,49 @@ export default function Copilot() {
             ))}
           </AnimatePresence>
 
-          {/* Typing Indicator */}
           {isLoading && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex justify-start"
-            >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
               <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.1] flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-black flex items-center justify-center flex-shrink-0 shadow-sm">
                   <Bot size={14} className="text-white" />
                 </div>
-                <div className="chat-bubble-assistant flex items-center gap-2">
-                  <Loader2 size={14} className="animate-spin text-white/40" />
-                  <span className="text-[12px] text-white/40">Analyzing...</span>
+                <div className="bg-[#fafafa] border border-black/[0.07] px-4 py-3 rounded-2xl rounded-bl-sm flex items-center gap-2">
+                  <Loader2 size={13} className="animate-spin text-black/30" />
+                  <span className="text-[13px] text-black/40">Analyzing…</span>
                 </div>
               </div>
             </motion.div>
           )}
 
-          {/* Suggestions — only show when it's the initial state */}
+          {/* Suggestions */}
           {messages.length <= 1 && (
-            <div className="flex flex-wrap gap-2 pt-4 justify-start pl-11">
+            <div className="flex flex-wrap gap-2 pt-2 pl-11">
               {[
-                { text: "Analyze top denial reasons and suggest fixes", icon: <ShieldAlert size={12} /> },
-                { text: "Compare payer performance for Blue Cross vs Aetna", icon: <Sparkles size={12} /> },
-                { text: "What GTM strategy works for AI radiology startups?", icon: <ArrowUpRight size={12} /> },
-                { text: "Explain VOB verification process step by step", icon: <Database size={12} /> },
-              ].map((suggestion, i) => (
+                { text: "Analyze top denial reasons and suggest fixes", icon: <ShieldAlert size={11} /> },
+                { text: "Compare payer performance for Blue Cross vs Aetna", icon: <Sparkles size={11} /> },
+                { text: "What GTM strategy works for AI radiology startups?", icon: <ArrowUpRight size={11} /> },
+                { text: "Explain VOB verification process step by step", icon: <Database size={11} /> },
+              ].map((s, i) => (
                 <button
                   key={i}
-                  onClick={() => { setInput(suggestion.text); }}
-                  className="flex items-center gap-2 text-[12px] bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.12] text-white/40 px-3 py-2 rounded-lg transition-all font-medium hover:text-white"
+                  onClick={() => setInput(s.text)}
+                  className="flex items-center gap-1.5 text-[12px] bg-white border border-black/[0.08] hover:border-black/20 hover:bg-black/[0.02] text-black/50 hover:text-black px-3 py-2 rounded-lg transition-all font-medium"
                 >
-                  {suggestion.icon}
-                  {suggestion.text}
+                  {s.icon} {s.text}
                 </button>
               ))}
             </div>
           )}
-
           <div ref={chatEndRef} />
         </div>
 
-        {/* Input Area */}
-        <div className="p-4 border-t border-white/[0.04] bg-[#0d0d15]/50 z-10 relative">
+        {/* Input */}
+        <div className="p-4 border-t border-black/[0.07] bg-white">
           <div className="relative">
-            <textarea 
+            <textarea
               ref={inputRef}
-              className="input-field pr-12 min-h-[56px] py-4 resize-none leading-relaxed"
-              placeholder="Ask Copilot about RCM, VOB, denials, GTM strategy..."
+              className="w-full bg-[#fafafa] border border-black/[0.08] rounded-xl px-4 py-3 pr-12 text-[13.5px] text-black placeholder:text-black/28 focus:outline-none focus:border-black/20 focus:bg-white transition-all resize-none min-h-[52px] leading-relaxed"
+              placeholder="Ask Copilot about RCM, VOB, denials, GTM strategy…"
               rows={1}
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -225,18 +209,16 @@ export default function Copilot() {
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-md bg-white hover:bg-white/80 text-black flex items-center justify-center transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-black hover:bg-zinc-800 text-white flex items-center justify-center transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
             >
-              {isLoading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} className="ml-0.5" />}
+              {isLoading ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}
             </button>
           </div>
           <div className="flex justify-between items-center mt-2 px-1">
-            <p className="text-[10px] text-[#5e5d6b]">
-              Powered by Gemini 1.5 Pro · AI can make mistakes. Consider verifying critical intelligence.
+            <p className="text-[11px] text-black/28">
+              Powered by Gemini 1.5 Pro · AI may make mistakes. Verify critical information.
             </p>
-            <div className="flex items-center gap-2">
-               <span className="text-[10px] text-[#5e5d6b] font-mono border border-white/[0.06] px-1.5 py-0.5 rounded bg-white/[0.02]">Enter ↵</span>
-            </div>
+            <span className="text-[10.5px] text-black/25 font-mono border border-black/[0.07] px-1.5 py-0.5 rounded bg-black/[0.02]">Enter ↵</span>
           </div>
         </div>
       </div>
@@ -245,44 +227,40 @@ export default function Copilot() {
       <AnimatePresence>
         {showDataSources && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setShowDataSources(false)}
           >
             <motion.div
-              initial={{ scale: 0.95, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95 }}
+              initial={{ scale: 0.96, y: 16 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.96 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-lg bg-[#0d0d15] border border-white/[0.1] rounded-2xl p-6"
+              className="w-full max-w-lg bg-white border border-black/[0.1] rounded-2xl p-6 shadow-2xl"
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-5">
                 <div>
-                  <h3 className="text-lg font-bold text-white">Connected Data Sources</h3>
-                  <p className="text-xs text-white/40 mt-1">Copilot can query these sources for intelligent answers.</p>
+                  <h3 className="text-[16px] font-bold text-black">Connected Data Sources</h3>
+                  <p className="text-[12px] text-black/40 mt-0.5">Copilot queries these sources for intelligent answers.</p>
                 </div>
-                <button onClick={() => setShowDataSources(false)} className="text-white/30 hover:text-white"><X size={18} /></button>
+                <button onClick={() => setShowDataSources(false)} className="text-black/30 hover:text-black transition-colors"><X size={18} /></button>
               </div>
               <div className="space-y-2">
                 {dataSources.map((ds) => (
-                  <div key={ds.table} className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] transition-colors">
-                    <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-white/60">
+                  <div key={ds.table} className="flex items-center gap-4 p-3 rounded-xl bg-black/[0.02] border border-black/[0.06] hover:bg-black/[0.04] transition-colors">
+                    <div className="w-9 h-9 rounded-lg bg-black/[0.06] border border-black/[0.08] flex items-center justify-center text-black/50">
                       {ds.icon}
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-white">{ds.name}</p>
-                      <p className="text-[11px] text-white/30">{ds.description}</p>
+                      <p className="text-[13px] font-semibold text-black">{ds.name}</p>
+                      <p className="text-[11px] text-black/40">{ds.description}</p>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                      <span className="text-[10px] text-white/40 font-medium">Active</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      <span className="text-[10.5px] text-black/40 font-medium">Active</span>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] text-[11px] text-white/30 flex items-start gap-2">
+              <div className="mt-4 p-3 rounded-lg bg-black/[0.02] border border-black/[0.06] text-[11px] text-black/40 flex items-start gap-2">
                 <Database size={12} className="mt-0.5 flex-shrink-0" />
                 <span>All data is accessed in real-time from your Supabase database. No data is stored by the AI model.</span>
               </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -39,7 +39,7 @@ export default function InsurancePage() {
       case 'verified': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
       case 'denied': return 'bg-red-500/10 text-red-400 border-red-500/20';
       case 'pending': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-      default: return 'bg-white/10 text-white/60 border-white/20';
+      default: return 'bg-white/10 text-black/60 border-white/20';
     }
   };
 
@@ -84,7 +84,7 @@ export default function InsurancePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Insurance Intelligence</h1>
-          <p className="text-sm text-white/40 mt-1">AI-powered VOB analysis, verification & denial prediction</p>
+          <p className="text-sm text-black/40 mt-1">AI-powered VOB analysis, verification & denial prediction</p>
         </div>
         <button onClick={() => setTab("analyzer")} className="btn-primary flex items-center gap-2">
           <Brain size={15} /> AI Analyzer
@@ -94,14 +94,14 @@ export default function InsurancePage() {
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s, i) => (
-          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="glass-card p-4">
+          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/[0.1] flex items-center justify-center">
-                <s.icon size={18} className="text-white/60" />
+              <div className="w-9 h-9 rounded-xl bg-black/[0.02] border border-black/[0.08] flex items-center justify-center">
+                <s.icon size={18} className="text-black/60" />
               </div>
               <div>
                 <p className="text-lg font-bold text-white">{s.value}</p>
-                <p className="text-xs text-white/40">{s.label}</p>
+                <p className="text-xs text-black/40">{s.label}</p>
               </div>
             </div>
           </motion.div>
@@ -109,11 +109,11 @@ export default function InsurancePage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 p-1 bg-white/[0.03] border border-white/[0.06] rounded-xl w-fit">
+      <div className="flex items-center gap-1 p-1 bg-black/[0.02] border border-black/[0.06] rounded-xl w-fit">
         {(["records", "analyzer"] as Tab[]).map((t) => (
           <button key={t} onClick={() => setTab(t)}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all capitalize ${
-              tab === t ? "bg-white text-black" : "text-white/40 hover:text-white/70"
+              tab === t ? "bg-white text-black" : "text-black/40 hover:text-white/70"
             }`}
           >
             {t === "analyzer" ? "🧠 AI Analyzer" : "📋 VOB Records"}
@@ -125,7 +125,7 @@ export default function InsurancePage() {
         {/* Records Tab */}
         {tab === "records" && (
           <motion.div key="records" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-            <div className="glass-card-static overflow-hidden">
+            <div className="bg-white border border-black/[0.07] rounded-2xl-static overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="data-table">
                   <thead>
@@ -142,12 +142,12 @@ export default function InsurancePage() {
                       <tr>
                         <td colSpan={5} className="text-center py-20">
                           <Loader2 className="w-8 h-8 text-white/10 animate-spin mx-auto mb-2" />
-                          <p className="text-xs text-white/20">Loading insurance cases...</p>
+                          <p className="text-xs text-black/20">Loading insurance cases...</p>
                         </td>
                       </tr>
                     ) : cases.length === 0 ? (
                       <tr>
-                        <td colSpan={5} className="text-center py-20 text-white/20 italic text-sm">
+                        <td colSpan={5} className="text-center py-20 text-black/20 italic text-sm">
                           No active insurance cases. Start an AI VOB analysis to generate records.
                         </td>
                       </tr>
@@ -163,7 +163,7 @@ export default function InsurancePage() {
                           >
                             <td>
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-[10px] font-bold text-white/40 group-hover:text-white transition-colors">
+                                <div className="w-8 h-8 rounded bg-black/[0.02] border border-black/[0.07] flex items-center justify-center text-[10px] font-bold text-black/40 group-hover:text-white transition-colors">
                                   {(c.patient_name || "?")[0]}
                                 </div>
                                 <div>
@@ -171,9 +171,9 @@ export default function InsurancePage() {
                                 </div>
                               </div>
                             </td>
-                            <td><code className="text-xs bg-white/[0.04] border border-white/[0.1] text-white/60 px-1.5 py-0.5 rounded">{c.cpt_code}</code></td>
+                            <td><code className="text-xs bg-black/[0.03] border border-black/[0.08] text-black/60 px-1.5 py-0.5 rounded">{c.cpt_code}</code></td>
                             <td><span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${getStatusBadge(c.status)}`}>{c.status}</span></td>
-                            <td className="text-xs text-white/40">{c.insurance_provider}</td>
+                            <td className="text-xs text-black/40">{c.insurance_provider}</td>
                             <td>
                               <div className="flex items-center gap-2">
                                 <span className={`text-xs font-bold ${(c.denial_risk_score || 0) > 70 ? 'text-red-400' : 'text-emerald-400'}`}>
@@ -211,8 +211,8 @@ export default function InsurancePage() {
                   </div>
                   <div className="text-center space-y-1">
                     <p className="text-white font-semibold text-sm">Running AI VOB Analysis</p>
-                    <p className="text-white/40 text-xs">Checking coverage, PA requirements, denial risk & revenue impact...</p>
-                    <p className="text-white/20 text-[11px]">This may take 15–30 seconds</p>
+                    <p className="text-black/40 text-xs">Checking coverage, PA requirements, denial risk & revenue impact...</p>
+                    <p className="text-black/20 text-[11px]">This may take 15–30 seconds</p>
                   </div>
                   <div className="flex gap-1">
                     {[0, 1, 2, 3, 4].map((i) => (
@@ -229,11 +229,11 @@ export default function InsurancePage() {
               )}
 
               {phase === "error" && (
-                <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-5 space-y-3">
+                <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white border border-black/[0.07] rounded-2xl p-5 space-y-3">
                   <p className="text-sm font-semibold text-white flex items-center gap-2">
-                    <AlertTriangle size={15} className="text-white/60" /> Analysis Failed
+                    <AlertTriangle size={15} className="text-black/60" /> Analysis Failed
                   </p>
-                  <p className="text-xs text-white/50">{error}</p>
+                  <p className="text-xs text-black/50">{error}</p>
                   <button onClick={handleReset} className="btn-primary text-xs">← Try Again</button>
                 </motion.div>
               )}

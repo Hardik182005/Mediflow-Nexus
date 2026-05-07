@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Check, Zap, Building2, Rocket, ArrowRight, HelpCircle, Shield } from "lucide-react";
@@ -12,18 +12,10 @@ const tiers = [
     description: "For small clinics and early-stage startups getting started with healthcare intelligence.",
     highlight: false,
     features: [
-      "Up to 500 patients/month",
-      "Basic VOB Verification",
-      "GTM Strategy Generator",
-      "5 AI Pitch Decks/month",
-      "Email Support",
-      "1 User Seat",
-      "Basic Reports",
-      "Community Access",
+      "Up to 500 patients/month", "Basic VOB Verification", "GTM Strategy Generator",
+      "5 AI Pitch Decks/month", "Email Support", "1 User Seat", "Basic Reports", "Community Access",
     ],
-    cta: "Start Free Trial",
-    action: "trial",
-    icon: Zap,
+    cta: "Start Free Trial", action: "trial", icon: Zap,
   },
   {
     name: "Professional",
@@ -33,21 +25,11 @@ const tiers = [
     highlight: true,
     badge: "Most Popular",
     features: [
-      "Up to 5,000 patients/month",
-      "AI-Powered VOB + Denial Prediction",
-      "Buyer Discovery (30+ hospitals)",
-      "Unlimited AI Pitch Decks",
-      "AI Email Outreach Drafter",
-      "Priority Support (24h SLA)",
-      "10 User Seats",
-      "Revenue Intelligence Dashboard",
-      "Payer Analytics",
-      "Sales Pipeline (Kanban)",
-      "API Access",
+      "Up to 5,000 patients/month", "AI-Powered VOB + Denial Prediction", "Buyer Discovery (30+ hospitals)",
+      "Unlimited AI Pitch Decks", "AI Email Outreach Drafter", "Priority Support (24h SLA)",
+      "10 User Seats", "Revenue Intelligence Dashboard", "Payer Analytics", "Sales Pipeline (Kanban)", "API Access",
     ],
-    cta: "Start Free Trial",
-    action: "trial",
-    icon: Building2,
+    cta: "Start Free Trial", action: "trial", icon: Building2,
   },
   {
     name: "Enterprise",
@@ -56,22 +38,11 @@ const tiers = [
     description: "For hospital networks and health systems requiring full platform deployment.",
     highlight: false,
     features: [
-      "Unlimited patients",
-      "Full AI Intelligence Suite",
-      "Custom buyer datasets",
-      "White-label deployment",
-      "Dedicated account manager",
-      "SSO & RBAC",
-      "Unlimited seats",
-      "Custom integrations (Epic, Cerner)",
-      "HIPAA BAA included",
-      "NABH/JCI compliance modules",
-      "On-premise option",
-      "99.9% SLA guarantee",
+      "Unlimited patients", "Full AI Intelligence Suite", "Custom buyer datasets", "White-label deployment",
+      "Dedicated account manager", "SSO & RBAC", "Unlimited seats", "Custom integrations (Epic, Cerner)",
+      "HIPAA BAA included", "NABH/JCI compliance modules", "On-premise option", "99.9% SLA guarantee",
     ],
-    cta: "Contact Sales",
-    action: "contact",
-    icon: Rocket,
+    cta: "Contact Sales", action: "contact", icon: Rocket,
   },
 ];
 
@@ -80,35 +51,29 @@ const faqs = [
   { q: "Can I switch plans?", a: "Absolutely. Upgrade or downgrade at any time. Changes are prorated." },
   { q: "Is patient data secure?", a: "Yes. All data is encrypted at rest and in transit. We are HIPAA-ready and SOC2 compliant." },
   { q: "Do you support Indian insurance?", a: "Yes. Our VOB engine supports Star Health, ICICI Lombard, HDFC ERGO, and 50+ Indian insurers." },
-  { q: "What about Singapore / ASEAN?", a: "MediFlow Nexus is designed for global healthcare markets including Singapore, Malaysia, Thailand, and the UAE. Our GTM engine includes ASEAN hospital datasets." },
+  { q: "What about Singapore / ASEAN?", a: "MediFlow Nexus is designed for global healthcare markets including Singapore, Malaysia, Thailand, and the UAE." },
 ];
 
 export default function PricingPage() {
   const router = useRouter();
 
   const handleCTA = (action: string) => {
-    if (action === "trial") {
-      router.push("/launch-engine/onboarding");
-    } else if (action === "contact") {
-      window.location.href = "mailto:sales@mediflownexus.com?subject=Enterprise%20Inquiry";
-    }
+    if (action === "trial") router.push("/launch-engine/onboarding");
+    else if (action === "contact") window.location.href = "mailto:sales@mediflownexus.com?subject=Enterprise%20Inquiry";
   };
 
   return (
-    <div className="space-y-8 max-w-[1400px] mx-auto pb-16 animate-fade-in">
+    <div className="space-y-10 max-w-[1200px] mx-auto pb-16 animate-fade-in">
       {/* Header */}
       <div className="text-center pt-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-medium text-white/60 mb-6">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.03] border border-black/[0.08] text-[12px] font-medium text-black/50 mb-6">
             <Shield size={12} /> SOC2 + HIPAA Compliant
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-black tracking-tight mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
             Simple, transparent pricing
           </h1>
-          <p className="text-white/40 max-w-xl mx-auto text-lg">
+          <p className="text-black/45 max-w-xl mx-auto text-[15px] leading-relaxed">
             Start free. Scale when ready. No hidden fees. Cancel anytime.
           </p>
         </motion.div>
@@ -119,61 +84,52 @@ export default function PricingPage() {
         {tiers.map((tier, i) => (
           <motion.div
             key={tier.name}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 ${
+            transition={{ delay: i * 0.08 }}
+            className={`relative rounded-2xl p-8 flex flex-col transition-all duration-200 ${
               tier.highlight
-                ? "bg-white text-black border-2 border-white shadow-[0_0_60px_rgba(255,255,255,0.1)] scale-[1.02]"
-                : "glass-card hover:border-white/20"
+                ? "bg-black text-white border-2 border-black shadow-2xl scale-[1.02]"
+                : "bg-white border border-black/[0.08] hover:border-black/15 hover:shadow-lg"
             }`}
           >
             {tier.badge && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-black text-white text-[10px] font-bold uppercase tracking-widest border border-white/20">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-black text-white text-[10px] font-bold uppercase tracking-widest border border-white/20">
                 {tier.badge}
               </div>
             )}
 
-            <div className="flex items-center gap-3 mb-4">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                tier.highlight ? "bg-black/10" : "bg-white/[0.06] border border-white/[0.1]"
-              }`}>
-                <tier.icon size={20} className={tier.highlight ? "text-black" : "text-white"} />
+            <div className="flex items-center gap-3 mb-5">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${tier.highlight ? "bg-white/10" : "bg-black/[0.05] border border-black/[0.08]"}`}>
+                <tier.icon size={18} className={tier.highlight ? "text-white" : "text-black"} />
               </div>
-              <h3 className={`text-lg font-bold ${tier.highlight ? "text-black" : "text-white"}`}>
-                {tier.name}
-              </h3>
+              <h3 className={`text-[17px] font-bold ${tier.highlight ? "text-white" : "text-black"}`}>{tier.name}</h3>
             </div>
 
             <div className="mb-4">
-              <span className={`text-4xl font-extrabold tracking-tight ${tier.highlight ? "text-black" : "text-white"}`}>
-                {tier.price}
-              </span>
-              <span className={`text-sm ${tier.highlight ? "text-black/40" : "text-white/40"}`}>
-                {tier.period}
-              </span>
+              <span className={`text-4xl font-bold tracking-tight ${tier.highlight ? "text-white" : "text-black"}`}>{tier.price}</span>
+              <span className={`text-[13px] ml-1 ${tier.highlight ? "text-white/50" : "text-black/40"}`}>{tier.period}</span>
             </div>
 
-            <p className={`text-sm mb-6 leading-relaxed ${tier.highlight ? "text-black/60" : "text-white/40"}`}>
-              {tier.description}
-            </p>
+            <p className={`text-[13px] mb-6 leading-relaxed ${tier.highlight ? "text-white/60" : "text-black/50"}`}>{tier.description}</p>
 
-            <div className="space-y-3 flex-1 mb-8">
+            <div className="space-y-2.5 flex-1 mb-8">
               {tier.features.map((f) => (
-                <div key={f} className="flex items-start gap-3">
-                  <Check size={16} className={`mt-0.5 flex-shrink-0 ${tier.highlight ? "text-black" : "text-white/60"}`} />
-                  <span className={`text-sm ${tier.highlight ? "text-black/80" : "text-white/60"}`}>{f}</span>
+                <div key={f} className="flex items-start gap-2.5">
+                  <Check size={14} className={`mt-0.5 flex-shrink-0 ${tier.highlight ? "text-white/70" : "text-black/50"}`} />
+                  <span className={`text-[13px] ${tier.highlight ? "text-white/75" : "text-black/60"}`}>{f}</span>
                 </div>
               ))}
             </div>
 
             <button
               onClick={() => handleCTA(tier.action)}
-              className={`w-full py-3 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
-              tier.highlight
-                ? "bg-black text-white hover:bg-black/90"
-                : "bg-white/[0.06] border border-white/[0.1] text-white hover:bg-white/[0.1]"
-            }`}>
+              className={`w-full py-3 rounded-xl font-semibold text-[13.5px] transition-all flex items-center justify-center gap-2 ${
+                tier.highlight
+                  ? "bg-white text-black hover:bg-zinc-50"
+                  : "bg-black text-white hover:bg-zinc-900"
+              }`}
+            >
               {tier.cta} <ArrowRight size={14} />
             </button>
           </motion.div>
@@ -181,41 +137,36 @@ export default function PricingPage() {
       </div>
 
       {/* Enterprise Banner */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="glass-card p-8 text-center"
-      >
-        <h3 className="text-xl font-bold text-white mb-2">Need a custom deployment?</h3>
-        <p className="text-white/40 text-sm max-w-lg mx-auto mb-6">
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-black rounded-2xl p-8 text-center">
+        <h3 className="text-[20px] font-bold text-white mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>Need a custom deployment?</h3>
+        <p className="text-white/50 text-[13.5px] max-w-lg mx-auto mb-6 leading-relaxed">
           We offer white-label, on-premise, and custom API integrations for hospital networks and health systems across India, Singapore, and ASEAN markets.
         </p>
         <button
           onClick={() => window.location.href = "mailto:sales@mediflownexus.com?subject=Enterprise%20Custom%20Deployment"}
-          className="btn-primary"
+          className="bg-white text-black font-semibold text-[13.5px] px-6 py-2.5 rounded-lg hover:bg-zinc-100 transition-colors inline-flex items-center gap-2"
         >
-          Talk to Sales <ArrowRight size={14} className="ml-2 inline" />
+          Talk to Sales <ArrowRight size={14} />
         </button>
       </motion.div>
 
       {/* FAQs */}
       <div>
-        <h3 className="text-xl font-bold text-white mb-6 text-center">Frequently Asked Questions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+        <h3 className="text-[20px] font-bold text-black mb-6 text-center" style={{ fontFamily: "'Playfair Display', serif" }}>Frequently Asked Questions</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
           {faqs.map((faq, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 + i * 0.05 }}
-              className="glass-card p-5"
+              transition={{ delay: 0.35 + i * 0.05 }}
+              className="bg-white border border-black/[0.07] rounded-xl p-5 hover:border-black/12 transition-colors"
             >
               <div className="flex items-start gap-3">
-                <HelpCircle size={16} className="text-white/40 mt-0.5 flex-shrink-0" />
+                <HelpCircle size={14} className="text-black/30 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-sm font-semibold text-white mb-1">{faq.q}</p>
-                  <p className="text-xs text-white/40 leading-relaxed">{faq.a}</p>
+                  <p className="text-[13.5px] font-semibold text-black mb-1.5">{faq.q}</p>
+                  <p className="text-[12.5px] text-black/50 leading-relaxed">{faq.a}</p>
                 </div>
               </div>
             </motion.div>

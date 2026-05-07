@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -123,19 +123,19 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
       <motion.div 
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="relative w-full max-w-2xl bg-[#0d0d15] border border-white/[0.1] rounded-2xl flex flex-col overflow-hidden h-[600px]"
+        className="relative w-full max-w-2xl bg-white border border-black/[0.08] rounded-2xl flex flex-col overflow-hidden h-[600px]"
       >
-        <div className="flex items-center justify-between p-5 border-b border-white/[0.05] bg-white/[0.02]">
+        <div className="flex items-center justify-between p-5 border-b border-white/[0.05] bg-black/[0.02]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
               <ShieldCheck size={20} className="text-blue-500" />
             </div>
             <div>
               <h2 className="text-sm font-bold text-white">Live Mock Pitch Simulator</h2>
-              <p className="text-[10px] text-white/40 uppercase tracking-widest">Roleplay vs {buyerOrg}</p>
+              <p className="text-[10px] text-black/40 uppercase tracking-widest">Roleplay vs {buyerOrg}</p>
             </div>
           </div>
-          <button onClick={stopAudioAndClose} className="p-2 rounded-lg hover:bg-white/5 text-white/40 hover:text-white transition-all">
+          <button onClick={stopAudioAndClose} className="p-2 rounded-lg hover:bg-white/5 text-black/40 hover:text-white transition-all">
             <X size={20} />
           </button>
         </div>
@@ -183,7 +183,7 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               placeholder="Type your pitch or response..."
-              className="flex-1 bg-white/[0.03] border border-white/[0.1] rounded-xl py-3 pl-4 pr-12 text-sm text-white placeholder-white/20 focus:outline-none focus:border-white/20"
+              className="flex-1 bg-black/[0.02] border border-black/[0.08] rounded-xl py-3 pl-4 pr-12 text-sm text-white placeholder-white/20 focus:outline-none focus:border-white/20"
             />
             <button 
               onClick={handleSend}

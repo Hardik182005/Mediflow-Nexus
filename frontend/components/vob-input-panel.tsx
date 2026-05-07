@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Plus, Trash2, Zap, CreditCard, FileText, ClipboardList, Stethoscope } from "lucide-react";
@@ -59,7 +59,7 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-[16px] font-bold text-white">AI Insurance Analyzer</h2>
-          <p className="text-[12px] text-white/40 mt-0.5">
+          <p className="text-[12px] text-black/40 mt-0.5">
             Paste insurance card, benefits, or clinical data — get a full VOB report instantly.
           </p>
         </div>
@@ -74,23 +74,23 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {inputs.map((inp, idx) => (
-          <div key={inp.id} className="glass-card p-4 space-y-3">
+          <div key={inp.id} className="bg-white border border-black/[0.07] rounded-2xl p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-white/20 text-[10px] font-bold">#{idx + 1}</span>
+                <span className="text-black/20 text-[10px] font-bold">#{idx + 1}</span>
                 <select
                   value={inp.type}
                   onChange={(e) => updateType(inp.id, e.target.value as VOBInput["type"])}
-                  className="bg-white/[0.06] border border-white/[0.1] text-white text-xs rounded-lg px-2.5 py-1.5 outline-none focus:border-white/30 cursor-pointer"
+                  className="bg-black/[0.04] border border-black/[0.08] text-white text-xs rounded-lg px-2.5 py-1.5 outline-none focus:border-white/30 cursor-pointer"
                 >
                   {INPUT_TYPES.map((t) => (
                     <option key={t} value={t} className="bg-black">{t}</option>
                   ))}
                 </select>
-                <span className="text-white/30">{TYPE_ICONS[inp.type]}</span>
+                <span className="text-black/30">{TYPE_ICONS[inp.type]}</span>
               </div>
               {inputs.length > 1 && (
-                <button onClick={() => removeInput(inp.id)} className="btn-ghost p-1.5 text-white/20 hover:text-white/60">
+                <button onClick={() => removeInput(inp.id)} className="btn-ghost p-1.5 text-black/20 hover:text-black/60">
                   <Trash2 size={12} />
                 </button>
               )}
@@ -100,9 +100,9 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
               onChange={(e) => updateContent(inp.id, e.target.value)}
               placeholder={TYPE_PLACEHOLDERS[inp.type]}
               rows={5}
-              className="w-full bg-black/40 border border-white/[0.08] rounded-lg p-3 text-xs text-white/70 placeholder:text-white/20 outline-none focus:border-white/20 resize-none font-mono leading-relaxed transition-colors"
+              className="w-full bg-black/40 border border-white/[0.08] rounded-lg p-3 text-xs text-white/70 placeholder:text-black/20 outline-none focus:border-white/20 resize-none font-mono leading-relaxed transition-colors"
             />
-            <span className="text-[10px] text-white/20">{inp.content.length} chars</span>
+            <span className="text-[10px] text-black/20">{inp.content.length} chars</span>
           </div>
         ))}
       </div>
@@ -124,7 +124,7 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
           </>
         )}
       </button>
-      <p className="text-center text-[11px] text-white/20">
+      <p className="text-center text-[11px] text-black/20">
         Powered by Gemini 1.5 Pro · Generates 8-section clinical intelligence report
       </p>
     </div>

@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 "use client";
 
 import { useState } from "react";
@@ -9,8 +9,8 @@ function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
   const copy = () => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); };
   return (
-    <button onClick={copy} className="btn-ghost p-1.5 text-white/30 hover:text-white/70">
-      {copied ? <Check size={12} className="text-white/60" /> : <Copy size={12} />}
+    <button onClick={copy} className="btn-ghost p-1.5 text-black/30 hover:text-white/70">
+      {copied ? <Check size={12} className="text-black/60" /> : <Copy size={12} />}
     </button>
   );
 }
@@ -22,49 +22,49 @@ function Section({ title, icon, badge, badgeVariant = "neutral", children, defau
   const [open, setOpen] = useState(defaultOpen);
   const badgeStyle = {
     high: "bg-white/10 text-white border border-white/20",
-    medium: "bg-white/[0.06] text-white/60 border border-white/10",
-    low: "bg-white/[0.03] text-white/30 border border-white/[0.06]",
-    neutral: "bg-white/[0.06] text-white/40 border border-white/[0.08]",
+    medium: "bg-black/[0.04] text-black/60 border border-white/10",
+    low: "bg-black/[0.02] text-black/30 border border-black/[0.06]",
+    neutral: "bg-black/[0.04] text-black/40 border border-white/[0.08]",
   }[badgeVariant];
 
   return (
-    <div className="glass-card overflow-hidden">
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-4 text-left hover:bg-white/[0.02] transition-colors">
+    <div className="bg-white border border-black/[0.07] rounded-2xl overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-4 text-left hover:bg-black/[0.02] transition-colors">
         <div className="flex items-center gap-3">
-          <span className="text-white/60">{icon}</span>
+          <span className="text-black/60">{icon}</span>
           <span className="text-sm font-semibold text-white">{title}</span>
           {badge && <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${badgeStyle}`}>{badge}</span>}
         </div>
-        <ChevronDown size={13} className={`text-white/20 transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown size={13} className={`text-black/20 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
-      {open && <div className="px-4 pb-4 border-t border-white/[0.04] pt-3">{children}</div>}
+      {open && <div className="px-4 pb-4 border-t border-black/[0.05] pt-3">{children}</div>}
     </div>
   );
 }
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
-    <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
-      <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1">{label}</p>
+    <div className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
+      <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1">{label}</p>
       <p className="text-sm text-white/70">{value || "—"}</p>
     </div>
   );
 }
 
 function RiskPill({ level }: { level: "Low" | "Medium" | "High" }) {
-  const styles = { High: "bg-white/10 text-white border-white/20", Medium: "bg-white/[0.06] text-white/60 border-white/10", Low: "bg-white/[0.03] text-white/30 border-white/[0.06]" };
+  const styles = { High: "bg-white/10 text-white border-white/20", Medium: "bg-black/[0.04] text-black/60 border-white/10", Low: "bg-black/[0.02] text-black/30 border-black/[0.06]" };
   return <span className={`text-xs px-3 py-1 rounded-full border font-semibold ${styles[level]}`}>{level} Risk</span>;
 }
 
 function StatusPill({ status }: { status: string }) {
   const isGood = ["Active", "Covered", "Not Required", "Ready", "Proceed with scheduling"].includes(status);
   const isBad = ["Inactive", "Not Covered", "Required", "Not Ready", "Hold until prior auth"].includes(status);
-  const style = isGood ? "bg-white/10 text-white border-white/20" : isBad ? "bg-white/[0.04] text-white/40 border-white/[0.08]" : "bg-white/[0.06] text-white/50 border-white/[0.1]";
+  const style = isGood ? "bg-white/10 text-white border-white/20" : isBad ? "bg-black/[0.03] text-black/40 border-white/[0.08]" : "bg-black/[0.04] text-black/50 border-black/[0.08]";
   return <span className={`text-xs px-3 py-1 rounded-full border font-semibold ${style}`}>{status}</span>;
 }
 
 function ScoreRing({ score }: { score: number }) {
-  const color = score >= 75 ? "text-white" : score >= 50 ? "text-white/60" : "text-white/30";
+  const color = score >= 75 ? "text-black" : score >= 50 ? "text-black/60" : "text-black/30";
   return (
     <div className="flex items-center gap-3">
       <div className="relative w-14 h-14">
@@ -77,7 +77,7 @@ function ScoreRing({ score }: { score: number }) {
       </div>
       <div>
         <p className="text-xs font-semibold text-white">Data Confidence</p>
-        <p className="text-[10px] text-white/30">{score >= 75 ? "High confidence" : score >= 50 ? "Moderate — review assumptions" : "Low — verify manually"}</p>
+        <p className="text-[10px] text-black/30">{score >= 75 ? "High confidence" : score >= 50 ? "Moderate — review assumptions" : "Low — verify manually"}</p>
       </div>
     </div>
   );
@@ -100,12 +100,12 @@ export default function VOBResults({ report, onReset }: Props) {
       {/* Top Bar */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center">
-            <Shield size={16} className="text-white" />
+          <div className="w-9 h-9 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center">
+            <Shield size={16} className="text-black" />
           </div>
           <div>
             <p className="text-sm font-bold text-white">{is.patientName}</p>
-            <p className="text-xs text-white/30">{is.payerName} · {is.planType} · {is.memberId}</p>
+            <p className="text-xs text-black/30">{is.payerName} · {is.planType} · {is.memberId}</p>
           </div>
           <StatusPill status={is.coverageStatus} />
         </div>
@@ -113,14 +113,14 @@ export default function VOBResults({ report, onReset }: Props) {
       </div>
 
       {/* Operational Recommendation Banner */}
-      <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.1] flex items-start justify-between gap-4">
+      <div className="p-4 rounded-xl bg-black/[0.03] border border-black/[0.08] flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
           {or_.action.includes("Proceed") ? <CheckCircle size={18} className="text-white mt-0.5" /> :
-           or_.action.includes("Hold") ? <Clock size={18} className="text-white/40 mt-0.5" /> :
-           <AlertTriangle size={18} className="text-white/60 mt-0.5" />}
+           or_.action.includes("Hold") ? <Clock size={18} className="text-black/40 mt-0.5" /> :
+           <AlertTriangle size={18} className="text-black/60 mt-0.5" />}
           <div>
             <p className="text-sm font-bold text-white">{or_.action}</p>
-            <p className="text-xs text-white/40 mt-0.5">{or_.reasoning}</p>
+            <p className="text-xs text-black/40 mt-0.5">{or_.reasoning}</p>
           </div>
         </div>
         <div className="flex-shrink-0">
@@ -146,25 +146,25 @@ export default function VOBResults({ report, onReset }: Props) {
           <ScoreRing score={dc.score} />
           {dc.missingFields.length > 0 && (
             <div>
-              <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1.5">Missing Fields</p>
+              <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1.5">Missing Fields</p>
               <div className="flex flex-wrap gap-1.5">
-                {dc.missingFields.map((f) => <span key={f} className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/40">{f}</span>)}
+                {dc.missingFields.map((f) => <span key={f} className="text-[10px] px-2 py-0.5 rounded-full bg-black/[0.03] border border-white/[0.08] text-black/40">{f}</span>)}
               </div>
             </div>
           )}
           {dc.assumptions.length > 0 && (
             <div>
-              <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1.5">Assumptions Made</p>
+              <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1.5">Assumptions Made</p>
               <div className="space-y-1">
-                {dc.assumptions.map((a, i) => <p key={i} className="text-xs text-white/40 flex gap-2"><span className="text-white/20">·</span>{a}</p>)}
+                {dc.assumptions.map((a, i) => <p key={i} className="text-xs text-black/40 flex gap-2"><span className="text-black/20">·</span>{a}</p>)}
               </div>
             </div>
           )}
           {dc.conflicts.length > 0 && (
             <div>
-              <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1.5">Conflicts Detected</p>
+              <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1.5">Conflicts Detected</p>
               <div className="space-y-1">
-                {dc.conflicts.map((c, i) => <p key={i} className="text-xs text-white/40 flex gap-2"><span>⚠</span>{c}</p>)}
+                {dc.conflicts.map((c, i) => <p key={i} className="text-xs text-black/40 flex gap-2"><span>⚠</span>{c}</p>)}
               </div>
             </div>
           )}
@@ -187,18 +187,18 @@ export default function VOBResults({ report, onReset }: Props) {
             <Field label="OOP Met" value={cb.outOfPocketMet} />
           </div>
           <div className="grid grid-cols-2 gap-2">
-            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.1] text-center">
-              <p className="text-[10px] text-white/30 uppercase tracking-wider font-bold mb-1">Patient Responsibility Est.</p>
+            <div className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.08] text-center">
+              <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold mb-1">Patient Responsibility Est.</p>
               <p className="text-lg font-bold text-white">{cb.patientResponsibilityEstimate}</p>
             </div>
-            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.1] text-center">
-              <p className="text-[10px] text-white/30 uppercase tracking-wider font-bold mb-1">Expected Reimbursement</p>
+            <div className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.08] text-center">
+              <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold mb-1">Expected Reimbursement</p>
               <p className="text-lg font-bold text-white">{cb.expectedReimbursement}</p>
             </div>
           </div>
           {cb.notes.length > 0 && (
             <div className="space-y-1">
-              {cb.notes.map((n, i) => <p key={i} className="text-xs text-white/40 flex gap-2"><span className="text-white/20">→</span>{n}</p>)}
+              {cb.notes.map((n, i) => <p key={i} className="text-xs text-black/40 flex gap-2"><span className="text-black/20">→</span>{n}</p>)}
             </div>
           )}
         </div>
@@ -213,21 +213,21 @@ export default function VOBResults({ report, onReset }: Props) {
           </div>
           {pa.requiredDocuments.length > 0 && (
             <div>
-              <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1.5">Required Documents</p>
+              <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1.5">Required Documents</p>
               <div className="space-y-1">
                 {pa.requiredDocuments.map((d, i) => (
-                  <div key={i} className="flex items-center gap-2 p-2 rounded bg-white/[0.02] border border-white/[0.04]">
+                  <div key={i} className="flex items-center gap-2 p-2 rounded bg-black/[0.02] border border-black/[0.05]">
                     {pa.missingDocuments.includes(d)
-                      ? <XCircle size={12} className="text-white/30 flex-shrink-0" />
-                      : <CheckCircle size={12} className="text-white/60 flex-shrink-0" />}
-                    <span className="text-xs text-white/50">{d}</span>
-                    {pa.missingDocuments.includes(d) && <span className="text-[10px] text-white/20 ml-auto">Missing</span>}
+                      ? <XCircle size={12} className="text-black/30 flex-shrink-0" />
+                      : <CheckCircle size={12} className="text-black/60 flex-shrink-0" />}
+                    <span className="text-xs text-black/50">{d}</span>
+                    {pa.missingDocuments.includes(d) && <span className="text-[10px] text-black/20 ml-auto">Missing</span>}
                   </div>
                 ))}
               </div>
             </div>
           )}
-          {pa.notes && <p className="text-xs text-white/40 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.04]">{pa.notes}</p>}
+          {pa.notes && <p className="text-xs text-black/40 p-2.5 rounded-lg bg-black/[0.02] border border-black/[0.05]">{pa.notes}</p>}
         </div>
       </Section>
 
@@ -236,15 +236,15 @@ export default function VOBResults({ report, onReset }: Props) {
         <div className="space-y-3">
           <RiskPill level={dr.level} />
           <div>
-            <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1.5">Risk Factors</p>
+            <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1.5">Risk Factors</p>
             <div className="space-y-1">
-              {dr.reasons.map((r, i) => <p key={i} className="text-xs text-white/50 flex gap-2"><span>⚠</span>{r}</p>)}
+              {dr.reasons.map((r, i) => <p key={i} className="text-xs text-black/50 flex gap-2"><span>⚠</span>{r}</p>)}
             </div>
           </div>
           <div>
-            <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1.5">Mitigation Steps</p>
+            <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1.5">Mitigation Steps</p>
             <div className="space-y-1">
-              {dr.mitigationSteps.map((s, i) => <p key={i} className="text-xs text-white/60 flex gap-2"><span className="text-white/30">✓</span>{s}</p>)}
+              {dr.mitigationSteps.map((s, i) => <p key={i} className="text-xs text-black/60 flex gap-2"><span className="text-black/30">✓</span>{s}</p>)}
             </div>
           </div>
         </div>
@@ -254,28 +254,28 @@ export default function VOBResults({ report, onReset }: Props) {
       <Section title="Revenue Intelligence" icon={<Shield size={15} />}>
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-2">
-            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-center">
-              <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1">Expected Reimbursement</p>
+            <div className="p-3 rounded-lg bg-black/[0.03] border border-white/[0.08] text-center">
+              <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1">Expected Reimbursement</p>
               <p className="text-base font-bold text-white">{ri.expectedReimbursementRange}</p>
             </div>
-            <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-center">
-              <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1">Patient Responsibility</p>
+            <div className="p-3 rounded-lg bg-black/[0.03] border border-white/[0.08] text-center">
+              <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1">Patient Responsibility</p>
               <p className="text-base font-bold text-white">{ri.patientResponsibilityRange}</p>
             </div>
           </div>
           <div className="flex gap-2">
-            <div className="flex-1 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] text-center">
-              <p className="text-[10px] text-white/20 font-bold mb-0.5">Revenue at Risk</p>
+            <div className="flex-1 p-2.5 rounded-lg bg-black/[0.02] border border-black/[0.06] text-center">
+              <p className="text-[10px] text-black/20 font-bold mb-0.5">Revenue at Risk</p>
               <RiskPill level={ri.revenueAtRisk} />
             </div>
-            <div className="flex-1 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] text-center">
-              <p className="text-[10px] text-white/20 font-bold mb-0.5">Delay Risk</p>
+            <div className="flex-1 p-2.5 rounded-lg bg-black/[0.02] border border-black/[0.06] text-center">
+              <p className="text-[10px] text-black/20 font-bold mb-0.5">Delay Risk</p>
               <RiskPill level={ri.delayRisk} />
             </div>
           </div>
           {ri.revenueNotes.length > 0 && (
             <div className="space-y-1">
-              {ri.revenueNotes.map((n, i) => <p key={i} className="text-xs text-white/40 flex gap-2"><span className="text-white/20">·</span>{n}</p>)}
+              {ri.revenueNotes.map((n, i) => <p key={i} className="text-xs text-black/40 flex gap-2"><span className="text-black/20">·</span>{n}</p>)}
             </div>
           )}
         </div>
@@ -284,18 +284,18 @@ export default function VOBResults({ report, onReset }: Props) {
       {/* Section 7: Operational Recommendation */}
       <Section title="Operational Recommendation" icon={<CheckCircle size={15} />} badge={or_.action.split(" ").slice(0, 2).join(" ")} defaultOpen>
         <div className="space-y-3">
-          <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.1]">
+          <div className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.08]">
             <p className="text-sm font-semibold text-white mb-1">{or_.action}</p>
-            <p className="text-xs text-white/50">{or_.reasoning}</p>
+            <p className="text-xs text-black/50">{or_.reasoning}</p>
           </div>
           {or_.urgentActions.length > 0 && (
             <div>
-              <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1.5">Urgent Actions</p>
+              <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1.5">Urgent Actions</p>
               <div className="space-y-1">
                 {or_.urgentActions.map((a, i) => (
-                  <div key={i} className="flex items-start gap-2 p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06]">
-                    <span className="text-white/40 text-xs mt-0.5">→</span>
-                    <p className="text-xs text-white/60">{a}</p>
+                  <div key={i} className="flex items-start gap-2 p-2.5 rounded-lg bg-black/[0.02] border border-black/[0.06]">
+                    <span className="text-black/40 text-xs mt-0.5">→</span>
+                    <p className="text-xs text-black/60">{a}</p>
                   </div>
                 ))}
               </div>
@@ -308,7 +308,7 @@ export default function VOBResults({ report, onReset }: Props) {
       <Section title="Patient-Friendly Summary" icon={<Shield size={15} />}>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold">Patient Summary</p>
+            <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold">Patient Summary</p>
             <CopyButton text={`Estimated Cost: ${ps.estimatedCost}\n\nWhat Insurance Covers: ${ps.whatInsuranceCovers}\n\nNext Steps:\n${ps.nextSteps.map((s, i) => `${i + 1}. ${s}`).join("\n")}`} />
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -316,12 +316,12 @@ export default function VOBResults({ report, onReset }: Props) {
             <Field label="What Insurance Covers" value={ps.whatInsuranceCovers} />
           </div>
           <div>
-            <p className="text-[10px] text-white/20 uppercase tracking-wider font-bold mb-1.5">Next Steps for Patient</p>
+            <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1.5">Next Steps for Patient</p>
             <div className="space-y-1">
               {ps.nextSteps.map((s, i) => (
                 <div key={i} className="flex gap-3 items-start">
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-white/[0.08] text-white text-[10px] font-bold flex items-center justify-center">{i + 1}</span>
-                  <p className="text-xs text-white/60 pt-0.5">{s}</p>
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-black/[0.04] text-white text-[10px] font-bold flex items-center justify-center">{i + 1}</span>
+                  <p className="text-xs text-black/60 pt-0.5">{s}</p>
                 </div>
               ))}
             </div>

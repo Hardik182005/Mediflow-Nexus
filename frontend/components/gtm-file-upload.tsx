@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useCallback } from "react";
 import { Upload, X, FileText, Film, Music, Image, File, Zap, Plus } from "lucide-react";
@@ -158,7 +158,7 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
       {/* Header */}
       <div>
         <h1 className="text-[20px] font-bold text-white tracking-tight">GTM Intelligence Engine</h1>
-        <p className="text-[13px] text-white/40 mt-1">
+        <p className="text-[13px] text-black/40 mt-1">
           Upload your startup docs — pitch deck, product PDF, demo video, brochure — and get a full AI GTM strategy.
         </p>
       </div>
@@ -171,8 +171,8 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
         onClick={() => inputRef.current?.click()}
         className={`relative border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all ${
           dragging
-            ? "border-white/40 bg-white/[0.06]"
-            : "border-white/[0.12] bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.04]"
+            ? "border-white/40 bg-black/[0.04]"
+            : "border-white/[0.12] bg-black/[0.02] hover:border-white/25 hover:bg-black/[0.03]"
         }`}
       >
         <input
@@ -183,20 +183,20 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
           onChange={onInputChange}
           className="hidden"
         />
-        <div className={`w-14 h-14 rounded-2xl border flex items-center justify-center transition-all ${dragging ? "bg-white/10 border-white/30" : "bg-white/[0.04] border-white/[0.1]"}`}>
-          <Upload size={24} className="text-white/60" />
+        <div className={`w-14 h-14 rounded-2xl border flex items-center justify-center transition-all ${dragging ? "bg-white/10 border-white/30" : "bg-black/[0.03] border-black/[0.08]"}`}>
+          <Upload size={24} className="text-black/60" />
         </div>
         <div className="text-center">
           <p className="text-sm font-semibold text-white">
             {dragging ? "Drop files here" : "Drag & drop or click to upload"}
           </p>
-          <p className="text-xs text-white/30 mt-1">
+          <p className="text-xs text-black/30 mt-1">
             PDF · PPT (as PDF) · MP4 · MOV · MP3 · PNG · JPG · TXT · CSV
           </p>
-          <p className="text-[11px] text-white/20 mt-1">Up to {MAX_FILES} files · Max {MAX_FILE_MB} MB each</p>
+          <p className="text-[11px] text-black/20 mt-1">Up to {MAX_FILES} files · Max {MAX_FILE_MB} MB each</p>
         </div>
         {files.length < MAX_FILES && (
-          <div className="flex items-center gap-1.5 text-[11px] text-white/30">
+          <div className="flex items-center gap-1.5 text-[11px] text-black/30">
             <Plus size={11} /> Add files
           </div>
         )}
@@ -206,7 +206,7 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
       {errors.length > 0 && (
         <div className="space-y-1">
           {errors.map((e, i) => (
-            <p key={i} className="text-xs text-white/40 flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.08]">
+            <p key={i} className="text-xs text-black/40 flex items-center gap-2 px-3 py-2 rounded-lg bg-black/[0.02] border border-white/[0.08]">
               ⚠ {e}
             </p>
           ))}
@@ -216,27 +216,27 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
       {/* File List */}
       {files.length > 0 && (
         <div className="space-y-2">
-          <p className="text-[11px] text-white/20 uppercase tracking-wider font-bold">{files.length} file{files.length !== 1 ? "s" : ""} ready</p>
+          <p className="text-[11px] text-black/20 uppercase tracking-wider font-bold">{files.length} file{files.length !== 1 ? "s" : ""} ready</p>
           {files.map((file) => (
-            <div key={file.id} className="glass-card p-3 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white/50">
+            <div key={file.id} className="bg-white border border-black/[0.07] rounded-2xl p-3 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-black/[0.04] border border-white/[0.08] flex items-center justify-center text-black/50">
                 <FileIcon ext={file.ext} size={16} />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-white font-medium truncate">{file.name}</p>
-                <p className="text-[11px] text-white/30">{formatSize(file.sizeKB)}</p>
+                <p className="text-[11px] text-black/30">{formatSize(file.sizeKB)}</p>
               </div>
               {/* Editable label */}
               <select
                 value={file.label}
                 onChange={(e) => updateLabel(file.id, e.target.value)}
-                className="bg-white/[0.04] border border-white/[0.08] text-white/60 text-[11px] rounded-lg px-2 py-1.5 outline-none focus:border-white/20 cursor-pointer"
+                className="bg-black/[0.03] border border-white/[0.08] text-black/60 text-[11px] rounded-lg px-2 py-1.5 outline-none focus:border-white/20 cursor-pointer"
               >
                 {["Pitch Deck", "Product Document", "Website Content", "Brochure", "Demo Video", "Video Transcript", "Audio Recording", "Image / Slide", "Text Document", "Data File"].map((l) => (
                   <option key={l} value={l} className="bg-black">{l}</option>
                 ))}
               </select>
-              <button onClick={() => removeFile(file.id)} className="btn-ghost p-1.5 text-white/20 hover:text-white/60">
+              <button onClick={() => removeFile(file.id)} className="btn-ghost p-1.5 text-black/20 hover:text-black/60">
                 <X size={14} />
               </button>
             </div>
@@ -246,13 +246,13 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
 
       {/* Optional text context */}
       <div className="space-y-2">
-        <p className="text-[11px] text-white/20 uppercase tracking-wider font-bold">Additional Context (optional)</p>
+        <p className="text-[11px] text-black/20 uppercase tracking-wider font-bold">Additional Context (optional)</p>
         <textarea
           value={textContext}
           onChange={(e) => setTextContext(e.target.value)}
           placeholder="Any extra context — company name, target market, specific CPT codes, pricing info, etc."
           rows={3}
-          className="w-full bg-black/40 border border-white/[0.08] rounded-xl p-3 text-sm text-white/60 placeholder:text-white/20 outline-none focus:border-white/20 resize-none transition-colors"
+          className="w-full bg-black/40 border border-white/[0.08] rounded-xl p-3 text-sm text-black/60 placeholder:text-black/20 outline-none focus:border-white/20 resize-none transition-colors"
         />
       </div>
 
@@ -275,7 +275,7 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
         )}
       </button>
 
-      <div className="flex items-center justify-center gap-4 text-[11px] text-white/20">
+      <div className="flex items-center justify-center gap-4 text-[11px] text-black/20">
         <span>✦ PDF · Video · Audio · Images</span>
         <span>✦ Gemini 1.5 Pro multimodal</span>
         <span>✦ 11-section output</span>
