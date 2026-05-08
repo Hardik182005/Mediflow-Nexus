@@ -3,7 +3,7 @@
   <br/>
   <strong>The Intelligence Engine for Modern Healthcare</strong>
   <br/>
-  <a href="https://mediflow-nexus-2026.web.app">Live URL: mediflow-nexus-2026.web.app</a>
+  <a href="https://mediflow-nexus-frontend-m477e5mida-uc.a.run.app">Live URL: mediflow-nexus-frontend-m477e5mida-uc.a.run.app</a>
 </p>
 
 <p align="center">
@@ -189,7 +189,7 @@ RESEND_API_KEY=your_resend_api_key
 MediFlow Nexus now supports:
 - **ElevenLabs Integration:** Live Mock Pitch Simulator and AI Outreach Voice Memos.
 - **Groq Llama-3 Fallback:** High-performance fallback for heavy analytical tasks if the primary LLM goes down.
-- **Firebase/Cloud Run Deployment:** Configured out-of-the-box for serverless edge deployment using Firebase Web Frameworks.
+- **Cloud Run Deployment:** Configured out-of-the-box for serverless edge deployment using Google Cloud Run.
 
 ### Database Setup
 
@@ -210,36 +210,31 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ---
 
-## ☁️ Deployment (Firebase Hosting & Cloud Run)
+## ☁️ Deployment (Google Cloud Run)
 
-MediFlow Nexus is fully configured for serverless deployment using Firebase Web Frameworks. This setup automatically deploys the Next.js frontend to **Firebase Hosting** and provisions the backend API routes and SSR logic on **Google Cloud Run** via Firebase Cloud Functions (2nd Gen).
+MediFlow Nexus is fully configured for serverless deployment using Google Cloud Run. This setup automatically builds the Next.js frontend into a Docker container and deploys it to a managed GCP environment.
 
-### 1. Authenticate with Firebase & Google Cloud
+### 1. Authenticate with Google Cloud
 ```bash
-# Login to Firebase
-firebase login
-
 # Login to Google Cloud
 gcloud auth login
 ```
 
-### 2. Set Up Firebase Project
+### 2. Set Up GCP Project
 ```bash
-cd frontend
-
-# Ensure you have a valid project in .firebaserc
-# E.g., "default": "mediflow-nexus-2026"
+# Set your project ID
+gcloud config set project mediflow-nexus-2026
 
 # Verify environment variables in .env are set correctly.
 ```
 
 ### 3. Deploy
 ```bash
-# Deploy to Firebase Hosting and Cloud Run automatically
-firebase deploy --only hosting
+cd frontend
+bash deploy-cloudrun.sh
 ```
 
-The Next.js framework integration will detect your setup, build the production application, and automatically push your SSR and API routes to Cloud Run while hosting static assets on Firebase.
+The deployment script will build the Docker image, push it to the Google Container Registry (GCR), and deploy the service to Cloud Run.
 
 ---
 
