@@ -24,15 +24,13 @@ export async function login(formData: FormData) {
 
   console.log(`[Login] Success for: ${email}`)
 
-  // Route based on stored role or next param
-  const role = authData.user?.user_metadata?.role || 'startup'
   const nextPath = formData.get('next') as string;
   revalidatePath('/', 'layout')
   
-  if (nextPath && nextPath !== '/login') {
+  if (nextPath && nextPath !== '/login' && nextPath !== '/') {
     redirect(nextPath)
   } else {
-    redirect(role === 'clinic' ? '/dashboard' : '/launch-engine')
+    redirect('/dashboard')
   }
 }
 

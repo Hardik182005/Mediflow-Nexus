@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -171,10 +171,10 @@ export default function GTMPage() {
                   <select 
                     value={selectedStartupId} 
                     onChange={(e) => setSelectedStartupId(e.target.value)}
-                    className="bg-transparent text-sm font-bold text-white outline-none cursor-pointer"
+                    className="bg-transparent text-sm font-bold text-black outline-none cursor-pointer"
                   >
                     {startups.length === 0 && <option value="">No startups onboarded</option>}
-                    {startups.map(s => <option key={s.id} value={s.id} className="bg-[#0A0A0A]">{s.name}</option>)}
+                    {startups.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                   </select>
                 </div>
               </div>
@@ -195,9 +195,9 @@ export default function GTMPage() {
                 ) : (
                   <div className="space-y-2">
                     {history.map((h) => (
-                      <button key={h.id} onClick={() => loadHistoryItem(h)} className="w-full flex items-center justify-between p-3 rounded-lg bg-black/[0.02] hover:bg-black/[0.04] border border-white/[0.05] transition-colors text-left group">
+                      <button key={h.id} onClick={() => loadHistoryItem(h)} className="w-full flex items-center justify-between p-3 rounded-lg bg-black/[0.02] hover:bg-black/[0.04] border border-black/[0.06] transition-colors text-left group">
                         <div>
-                          <p className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">Strategy generated on {new Date(h.created_at).toLocaleDateString()}</p>
+                          <p className="text-sm font-semibold text-black group-hover:text-black/70 transition-colors">Strategy generated on {new Date(h.created_at).toLocaleDateString()}</p>
                           <p className="text-xs text-black/40 mt-1 line-clamp-1">{h.icp_data?.targetAccounts?.join(', ') || 'General Strategy'}</p>
                         </div>
                         <ChevronRight size={16} className="text-black/20 group-hover:text-blue-400 transition-colors" />
@@ -224,13 +224,13 @@ export default function GTMPage() {
             {/* Animated ring */}
             <div className="relative w-20 h-20">
               <div className="absolute inset-0 rounded-full border-2 border-black/[0.06] animate-ping" style={{ animationDuration: "2s" }} />
-              <div className="absolute inset-0 rounded-full border-2 border-t-white border-white/10 animate-spin" style={{ animationDuration: "1.2s" }} />
-              <div className="absolute inset-3 rounded-full border border-white/10 animate-spin" style={{ animationDuration: "2.5s", animationDirection: "reverse" }} />
+              <div className="absolute inset-0 rounded-full border-2 border-t-black border-black/10 animate-spin" style={{ animationDuration: "1.2s" }} />
+              <div className="absolute inset-3 rounded-full border border-black/10 animate-spin" style={{ animationDuration: "2.5s", animationDirection: "reverse" }} />
             </div>
 
             {/* Step indicator */}
             <div className="text-center space-y-2 max-w-xs">
-              <p className="text-white font-semibold text-sm">Analyzing with Gemini 1.5 Pro</p>
+              <p className="text-black font-semibold text-sm">Analyzing with Gemini 1.5 Pro</p>
               <motion.p
                 key={loadingStep}
                 initial={{ opacity: 0, y: 4 }}
@@ -248,7 +248,7 @@ export default function GTMPage() {
                 <div
                   key={i}
                   className={`h-1.5 rounded-full transition-all duration-500 ${
-                    i === loadingStep ? "w-6 bg-white" : i < loadingStep ? "w-1.5 bg-white/40" : "w-1.5 bg-white/10"
+                    i === loadingStep ? "w-6 bg-black" : i < loadingStep ? "w-1.5 bg-black/40" : "w-1.5 bg-black/10"
                   }`}
                 />
               ))}
@@ -279,7 +279,7 @@ export default function GTMPage() {
             <div className="flex items-start gap-3">
               <span className="text-xl">⚠</span>
               <div>
-                <p className="text-sm font-semibold text-white mb-1">Analysis Failed</p>
+                <p className="text-sm font-semibold text-black mb-1">Analysis Failed</p>
                 <p className="text-xs text-black/50 leading-relaxed">{error}</p>
               </div>
             </div>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -82,7 +82,7 @@ export default function OnboardingPage() {
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Startup Engine</h1>
+          <h1 className="text-2xl font-bold text-black tracking-tight">Startup Engine</h1>
           <p className="text-sm text-black/40 mt-1">AI-powered product understanding & positioning</p>
         </div>
         <button 
@@ -95,7 +95,7 @@ export default function OnboardingPage() {
 
       {loading ? (
         <div className="py-40 flex flex-col items-center justify-center gap-4">
-          <Loader2 className="w-10 h-10 text-white/10 animate-spin" />
+          <Loader2 className="w-10 h-10 text-black/10 animate-spin" />
           <p className="text-sm text-black/20 font-medium">Syncing startup ecosystem...</p>
         </div>
       ) : (
@@ -111,15 +111,15 @@ export default function OnboardingPage() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-black/[0.02] border border-black/[0.07] flex items-center justify-center text-white text-lg font-bold group-hover:bg-black/[0.04] transition-colors">
+                    <div className="w-12 h-12 rounded-xl bg-black/[0.02] border border-black/[0.07] flex items-center justify-center text-black text-lg font-bold group-hover:bg-black/[0.04] transition-colors">
                       {s.name[0]}
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-white">{s.name}</h3>
+                      <h3 className="text-sm font-bold text-black">{s.name}</h3>
                       <p className="text-[10px] uppercase tracking-widest text-black/40 font-bold">{s.category}</p>
                     </div>
                   </div>
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border border-white/10 bg-white/5 text-black/60 uppercase tracking-wider`}>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border border-black/10 bg-black/[0.03] text-black/60 uppercase tracking-wider`}>
                     {s.stage}
                   </span>
                 </div>
@@ -149,12 +149,12 @@ export default function OnboardingPage() {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between pt-2 border-t border-white/5">
+                <div className="flex items-center justify-between pt-2 border-t border-black/[0.06]">
                   <div className="flex items-center gap-1.5">
                     <Target size={12} className="text-black/20" />
                     <span className="text-[10px] text-black/20 font-medium">ICP: {s.icp?.slice(0, 20)}...</span>
                   </div>
-                  <button className="text-[10px] font-bold text-black/40 hover:text-white flex items-center gap-1 uppercase tracking-wider transition-colors">
+                  <button className="text-[10px] font-bold text-black/40 hover:text-black flex items-center gap-1 uppercase tracking-wider transition-colors">
                     View Strategy <Plus size={10} />
                   </button>
                 </div>
@@ -180,21 +180,21 @@ export default function OnboardingPage() {
       <AnimatePresence>
         {showModal && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={() => setShowModal(false)} />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)} />
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl bg-[#080808] border border-white/10 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden"
+              className="relative w-full max-w-2xl bg-white border border-black/10 rounded-2xl shadow-2xl overflow-hidden"
             >
-              <div className="px-6 py-5 border-b border-white/5 flex items-center justify-between bg-black/[0.02]">
+              <div className="px-6 py-5 border-b border-black/[0.07] flex items-center justify-between bg-black/[0.02]">
                 <div>
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-black flex items-center gap-2">
                     <Rocket size={18} className="text-black" /> Startup Onboarding
                   </h3>
                   <p className="text-[11px] text-black/40 uppercase tracking-widest font-bold mt-0.5">Initialize GTM Intelligence</p>
                 </div>
-                <button onClick={() => setShowModal(false)} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 text-black/40 hover:text-white transition-all">
+                <button onClick={() => setShowModal(false)} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/5 text-black/40 hover:text-black transition-all">
                   <X size={18} />
                 </button>
               </div>

@@ -40,23 +40,18 @@ export async function updateSession(request: NextRequest) {
   const isLandingPage = request.nextUrl.pathname === '/'
   const isAuthRoute = request.nextUrl.pathname.startsWith('/auth')
 
-  console.log(`[Middleware] Path: ${request.nextUrl.pathname}, Method: ${request.method}, User: ${!!user}`)
-
   if (!user && !isLoginPage && !isLandingPage && !isAuthRoute) {
-    console.log(`[Middleware] Redirecting to login: ${request.nextUrl.pathname}`)
-    // If no user and not on a public page, redirect to login
+    // Unauthenticated user trying to access protected route → go to login
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('next', request.nextUrl.pathname)
     return NextResponse.redirect(url)
   }
 
-  // If user exists and tries to go to login, send them to workspace selector
+  // Logged-in user visiting login page → send to dashboard
   if (user && isLoginPage) {
-    console.log(`[Middleware] User already logged in, redirecting from login page`)
     const url = request.nextUrl.clone()
-    url.pathname = '/'
-    url.hash = 'workspaces'
+    url.pathname = '/dashboard'
     return NextResponse.redirect(url)
   }
 
