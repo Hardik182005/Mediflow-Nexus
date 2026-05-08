@@ -77,95 +77,78 @@ export default function MarketingLanding() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/[0.03] border border-black/[0.08] text-xs font-medium text-black/60 mb-8">
               <span className="flex h-2 w-2 rounded-full bg-black animate-pulse shadow-[0_0_8px_rgba(0,0,0,0.5)]"></span>
-              AI-Powered Intelligence Platform
+              MediFlow Nexus OS 2.0 is now live
             </div>
             
             <h1 className="text-6xl md:text-8xl font-serif tracking-tight mb-8 leading-[1.1] max-w-4xl text-black">
-              Healthcare Research, <br className="hidden md:block"/>
+              The Intelligence Engine for <br className="hidden md:block"/>
               <span className="text-black/40 italic font-light">
-                Reimagined.
+                Modern Healthcare
               </span>
             </h1>
             
             <p className="text-xl text-black/60 max-w-2xl mx-auto mb-12 leading-relaxed">
-              Empowering top-tier medical facilities and startups with obsidian-sharp AI analysis to navigate the world's most complex operations.
+              Unify your clinic operations and accelerate your startup's go-to-market motion with our enterprise-grade revenue intelligence platform.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <a href="#workspaces" className="px-8 py-4 rounded-full bg-black text-white font-semibold hover:bg-black/90 transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(0,0,0,0.15)]">
-                Get Started Free →
+                Launch Platform <ArrowRight className="w-4 h-4" />
               </a>
               <a href="#features" className="px-8 py-4 rounded-full bg-transparent border border-black/[0.1] text-black font-semibold hover:bg-black/[0.04] transition-all flex items-center gap-2">
-                View Demo
+                Explore Features
               </a>
             </div>
 
             <p className="mt-8 text-xs text-black/40 font-medium">Trusted by 200+ clinics • SOC 2 Certified • Enterprise Ready</p>
-
-            {/* Dashboard Demo Graphic */}
-            <div className="mt-20 w-full max-w-5xl mx-auto rounded-xl overflow-hidden shadow-2xl bg-[#111111] aspect-[16/9] flex items-center justify-center relative border border-black/[0.1]">
-              <div className="absolute top-0 w-full h-10 bg-[#1a1a1a] flex items-center px-4 gap-2 border-b border-white/5">
-                <div className="w-3 h-3 rounded-full bg-white/20"></div>
-                <div className="w-3 h-3 rounded-full bg-white/20"></div>
-                <div className="w-3 h-3 rounded-full bg-white/20"></div>
-              </div>
-              
-              {/* Pseudo UI elements for dashboard */}
-              <div className="w-full h-full pt-10 p-6 flex gap-6">
-                {/* Sidebar */}
-                <div className="hidden md:flex w-64 h-full bg-[#1a1a1a] rounded-lg border border-white/5 p-4 flex-col gap-4">
-                  <div className="w-full h-8 bg-white/5 rounded"></div>
-                  <div className="w-3/4 h-4 bg-white/5 rounded"></div>
-                  <div className="w-1/2 h-4 bg-white/5 rounded"></div>
-                </div>
-                {/* Main Content */}
-                <div className="flex-1 h-full flex flex-col gap-6">
-                  {/* Top Widgets */}
-                  <div className="flex gap-6 h-1/3">
-                    <div className="flex-1 bg-[#1a1a1a] rounded-lg border border-white/5 p-6 flex flex-col justify-end">
-                       <svg className="w-full h-full text-white/20" viewBox="0 0 100 40" preserveAspectRatio="none">
-                          <path d="M0 30 L20 20 L40 25 L60 10 L80 15 L100 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                       </svg>
-                    </div>
-                    <div className="hidden sm:flex w-1/3 bg-[#1a1a1a] rounded-lg border border-white/5 p-6 items-center justify-center">
-                       <div className="w-24 h-24 rounded-full border-4 border-white/10 border-t-white/80"></div>
-                    </div>
-                  </div>
-                  {/* Bottom List */}
-                  <div className="flex-1 bg-[#1a1a1a] rounded-lg border border-white/5 p-6 flex flex-col gap-4">
-                    <div className="w-full h-12 bg-white/5 rounded-md flex items-center px-4 justify-between">
-                       <div className="w-1/4 h-4 bg-white/10 rounded"></div>
-                       <div className="w-16 h-6 bg-white/10 rounded-full"></div>
-                    </div>
-                    <div className="w-full h-12 bg-white/5 rounded-md flex items-center px-4 justify-between">
-                       <div className="w-1/3 h-4 bg-white/10 rounded"></div>
-                       <div className="w-16 h-6 bg-white/10 rounded-full"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </motion.div>
         </section>
 
-        {/* Feature Highlights section instead of grid cards */}
+        {/* Bento Box Features */}
         <section id="features" className="max-w-7xl mx-auto px-6 lg:px-8 py-24 border-t border-black/[0.04]">
-          <div className="text-center mb-16">
-            <h2 className="text-xs tracking-[0.2em] uppercase text-black/40 font-bold mb-8">Core Capabilities</h2>
+          <div className="mb-16">
+            <h2 className="text-3xl font-serif tracking-tight mb-4 text-black">Enterprise Capabilities</h2>
+            <p className="text-black/60 max-w-2xl">Built for scale, designed for speed. MediFlow Nexus handles the complexity of healthcare data so you can focus on growth.</p>
           </div>
-          
-          <div className="flex flex-col items-center justify-center gap-6 text-4xl md:text-6xl font-serif text-black/10">
-            <div className="hover:text-black transition-colors duration-500 cursor-default">Contract Analysis</div>
-            <div className="hover:text-black transition-colors duration-500 cursor-default">Complex Workflows</div>
-            <div className="hover:text-black transition-colors duration-500 cursor-default">Document Storage</div>
-            <div className="hover:text-black transition-colors duration-500 cursor-default">Risk Detection</div>
-          </div>
-          
-          <div className="mt-16 flex justify-center">
-            <a href="#workspaces" className="px-6 py-3 rounded-full border border-black/[0.1] text-black text-sm font-semibold hover:bg-black/[0.03] transition-colors">
-              Explore Platform
-            </a>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Feature 1 - Large */}
+            <div className="md:col-span-2 bg-black/[0.02] border border-black/[0.08] rounded-3xl p-8 hover:bg-black/[0.04] transition-colors relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-black/[0.02] rounded-full blur-[80px] -mr-32 -mt-32 transition-opacity group-hover:opacity-100 opacity-50" />
+              <div className="w-12 h-12 rounded-xl bg-black/5 border border-black/10 flex items-center justify-center mb-6">
+                <BarChart3 className="w-6 h-6 text-black" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-black">AI Denials Prediction</h3>
+              <p className="text-black/60 max-w-md">Our machine learning models analyze historical claims to predict and prevent denials before they happen, recovering millions in lost revenue.</p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="bg-black/[0.02] border border-black/[0.08] rounded-3xl p-8 hover:bg-black/[0.04] transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-black/5 border border-black/10 flex items-center justify-center mb-6">
+                <Lock className="w-6 h-6 text-black" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-black">SOC2 & HIPAA</h3>
+              <p className="text-black/60">Bank-grade encryption and full compliance out of the box.</p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="bg-black/[0.02] border border-black/[0.08] rounded-3xl p-8 hover:bg-black/[0.04] transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-black/5 border border-black/10 flex items-center justify-center mb-6">
+                <Users className="w-6 h-6 text-black" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-black">Patient Copilot</h3>
+              <p className="text-black/60">Automated intake and insurance verification workflows.</p>
+            </div>
+
+            {/* Feature 4 - Large */}
+            <div className="md:col-span-2 bg-black/[0.02] border border-black/[0.08] rounded-3xl p-8 hover:bg-black/[0.04] transition-colors relative overflow-hidden group">
+               <div className="absolute bottom-0 right-0 w-64 h-64 bg-black/[0.02] rounded-full blur-[80px] -mr-32 -mb-32 transition-opacity group-hover:opacity-100 opacity-50" />
+              <div className="w-12 h-12 rounded-xl bg-black/5 border border-black/10 flex items-center justify-center mb-6">
+                <Rocket className="w-6 h-6 text-black" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-black">Go-To-Market Automation</h3>
+              <p className="text-black/60 max-w-md">Instantly generate tailored outreach campaigns, calculate ROI, and sync seamlessly with Salesforce and Hubspot.</p>
+            </div>
           </div>
         </section>
 
@@ -238,6 +221,108 @@ export default function MarketingLanding() {
           </div>
         </section>
 
+        {/* Flywheel / Network Effects */}
+        <section className="max-w-5xl mx-auto px-6 lg:px-8 py-24 border-t border-black/[0.04]">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-serif tracking-tight mb-4 text-black">The MediFlow Flywheel</h2>
+            <p className="text-black/60 max-w-2xl mx-auto">Every new user strengthens the platform for everyone. Data-driven network effects create compounding value.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[
+              { step: "01", title: "Startups Onboard", desc: "Healthcare startups register their products and define target markets." },
+              { step: "02", title: "AI Matches Buyers", desc: "Our engine cross-references startup data with 30+ hospital profiles." },
+              { step: "03", title: "Clinics Verify Faster", desc: "Hospitals use AI-powered VOB, reducing manual insurance calls by 90%." },
+              { step: "04", title: "Data Compounds", desc: "Every transaction improves match accuracy and denial predictions for all users." },
+            ].map((item, i) => (
+              <motion.div
+                key={item.step}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="relative bg-black/[0.02] border border-black/[0.08] rounded-2xl p-6 hover:bg-black/[0.04] transition-colors"
+              >
+                <div className="text-4xl font-black text-black/[0.06] mb-4">{item.step}</div>
+                <h4 className="text-lg font-bold text-black mb-2">{item.title}</h4>
+                <p className="text-sm text-black/60 leading-relaxed">{item.desc}</p>
+                {i < 3 && (
+                  <div className="hidden md:block absolute top-1/2 -right-4 w-8 text-black/20 text-center font-bold">→</div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Security & Compliance */}
+        <section id="security" className="max-w-5xl mx-auto px-6 lg:px-8 py-24 border-t border-black/[0.04]">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-serif tracking-tight mb-4 text-black">Enterprise-Grade Security</h2>
+            <p className="text-black/60 max-w-2xl mx-auto">Built for the most regulated industry on earth. Compliance is not an afterthought — it&apos;s our foundation.</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { badge: "HIPAA", desc: "Health Insurance Portability and Accountability Act compliance" },
+              { badge: "SOC2", desc: "Type II certified infrastructure and access controls" },
+              { badge: "NABH", desc: "National Accreditation Board for Hospitals (India)" },
+              { badge: "JCI", desc: "Joint Commission International standards" },
+            ].map((item, i) => (
+              <motion.div
+                key={item.badge}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="text-center bg-black/[0.02] border border-black/[0.08] rounded-2xl p-6 hover:border-black/30 transition-colors"
+              >
+                <div className="text-2xl font-black text-black mb-2">{item.badge}</div>
+                <p className="text-xs text-black/60 leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Global Markets (ASEAN) */}
+        <section id="enterprise" className="max-w-5xl mx-auto px-6 lg:px-8 py-24 border-t border-black/[0.04]">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-serif tracking-tight mb-4 text-black">Built for Global Healthcare</h2>
+            <p className="text-black/60 max-w-2xl mx-auto">From India to Singapore to the UAE — MediFlow Nexus adapts to local payer systems, regulatory frameworks, and market dynamics.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { market: "India", insurers: "Star Health, ICICI Lombard, HDFC ERGO, New India Assurance", hospitals: "Apollo, Manipal, Fortis, Max Healthcare", regulatory: "NABH, IRDAI, DISHA" },
+              { market: "Singapore & ASEAN", insurers: "Great Eastern, AIA, Prudential, NTUC Income", hospitals: "Mount Elizabeth, Raffles, Gleneagles, Bumrungrad", regulatory: "PDPA, MOH, NHIS, JCI" },
+              { market: "Middle East", insurers: "Daman, Oman Insurance, ADNIC, Bupa Arabia", hospitals: "Cleveland Clinic AD, Mediclinic, NMC Healthcare", regulatory: "DHA, HAAD, JCI, Nabidh" },
+            ].map((item, i) => (
+              <motion.div
+                key={item.market}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-black/[0.02] border border-black/[0.08] rounded-2xl p-6 hover:bg-black/[0.04] transition-colors"
+              >
+                <h4 className="text-xl font-bold text-black mb-4">{item.market}</h4>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-[10px] text-black/40 uppercase tracking-widest font-bold mb-1">Insurers</p>
+                    <p className="text-xs text-black/60">{item.insurers}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-black/40 uppercase tracking-widest font-bold mb-1">Hospital Networks</p>
+                    <p className="text-xs text-black/60">{item.hospitals}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-black/40 uppercase tracking-widest font-bold mb-1">Regulatory</p>
+                    <p className="text-xs text-black/60">{item.regulatory}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
       </main>
 
       {/* Footer */}
