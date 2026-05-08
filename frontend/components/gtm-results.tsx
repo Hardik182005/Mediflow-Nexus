@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { 
@@ -28,7 +28,7 @@ function Section({ title, icon: Icon, children, defaultOpen = false }: { title: 
       <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-4 text-left hover:bg-black/[0.02] transition-colors">
         <div className="flex items-center gap-3">
           <Icon size={16} className="text-black/40" />
-          <span className="text-sm font-semibold text-white">{title}</span>
+          <span className="text-sm font-bold text-black">{title}</span>
         </div>
         <ChevronDown size={14} className={`text-black/30 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
@@ -38,14 +38,14 @@ function Section({ title, icon: Icon, children, defaultOpen = false }: { title: 
 }
 
 function Tag({ label }: { label: string }) {
-  return <span className="text-[10px] px-2 py-1 rounded-full bg-black/[0.04] text-black/60 border border-white/[0.08]">{label}</span>;
+  return <span className="text-[10px] px-2 py-1 rounded-full bg-black/[0.04] text-black/60 border border-black/[0.08]">{label}</span>;
 }
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
-      <p className="text-[10px] text-black/30 font-medium uppercase tracking-wider mb-1">{label}</p>
-      <p className="text-sm text-white/70">{value}</p>
+      <p className="text-[10px] text-black/40 font-bold uppercase tracking-wider mb-1">{label}</p>
+      <p className="text-sm text-black/80 font-medium leading-relaxed">{value}</p>
     </div>
   );
 }
@@ -63,7 +63,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-[20px] font-bold text-white tracking-tight">{ss.companyName || "GTM Strategy"}</h1>
+          <h1 className="text-[20px] font-bold text-black tracking-tight">{ss.companyName || "GTM Strategy"}</h1>
           <p className="text-[13px] text-black/40 mt-1">"{ss.tagline}"</p>
         </div>
         <button onClick={onReset} className="btn-secondary text-xs">← New Analysis</button>
@@ -78,8 +78,8 @@ export default function GTMResults({ strategy, onReset }: Props) {
           { label: "Deployment", value: pi.deploymentType },
         ].map((item) => (
           <div key={item.label}>
-            <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold">{item.label}</p>
-            <p className="text-sm font-semibold text-white mt-0.5">{item.value}</p>
+            <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold">{item.label}</p>
+            <p className="text-sm font-bold text-black mt-0.5">{item.value}</p>
           </div>
         ))}
       </div>
@@ -129,18 +129,18 @@ export default function GTMResults({ strategy, onReset }: Props) {
       {/* Section 4: Buyer Persona */}
       <Section title="Buyer Persona" icon={User}>
         <div className="pt-3 space-y-3">
-          <div className="p-3 rounded-lg bg-black/[0.03] border border-white/[0.08]">
-            <p className="text-xs font-semibold text-white mb-1">Primary Buyer: {bp.primaryBuyer.title}</p>
-            <p className="text-xs text-black/50 mb-2">{bp.primaryBuyer.motivation}</p>
+          <div className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.08]">
+            <p className="text-xs font-bold text-black mb-1">Primary Buyer: {bp.primaryBuyer.title}</p>
+            <p className="text-xs text-black/60 mb-2 leading-relaxed">{bp.primaryBuyer.motivation}</p>
             <div className="flex flex-wrap gap-1">{bp.primaryBuyer.painPoints.map((p) => <Tag key={p} label={p} />)}</div>
           </div>
           <div>
             <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold mb-2">Secondary Buyers</p>
             <div className="space-y-2">
               {bp.secondaryBuyers.map((b) => (
-                <div key={b.title} className="flex items-center justify-between p-2 rounded bg-black/[0.02] border border-white/[0.05]">
-                  <span className="text-xs text-white font-medium">{b.title}</span>
-                  <span className="text-xs text-black/40">{b.role}</span>
+                <div key={b.title} className="flex items-center justify-between p-2 rounded bg-black/[0.02] border border-black/[0.05]">
+                  <span className="text-xs text-black font-bold">{b.title}</span>
+                  <span className="text-[10px] text-black/40 font-bold uppercase tracking-widest">{b.role}</span>
                 </div>
               ))}
             </div>
@@ -156,19 +156,19 @@ export default function GTMResults({ strategy, onReset }: Props) {
       <Section title="Value Proposition" icon={Lightbulb}>
         <div className="pt-3 space-y-3">
           <div className="p-4 rounded-lg bg-black/[0.03] border border-black/[0.08] text-center">
-            <p className="text-base font-bold text-white">"{vp.headline}"</p>
+            <p className="text-base font-bold text-black leading-relaxed">"{vp.headline}"</p>
           </div>
           <div className="space-y-2">
             {vp.statements.map((s, i) => (
-              <div key={i} className="flex gap-2 items-start">
-                <span className="text-black/20 text-xs mt-0.5">→</span>
-                <p className="text-sm text-black/60">{s}</p>
+              <div key={i} className="flex gap-2 items-start p-3 rounded-xl bg-black/[0.02] border border-black/[0.04]">
+                <span className="text-black/20 text-xs mt-0.5 font-bold">→</span>
+                <p className="text-sm text-black/70 font-medium leading-relaxed">{s}</p>
               </div>
             ))}
           </div>
           <div className="flex items-center justify-between p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
-            <span className="text-xs text-black/30">Estimated ROI</span>
-            <span className="text-sm font-bold text-white">{vp.roi}</span>
+            <span className="text-xs text-black/40 font-bold uppercase tracking-widest">Estimated ROI</span>
+            <span className="text-sm font-bold text-black">{vp.roi}</span>
           </div>
         </div>
       </Section>
@@ -181,21 +181,21 @@ export default function GTMResults({ strategy, onReset }: Props) {
               <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold">Elevator Pitch</p>
               <CopyButton text={messaging.elevatorPitch} />
             </div>
-            <p className="text-sm text-white/70 italic">"{messaging.elevatorPitch}"</p>
+            <p className="text-sm text-black/70 italic leading-relaxed">"{messaging.elevatorPitch}"</p>
           </div>
           <div className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
             <div className="flex items-center justify-between mb-1">
               <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold">Tagline</p>
               <CopyButton text={messaging.tagline} />
             </div>
-            <p className="text-sm font-semibold text-white">"{messaging.tagline}"</p>
+            <p className="text-sm font-bold text-black">"{messaging.tagline}"</p>
           </div>
           <div className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
             <div className="flex items-center justify-between mb-2">
               <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold">Email Outreach</p>
               <CopyButton text={`Subject: ${messaging.emailOutreach.subject}\n\n${messaging.emailOutreach.body}`} />
             </div>
-            <p className="text-xs text-black/40 font-medium mb-1">Subject: {messaging.emailOutreach.subject}</p>
+            <p className="text-xs text-black/60 font-bold mb-1">Subject: {messaging.emailOutreach.subject}</p>
             <p className="text-xs text-black/50 leading-relaxed whitespace-pre-wrap">{messaging.emailOutreach.body}</p>
           </div>
           <div className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
@@ -210,8 +210,8 @@ export default function GTMResults({ strategy, onReset }: Props) {
             <div className="space-y-1">
               {messaging.keyMarketingPoints.map((pt, i) => (
                 <div key={i} className="flex gap-2 items-start p-2 rounded bg-black/[0.02] border border-black/[0.05]">
-                  <span className="text-black/20 text-xs mt-0.5">✦</span>
-                  <p className="text-xs text-black/60">{pt}</p>
+                  <span className="text-black/20 text-xs mt-0.5 font-bold">✦</span>
+                  <p className="text-xs text-black/60 leading-relaxed">{pt}</p>
                 </div>
               ))}
             </div>
@@ -233,9 +233,9 @@ export default function GTMResults({ strategy, onReset }: Props) {
             <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold mb-2">Workflow Steps</p>
             <div className="space-y-2">
               {demoStrategy.workflowSteps.map((step, i) => (
-                <div key={i} className="flex gap-3 items-start">
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-black/[0.04] text-white text-[10px] font-bold flex items-center justify-center">{i + 1}</span>
-                  <p className="text-xs text-black/60 pt-0.5">{step}</p>
+                <div key={i} className="flex gap-3 items-start p-2 rounded-lg bg-black/[0.02] border border-black/[0.04]">
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-black text-white text-[10px] font-bold flex items-center justify-center">{i + 1}</span>
+                  <p className="text-xs text-black/60 pt-0.5 font-medium">{step}</p>
                 </div>
               ))}
             </div>
@@ -245,8 +245,8 @@ export default function GTMResults({ strategy, onReset }: Props) {
             <div className="space-y-2">
               {demoStrategy.objectionHandling.map((obj, i) => (
                 <div key={i} className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
-                  <p className="text-xs text-black/40 font-medium mb-1">❓ {obj.objection}</p>
-                  <p className="text-xs text-black/60">✓ {obj.response}</p>
+                  <p className="text-xs text-black/50 font-bold mb-1">❓ {obj.objection}</p>
+                  <p className="text-xs text-black/70 font-medium leading-relaxed">✓ {obj.response}</p>
                 </div>
               ))}
             </div>
@@ -267,10 +267,10 @@ export default function GTMResults({ strategy, onReset }: Props) {
               {buyerDiscovery.sampleBuyerProfiles.map((b, i) => (
                 <div key={i} className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
                   <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs font-semibold text-white">{b.orgName}</p>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-black/[0.04] text-black/40 border border-white/[0.08]">{b.type}</span>
+                    <p className="text-xs font-bold text-black">{b.orgName}</p>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-black/[0.04] text-black/50 border border-black/[0.08] font-bold uppercase tracking-widest">{b.type}</span>
                   </div>
-                  <p className="text-xs text-black/40">{b.reason}</p>
+                  <p className="text-xs text-black/60 leading-relaxed font-medium">{b.reason}</p>
                 </div>
               ))}
             </div>
@@ -297,7 +297,7 @@ export default function GTMResults({ strategy, onReset }: Props) {
             <div className="flex items-center gap-2 flex-wrap">
               {salesStrategy.funnel.map((stage, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <span className="text-xs px-3 py-1.5 rounded-lg bg-black/[0.04] border border-white/[0.08] text-black/60 font-medium">{stage}</span>
+                  <span className="text-[10px] px-3 py-1.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-black/60 font-bold uppercase tracking-widest">{stage}</span>
                   {i < salesStrategy.funnel.length - 1 && <span className="text-black/20 text-xs">→</span>}
                 </div>
               ))}
@@ -308,8 +308,8 @@ export default function GTMResults({ strategy, onReset }: Props) {
             <div className="space-y-2">
               {salesStrategy.objections.map((obj, i) => (
                 <div key={i} className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
-                  <p className="text-xs text-black/40 font-medium mb-1">⚠ {obj.objection}</p>
-                  <p className="text-xs text-black/60">→ {obj.solution}</p>
+                  <p className="text-xs text-black/50 font-bold mb-1">⚠ {obj.objection}</p>
+                  <p className="text-xs text-black/70 font-medium leading-relaxed">→ {obj.solution}</p>
                 </div>
               ))}
             </div>
@@ -327,9 +327,9 @@ export default function GTMResults({ strategy, onReset }: Props) {
               { label: "Efficiency Gain", value: roiImpact.efficiencyGain },
               { label: "Payback Period", value: roiImpact.paybackPeriod },
             ].map((item) => (
-              <div key={item.label} className="p-3 rounded-lg bg-black/[0.03] border border-white/[0.08] text-center">
-                <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold mb-1">{item.label}</p>
-                <p className="text-sm font-bold text-white">{item.value}</p>
+              <div key={item.label} className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.08] text-center">
+                <p className="text-[10px] text-black/40 uppercase tracking-widest font-bold mb-1">{item.label}</p>
+                <p className="text-sm font-bold text-black">{item.value}</p>
               </div>
             ))}
           </div>
@@ -347,24 +347,27 @@ export default function GTMResults({ strategy, onReset }: Props) {
             {marketplaceMatch.idealMatches.map((match, i) => (
               <div key={i} className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
                 <div className="flex items-center justify-between mb-1">
-                  <p className="text-xs font-semibold text-white">{match.clinicType}</p>
+                  <p className="text-xs font-bold text-black">{match.clinicType}</p>
                   <div className="flex items-center gap-2">
                     <div className="h-1.5 w-16 bg-black/[0.04] rounded-full overflow-hidden">
-                      <div className="h-full bg-white rounded-full" style={{ width: `${match.fitScore}%` }} />
+                      <div className="h-full bg-black rounded-full" style={{ width: `${match.fitScore}%` }} />
                     </div>
                     <span className="text-xs font-bold text-black/60">{match.fitScore}%</span>
                   </div>
                 </div>
-                <p className="text-xs text-black/40">{match.reason}</p>
+                <p className="text-xs text-black/50 font-medium leading-relaxed">{match.reason}</p>
               </div>
             ))}
           </div>
           <div className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.08]">
-            <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold mb-1">Recommended Action</p>
-            <p className="text-sm text-white/70">{marketplaceMatch.recommendedAction}</p>
+            <p className="text-[10px] text-black/40 uppercase tracking-widest font-bold mb-1">Recommended Action</p>
+            <p className="text-sm text-black/80 font-medium leading-relaxed">{marketplaceMatch.recommendedAction}</p>
           </div>
         </div>
       </Section>
+    </div>
+  );
+}
     </div>
   );
 }

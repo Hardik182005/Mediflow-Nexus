@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -131,11 +131,11 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
               <ShieldCheck size={20} className="text-blue-500" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-white">Live Mock Pitch Simulator</h2>
-              <p className="text-[10px] text-black/40 uppercase tracking-widest">Roleplay vs {buyerOrg}</p>
+              <h2 className="text-sm font-bold text-black">Live Mock Pitch Simulator</h2>
+              <p className="text-[10px] text-black/50 uppercase tracking-widest">Roleplay vs {buyerOrg}</p>
             </div>
           </div>
-          <button onClick={stopAudioAndClose} className="p-2 rounded-lg hover:bg-white/5 text-black/40 hover:text-white transition-all">
+          <button onClick={stopAudioAndClose} className="p-2 rounded-lg hover:bg-black/5 text-black/40 hover:text-black transition-all">
             <X size={20} />
           </button>
         </div>
@@ -147,7 +147,7 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
                 {m.role === "user" ? <User size={14} /> : <ShieldCheck size={14} />}
               </div>
               <div className={`flex flex-col gap-2 max-w-[80%] ${m.role === "user" ? "items-end" : "items-start"}`}>
-                <div className={`p-4 rounded-2xl text-sm leading-relaxed ${m.role === "user" ? "bg-white/10 text-white rounded-tr-sm" : "bg-blue-500/10 border border-blue-500/20 text-blue-100 rounded-tl-sm"}`}>
+                <div className={`p-4 rounded-2xl text-sm leading-relaxed ${m.role === "user" ? "bg-black/[0.04] text-black rounded-tr-sm" : "bg-blue-500/10 border border-blue-500/20 text-blue-900 rounded-tl-sm"}`}>
                   {m.text}
                 </div>
                 {m.role === "buyer" && m.audioUrl && (
@@ -167,7 +167,7 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
               <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
                 <Loader2 size={14} className="text-blue-400 animate-spin" />
               </div>
-              <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-100/50 text-sm rounded-tl-sm">
+              <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-900/50 text-sm rounded-tl-sm">
                 Thinking...
               </div>
             </div>
@@ -183,12 +183,12 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               placeholder="Type your pitch or response..."
-              className="flex-1 bg-black/[0.02] border border-black/[0.08] rounded-xl py-3 pl-4 pr-12 text-sm text-white placeholder-white/20 focus:outline-none focus:border-white/20"
+              className="flex-1 bg-black/[0.02] border border-black/[0.08] rounded-xl py-3 pl-4 pr-12 text-sm text-black placeholder-black/30 focus:outline-none focus:border-black/20"
             />
             <button 
               onClick={handleSend}
               disabled={!input.trim() || isProcessing}
-              className="absolute right-2 p-2 bg-white text-black rounded-lg disabled:opacity-50 hover:bg-white/90 transition-all"
+              className="absolute right-2 p-2 bg-black text-white rounded-lg disabled:opacity-50 hover:bg-black/90 transition-all"
             >
               <Send size={16} />
             </button>

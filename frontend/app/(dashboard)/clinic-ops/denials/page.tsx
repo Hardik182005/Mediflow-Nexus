@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -97,8 +97,8 @@ export default function DenialsPage() {
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Denial Intelligence</h1>
-          <p className="text-sm text-black/40 mt-1">Prediction, analysis, fix recommendations & auto-appeals</p>
+          <h1 className="text-2xl font-bold text-black">Denial Intelligence</h1>
+          <p className="text-sm text-black/60 mt-1">Prediction, analysis, fix recommendations & auto-appeals</p>
         </div>
         <button onClick={() => handleGenerateAppeal()} disabled={generatingAppealId === 'header'} className="btn-primary flex items-center gap-2">
           {generatingAppealId === 'header' ? <Loader2 size={16} className="animate-spin" /> : <FileText size={16} />}
@@ -108,15 +108,15 @@ export default function DenialsPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Active Denials", value: denials.length.toString(), icon: AlertTriangle, color: "white" },
-          { label: "At Risk Amount", value: "$47.2K", icon: DollarSign, color: "white" },
-          { label: "Appeals Pending", value: "6", icon: Shield, color: "white" },
-          { label: "Overturn Rate", value: "62%", icon: TrendingDown, color: "white" },
+          { label: "Active Denials", value: denials.length.toString(), icon: AlertTriangle, color: "black" },
+          { label: "At Risk Amount", value: "$47.2K", icon: DollarSign, color: "black" },
+          { label: "Appeals Pending", value: "6", icon: Shield, color: "black" },
+          { label: "Overturn Rate", value: "62%", icon: TrendingDown, color: "black" },
         ].map((s, i) => (
           <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center"><s.icon size={18} style={{ color: s.color }} /></div>
-              <div><p className="text-lg font-bold text-white">{s.value}</p><p className="text-xs text-black/40">{s.label}</p></div>
+              <div className="w-9 h-9 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center"><s.icon size={18} className="text-black" /></div>
+              <div><p className="text-lg font-bold text-black">{s.value}</p><p className="text-xs text-black/50">{s.label}</p></div>
             </div>
           </motion.div>
         ))}
@@ -124,16 +124,16 @@ export default function DenialsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Denial by Reason Chart */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black/[0.07] rounded-2xl-static p-5">
-          <h3 className="text-sm font-semibold text-white mb-4">Denials by Reason</h3>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black/[0.07] rounded-2xl p-5">
+          <h3 className="text-sm font-semibold text-black mb-4">Denials by Reason</h3>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={denialsByReason} layout="vertical" margin={{ left: 20 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.02)" />
-                <XAxis type="number" tick={{ fill: "rgba(255,255,255,0.2)", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis type="category" dataKey="reason" tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 11 }} axisLine={false} tickLine={false} width={140} />
-                <Tooltip contentStyle={{ background: "black", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, fontSize: 12 }} />
-                <Bar dataKey="count" radius={[0, 6, 6, 0]} fill="white" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" />
+                <XAxis type="number" tick={{ fill: "rgba(0,0,0,0.4)", fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis type="category" dataKey="reason" tick={{ fill: "rgba(0,0,0,0.6)", fontSize: 11 }} axisLine={false} tickLine={false} width={140} />
+                <Tooltip contentStyle={{ background: "white", border: "1px solid rgba(0,0,0,0.1)", borderRadius: 8, fontSize: 12, color: "black", fontWeight: "bold" }} />
+                <Bar dataKey="count" radius={[0, 6, 6, 0]} fill="black" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -143,35 +143,35 @@ export default function DenialsPage() {
         <div className="space-y-4">
           {loading ? (
             <div className="bg-white border border-black/[0.07] rounded-2xl p-12 text-center">
-              <Loader2 className="w-8 h-8 text-white/10 animate-spin mx-auto mb-2" />
+              <Loader2 className="w-8 h-8 text-black/20 animate-spin mx-auto mb-2" />
               <p className="text-sm text-black/20">Loading denial data...</p>
             </div>
           ) : denials.length === 0 ? (
             <div className="bg-white border border-black/[0.07] rounded-2xl p-12 text-center">
-              <Shield size={32} className="mx-auto mb-3 text-white/10" />
+              <Shield size={32} className="mx-auto mb-3 text-black/10" />
               <p className="text-sm text-black/40">No active denials found.</p>
-              <p className="text-xs text-black/20 mt-1">Denials from insurance cases will appear here.</p>
+              <p className="text-xs text-black/30 mt-1">Denials from insurance cases will appear here.</p>
             </div>
           ) : denials.map((d, i) => (
             <motion.div key={d.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <div>
-                  <p className="text-sm font-semibold text-white">{d.patient_name || "Patient"}</p>
-                  <p className="text-xs text-black/40">{d.insurance_provider} • CPT {d.cpt_code}</p>
+                  <p className="text-sm font-semibold text-black">{d.patient_name || "Patient"}</p>
+                  <p className="text-xs text-black/60">{d.insurance_provider} • CPT {d.cpt_code}</p>
                 </div>
                 <span className={`badge ${statusBadge[d.status] || "badge-neutral"}`}>{d.status}</span>
               </div>
               <div className="flex items-center justify-between mb-3">
                 <p className="text-xs text-black/60">{d.denial_reason || "Review required"}</p>
-                <p className="text-sm font-bold text-white">{formatCurrency(d.claim_amount || 0)}</p>
+                <p className="text-sm font-bold text-black">{formatCurrency(d.claim_amount || 0)}</p>
               </div>
               <div className="mb-3">
                 <div className="flex justify-between text-xs mb-1">
                   <span className="text-black/40">Risk Score</span>
-                  <span className="text-white font-bold">{d.denial_risk_score || 0}%</span>
+                  <span className="text-black font-bold">{d.denial_risk_score || 0}%</span>
                 </div>
                 <div className="h-1.5 bg-black/[0.04] border border-black/[0.08] rounded-full overflow-hidden">
-                  <div className="h-full rounded-full bg-white" style={{ width: `${d.denial_risk_score || 0}%` }} />
+                  <div className="h-full rounded-full bg-black" style={{ width: `${d.denial_risk_score || 0}%` }} />
                 </div>
               </div>
               {expandedId === d.id && (

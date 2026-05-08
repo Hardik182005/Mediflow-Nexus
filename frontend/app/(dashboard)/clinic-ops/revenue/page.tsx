@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -46,8 +46,8 @@ export default function RevenuePage() {
         </div>
       )}
       <div>
-        <h1 className="text-2xl font-bold text-white">Revenue Intelligence</h1>
-        <p className="text-sm text-black/40 mt-1">Reimbursement prediction, leakage detection & CPT profitability</p>
+        <h1 className="text-2xl font-bold text-black">Revenue Intelligence</h1>
+        <p className="text-sm text-black/60 mt-1">Reimbursement prediction, leakage detection & CPT profitability</p>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
@@ -60,7 +60,7 @@ export default function RevenuePage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center"><s.icon size={18} className="text-black" /></div>
-                <div><p className="text-lg font-bold text-white">{s.value}</p><p className="text-xs text-black/40">{s.label}</p></div>
+                <div><p className="text-lg font-bold text-black">{s.value}</p><p className="text-xs text-black/50">{s.label}</p></div>
               </div>
               <span className="text-xs font-semibold text-black/60">{s.change >= 0 ? "+" : ""}{s.change}%</span>
             </div>
@@ -68,31 +68,31 @@ export default function RevenuePage() {
         ))}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black/[0.07] rounded-2xl-static p-5">
-          <h3 className="text-sm font-semibold text-white mb-4">Revenue vs Predicted</h3>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black/[0.07] rounded-2xl p-5">
+          <h3 className="text-sm font-semibold text-black mb-4">Revenue vs Predicted</h3>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={revenueChartData}>
                 <defs>
-                  <linearGradient id="revGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="white" stopOpacity={0.2} /><stop offset="100%" stopColor="white" stopOpacity={0} /></linearGradient>
+                  <linearGradient id="revGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="black" stopOpacity={0.05} /><stop offset="100%" stopColor="black" stopOpacity={0} /></linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.02)" />
-                <XAxis dataKey="month" tick={{ fill: "rgba(255,255,255,0.2)", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "rgba(255,255,255,0.2)", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v / 1000}K`} />
-                <Tooltip contentStyle={{ background: "black", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, fontSize: 12 }} />
-                <Area type="monotone" dataKey="revenue" stroke="white" strokeWidth={2} fill="url(#revGrad2)" name="Revenue" />
-                <Area type="monotone" dataKey="predicted" stroke="rgba(255,255,255,0.3)" strokeWidth={2} strokeDasharray="5 5" fill="none" name="Predicted" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" />
+                <XAxis dataKey="month" tick={{ fill: "rgba(0,0,0,0.4)", fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: "rgba(0,0,0,0.4)", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v / 1000}K`} />
+                <Tooltip contentStyle={{ background: "white", border: "1px solid rgba(0,0,0,0.1)", borderRadius: 8, fontSize: 12, color: "black", fontWeight: "bold" }} />
+                <Area type="monotone" dataKey="revenue" stroke="black" strokeWidth={2} fill="url(#revGrad2)" name="Revenue" />
+                <Area type="monotone" dataKey="predicted" stroke="rgba(0,0,0,0.3)" strokeWidth={2} strokeDasharray="5 5" fill="none" name="Predicted" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-white border border-black/[0.07] rounded-2xl-static p-5">
-          <h3 className="text-sm font-semibold text-white mb-4">Revenue Leakage Detector</h3>
+          <h3 className="text-sm font-semibold text-black mb-4">Revenue Leakage Detector</h3>
           <div className="space-y-3">
             {leakageItems.map((item) => (
               <div key={item.source} className="flex items-center justify-between p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
                 <div className="flex items-center gap-3">
-                  <div className={`w-2 h-2 rounded-full ${item.severity === "high" ? "bg-white" : item.severity === "medium" ? "bg-white/40" : "bg-white/10"}`} />
+                  <div className={`w-2 h-2 rounded-full ${item.severity === "high" ? "bg-black" : item.severity === "medium" ? "bg-black/40" : "bg-black/10"}`} />
                   <span className="text-sm text-black/60">{item.source}</span>
                 </div>
                 <span className="text-sm font-semibold text-black/40">{formatCurrency(item.amount)}</span>
@@ -102,27 +102,27 @@ export default function RevenuePage() {
         </motion.div>
       </div>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-white border border-black/[0.07] rounded-2xl-static overflow-hidden">
-        <div className="p-5 pb-0"><h3 className="text-sm font-semibold text-white">CPT Profitability Engine</h3></div>
+        <div className="p-5 pb-0"><h3 className="text-sm font-semibold text-black">CPT Profitability Engine</h3></div>
         <div className="overflow-x-auto">
           <table className="data-table">
             <thead><tr><th>CPT Code</th><th>Description</th><th>Revenue</th><th>Cost</th><th>Margin</th><th>Volume</th><th>Total Revenue</th></tr></thead>
             <tbody>
               {cptProfitability.map((c) => (
                 <tr key={c.code}>
-                  <td><code className="text-sm text-white bg-white/10 px-2 py-0.5 rounded">{c.code}</code></td>
+                  <td><code className="text-sm text-black bg-black/5 px-2 py-0.5 rounded">{c.code}</code></td>
                   <td className="text-sm text-black/60">{c.name}</td>
-                  <td className="text-sm text-white">{formatCurrency(c.revenue)}</td>
+                  <td className="text-sm text-black font-medium">{formatCurrency(c.revenue)}</td>
                   <td className="text-sm text-black/20">{formatCurrency(c.cost)}</td>
                   <td>
                     <div className="flex items-center gap-2">
                       <div className="w-12 h-1.5 bg-black/[0.04] border border-black/[0.08] rounded-full overflow-hidden">
-                        <div className="h-full rounded-full bg-white" style={{ width: `${c.margin}%` }} />
+                        <div className="h-full rounded-full bg-black" style={{ width: `${c.margin}%` }} />
                       </div>
                       <span className="text-xs font-semibold text-black/60">{c.margin}%</span>
                     </div>
                   </td>
                   <td className="text-sm text-black/20">{c.volume}</td>
-                  <td className="text-sm font-semibold text-white">{formatCurrency(c.revenue * c.volume)}</td>
+                  <td className="text-sm font-semibold text-black">{formatCurrency(c.revenue * c.volume)}</td>
                 </tr>
               ))}
             </tbody>

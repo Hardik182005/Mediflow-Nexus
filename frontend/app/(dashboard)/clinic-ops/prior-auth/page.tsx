@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -120,23 +120,23 @@ export default function PriorAuthPage() {
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Prior Authorization Intelligence</h1>
-          <p className="text-sm text-black/40 mt-1">Requirement detection, packet generation & approval prediction</p>
+          <h1 className="text-2xl font-bold text-black">Prior Authorization Intelligence</h1>
+          <p className="text-sm text-black/60 mt-1">Requirement detection, packet generation & approval prediction</p>
         </div>
         <button onClick={() => setShowNewPAModal(true)} className="btn-primary flex items-center gap-2"><Plus size={16} /> New PA Request</button>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Pending PAs", value: cases.filter(c => c.status === 'pending').length.toString(), icon: Clock, color: "white" },
-          { label: "Approved", value: cases.filter(c => c.status === 'verified').length.toString(), icon: CheckCircle, color: "white" },
-          { label: "Denied", value: cases.filter(c => c.status === 'denied').length.toString(), icon: XCircle, color: "white" },
-          { label: "Avg Approval Time", value: "3.4 days", icon: FileCheck, color: "white" },
+          { label: "Pending PAs", value: cases.filter(c => c.status === 'pending').length.toString(), icon: Clock, color: "black" },
+          { label: "Approved", value: cases.filter(c => c.status === 'verified').length.toString(), icon: CheckCircle, color: "black" },
+          { label: "Denied", value: cases.filter(c => c.status === 'denied').length.toString(), icon: XCircle, color: "black" },
+          { label: "Avg Approval Time", value: "3.4 days", icon: FileCheck, color: "black" },
         ].map((s, i) => (
           <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center"><s.icon size={18} className="text-black" /></div>
-              <div><p className="text-lg font-bold text-white">{s.value}</p><p className="text-xs text-black/40">{s.label}</p></div>
+              <div><p className="text-lg font-bold text-black">{s.value}</p><p className="text-xs text-black/50">{s.label}</p></div>
             </div>
           </motion.div>
         ))}
@@ -146,12 +146,12 @@ export default function PriorAuthPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {loading ? (
           <div className="bg-white border border-black/[0.07] rounded-2xl p-12 text-center col-span-2">
-            <Loader2 className="w-8 h-8 text-white/10 animate-spin mx-auto mb-2" />
-            <p className="text-sm text-black/20">Loading prior auth cases...</p>
+            <Loader2 className="w-8 h-8 text-black/10 animate-spin mx-auto mb-2" />
+            <p className="text-sm text-black/40">Loading prior auth cases...</p>
           </div>
         ) : cases.length === 0 ? (
           <div className="bg-white border border-black/[0.07] rounded-2xl p-12 text-center col-span-2">
-            <FileCheck size={32} className="mx-auto mb-3 text-white/10" />
+            <FileCheck size={32} className="mx-auto mb-3 text-black/10" />
             <p className="text-sm text-black/40">No prior auth cases found.</p>
             <p className="text-xs text-black/20 mt-1">Click "New PA Request" to create one, or cases from insurance verification will appear here.</p>
           </div>
@@ -163,8 +163,8 @@ export default function PriorAuthPage() {
                   {(pa.patient_name || "?").split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">{pa.patient_name || "Unknown"}</p>
-                  <p className="text-xs text-black/40">{pa.insurance_provider} • {pa.id?.slice(0, 8)}</p>
+                  <p className="text-sm font-semibold text-black">{pa.patient_name || "Unknown"}</p>
+                  <p className="text-xs text-black/60">{pa.insurance_provider} • {pa.id?.slice(0, 8)}</p>
                 </div>
               </div>
               <span className={`badge ${statusBadge[pa.status] || "badge-neutral"}`}>{(pa.status || "pending").replace("_", " ")}</span>
@@ -180,8 +180,8 @@ export default function PriorAuthPage() {
                 <code className="text-sm text-black/40">{pa.denial_risk_score || 0}%</code>
               </div>
               <div>
-                <p className="text-xs text-[#908fa0]">Deductible</p>
-                <p className="text-sm text-[#c7c4d7]">${pa.deductible || 0}</p>
+                <p className="text-xs text-black/40">Deductible</p>
+                <p className="text-sm text-black/60">${pa.deductible || 0}</p>
               </div>
             </div>
 
@@ -192,7 +192,7 @@ export default function PriorAuthPage() {
                 <span className="font-bold text-black/60">{100 - (pa.denial_risk_score || 0)}%</span>
               </div>
               <div className="h-2 bg-black/[0.04] border border-black/[0.08] rounded-full overflow-hidden">
-                <motion.div initial={{ width: 0 }} animate={{ width: `${100 - (pa.denial_risk_score || 0)}%` }} transition={{ delay: 0.4, duration: 0.8 }} className="h-full rounded-full bg-white" />
+                <motion.div initial={{ width: 0 }} animate={{ width: `${100 - (pa.denial_risk_score || 0)}%` }} transition={{ delay: 0.4, duration: 0.8 }} className="h-full rounded-full bg-black" />
               </div>
             </div>
 
@@ -240,8 +240,8 @@ export default function PriorAuthPage() {
               className="w-full max-w-md bg-white border border-black/[0.08] rounded-2xl p-6 space-y-4"
             >
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-white">New PA Request</h3>
-                <button onClick={() => setShowNewPAModal(false)} className="text-black/30 hover:text-white"><X size={18} /></button>
+                <h3 className="text-lg font-bold text-black">New PA Request</h3>
+                <button onClick={() => setShowNewPAModal(false)} className="text-black/30 hover:text-black transition-colors"><X size={18} /></button>
               </div>
               <div className="space-y-3">
                 <div>

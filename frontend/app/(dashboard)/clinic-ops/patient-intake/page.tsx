@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,23 +8,15 @@ import { createClient } from "@/lib/supabase/client";
 const statusOptions = ['intake', 'verified', 'authorized', 'in_treatment', 'completed', 'dropped'];
 
 const getStatusBadge = (status: string) => {
-  switch (status) {
-    case 'intake': return "bg-blue-500/10 text-blue-400 border-blue-500/20";
-    case 'verified': return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
-    case 'authorized': return "bg-purple-500/10 text-purple-400 border-purple-500/20";
-    case 'in_treatment': return "bg-orange-500/10 text-orange-400 border-orange-500/20";
-    case 'completed': return "bg-zinc-500/10 text-zinc-400 border-zinc-500/20";
-    case 'dropped': return "bg-red-500/10 text-red-400 border-red-500/20";
-    default: return "bg-zinc-500/10 text-zinc-400 border-zinc-500/20";
-  }
+  return "bg-black/[0.04] text-black border-black/[0.1]";
 };
 
 const getScoreColor = (score: number) => {
-  return "text-black/60";
+  return "text-black";
 };
 
 const getScoreBar = (score: number) => {
-  return "bg-white";
+  return "bg-black";
 };
 
 export default function PatientIntakePage() {
@@ -93,18 +85,18 @@ export default function PatientIntakePage() {
   );
 
   const stats = [
-    { label: "Total Patients", value: patients.length.toString(), icon: UserPlus, color: "white" },
-    { label: "Avg Readiness", value: patients.length ? `${Math.round(patients.reduce((acc, p) => acc + (p.treatment_readiness_score || 0), 0) / patients.length)}%` : "0%", icon: CheckCircle, color: "white" },
-    { label: "Docs Incomplete", value: patients.filter(p => p.document_completeness < 80).length.toString(), icon: AlertCircle, color: "white" },
-    { label: "Recent Additions", value: patients.filter(p => new Date(p.created_at) > new Date(Date.now() - 86400000)).length.toString(), icon: Clock, color: "white" },
+    { label: "Total Patients", value: patients.length.toString(), icon: UserPlus, color: "black" },
+    { label: "Avg Readiness", value: patients.length ? `${Math.round(patients.reduce((acc, p) => acc + (p.treatment_readiness_score || 0), 0) / patients.length)}%` : "0%", icon: CheckCircle, color: "black" },
+    { label: "Docs Incomplete", value: patients.filter(p => p.document_completeness < 80).length.toString(), icon: AlertCircle, color: "black" },
+    { label: "Recent Additions", value: patients.filter(p => new Date(p.created_at) > new Date(Date.now() - 86400000)).length.toString(), icon: Clock, color: "black" },
   ];
 
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Patient Intake Intelligence</h1>
-          <p className="text-sm text-black/40 mt-1">Smart intake, document tracking & readiness scoring</p>
+          <h1 className="text-2xl font-bold text-black">Patient Intake Intelligence</h1>
+          <p className="text-sm text-black/60 mt-1">Smart intake, document tracking & readiness scoring</p>
         </div>
         <button 
           onClick={() => setShowModal(true)}
@@ -123,8 +115,8 @@ export default function PatientIntakePage() {
                 <s.icon size={18} style={{ color: s.color }} />
               </div>
               <div>
-                <p className="text-lg font-bold text-white">{s.value}</p>
-                <p className="text-xs text-black/40">{s.label}</p>
+                <p className="text-lg font-bold text-black">{s.value}</p>
+                <p className="text-xs text-black/50">{s.label}</p>
               </div>
             </div>
           </motion.div>
@@ -183,8 +175,8 @@ export default function PatientIntakePage() {
                             {p.first_name[0]}{p.last_name[0]}
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-white">{p.first_name} {p.last_name}</p>
-                            <p className="text-[10px] font-mono text-black/20">{p.id.slice(0, 8)}</p>
+                            <p className="text-sm font-medium text-black">{p.first_name} {p.last_name}</p>
+                            <p className="text-[10px] font-mono text-black/40">{p.id.slice(0, 8)}</p>
                           </div>
                         </div>
                       </td>
@@ -198,7 +190,7 @@ export default function PatientIntakePage() {
                         <div className="flex items-center gap-2">
                           <div className="w-16 h-1.5 bg-black/[0.04] rounded-full overflow-hidden">
                             <div 
-                              className="h-full rounded-full bg-white" 
+                              className="h-full rounded-full bg-black" 
                               style={{ width: `${p.treatment_readiness_score}%` }} 
                             />
                           </div>
@@ -209,11 +201,11 @@ export default function PatientIntakePage() {
                         <div className="flex items-center gap-2">
                           <div className="w-16 h-1.5 bg-black/[0.04] rounded-full overflow-hidden">
                             <div 
-                              className="h-full rounded-full bg-emerald-500" 
+                              className="h-full rounded-full bg-black" 
                               style={{ width: `${p.document_completeness}%` }} 
                             />
                           </div>
-                          <span className="text-xs font-semibold text-emerald-400/60">{p.document_completeness}%</span>
+                          <span className="text-xs font-semibold text-black/60">{p.document_completeness}%</span>
                         </div>
                       </td>
                     </motion.tr>
@@ -239,13 +231,13 @@ export default function PatientIntakePage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-xl bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+              className="relative w-full max-w-xl bg-white border border-black/10 rounded-2xl shadow-2xl overflow-hidden"
             >
-              <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+              <div className="px-6 py-4 border-b border-black/10 flex items-center justify-between">
+                <h3 className="text-lg font-bold text-black flex items-center gap-2">
                   <UserPlus size={18} className="text-black" /> New Patient Intake
                 </h3>
-                <button onClick={() => setShowModal(false)} className="text-black/40 hover:text-white transition-colors">
+                <button onClick={() => setShowModal(false)} className="text-black/40 hover:text-black transition-colors">
                   <X size={20} />
                 </button>
               </div>

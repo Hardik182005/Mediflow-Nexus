@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -317,8 +317,8 @@ export default function BuyerDiscoveryPage() {
       )}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Buyer Discovery</h1>
-          <p className="text-sm text-black/40 mt-1">AI-powered hospital & clinic targeting</p>
+          <h1 className="text-2xl font-bold text-black tracking-tight">Buyer Discovery</h1>
+          <p className="text-sm text-black/60 mt-1">AI-powered hospital & clinic targeting</p>
         </div>
         <div className="flex items-center gap-3">
           <select 
@@ -341,8 +341,8 @@ export default function BuyerDiscoveryPage() {
 
       {/* Product Context Upload */}
       <div className="bg-white border border-black/[0.07] rounded-2xl p-5">
-        <h2 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-          <FileText size={16} className="text-black" />
+        <h2 className="text-sm font-semibold text-black mb-4 flex items-center gap-2">
+          <FileText size={16} className="text-black/60" />
           Supplemental Product Context (Optional)
         </h2>
         <ContextFileUpload onChange={(files: any) => setProductFiles(files)} />
@@ -362,8 +362,8 @@ export default function BuyerDiscoveryPage() {
                 <s.icon size={20} className="text-black/30" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white tracking-tight">{s.value}</p>
-                <p className="text-[10px] text-black/30 uppercase font-bold tracking-widest">{s.label}</p>
+                <p className="text-2xl font-bold text-black tracking-tight">{s.value}</p>
+                <p className="text-[10px] text-black/50 uppercase font-bold tracking-widest">{s.label}</p>
               </div>
             </div>
           </motion.div>
@@ -378,7 +378,7 @@ export default function BuyerDiscoveryPage() {
             placeholder="Search discovered buyers..." 
             value={searchTerm} 
             onChange={(e) => setSearchTerm(e.target.value)} 
-            className="input-field pl-12 h-12 bg-black border-white/10" 
+            className="input-field pl-12 h-12 bg-white border-black/10 text-black" 
           />
         </div>
         <button 
@@ -396,12 +396,12 @@ export default function BuyerDiscoveryPage() {
             <div className="flex items-center gap-6 flex-wrap">
               <div className="flex items-center gap-2">
                 <label className="text-xs text-black/40 font-medium">Min Score:</label>
-                <input type="range" min={0} max={100} value={minScore} onChange={(e) => setMinScore(parseInt(e.target.value))} className="w-32 accent-white" />
-                <span className="text-xs font-bold text-white w-8">{minScore}%</span>
+                <input type="range" min={0} max={100} value={minScore} onChange={(e) => setMinScore(parseInt(e.target.value))} className="w-32 accent-black" />
+                <span className="text-xs font-bold text-black w-8">{minScore}%</span>
               </div>
               <div className="flex items-center gap-2">
                 <label className="text-xs text-black/40 font-medium">Status:</label>
-                <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="bg-[#0A0A0A] text-xs text-black/60 px-3 py-1.5 rounded-lg border border-black/[0.08] outline-none">
+                <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="bg-white text-xs text-black/60 px-3 py-1.5 rounded-lg border border-black/[0.08] outline-none">
                   <option value="all">All</option>
                   <option value="perfect">Perfect</option>
                   <option value="strong">Strong</option>
@@ -433,17 +433,17 @@ export default function BuyerDiscoveryPage() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-black/[0.02] border border-black/[0.07] flex items-center justify-center text-white text-lg font-bold group-hover:bg-black/[0.04] transition-colors uppercase">
+                    <div className="w-12 h-12 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center text-black text-lg font-bold group-hover:bg-black/[0.06] transition-colors uppercase">
                       {b.buyer_org[0]}
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-white">{b.buyer_org}</h3>
-                      <p className="text-[10px] text-black/40 font-bold uppercase tracking-widest">{b.buyer_name}</p>
+                      <h3 className="text-sm font-bold text-black">{b.buyer_org}</h3>
+                      <p className="text-[10px] text-black/50 font-bold uppercase tracking-widest">{b.buyer_name}</p>
                     </div>
                   </div>
                   <div className="flex flex-col items-end">
-                    <div className="flex items-center gap-1 text-white">
-                      <Star size={12} className="fill-white" />
+                    <div className="flex items-center gap-1 text-black">
+                      <Star size={12} className="fill-black" />
                       <span className="text-sm font-bold">{b.match_score}%</span>
                     </div>
                     <span className="text-[8px] font-bold text-black/20 uppercase tracking-tighter">AI Score</span>
@@ -467,7 +467,7 @@ export default function BuyerDiscoveryPage() {
                     {b.pitch_deck_json ? (
                       <button 
                         onClick={() => handleViewPitch(b.pitch_deck_json, b.buyer_org)}
-                        className="p-2 rounded-lg bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all flex items-center gap-2"
+                        className="p-2 rounded-lg bg-black text-white border border-black hover:bg-black/90 transition-all flex items-center gap-2"
                       >
                         <Presentation size={14} />
                         <span className="text-[10px] font-bold uppercase tracking-widest">View Pitch</span>
@@ -485,14 +485,14 @@ export default function BuyerDiscoveryPage() {
                       </button>
                     )}
                     {connectedBuyers.includes(b.id) ? (
-                      <span className="text-[10px] font-bold text-white flex items-center gap-1 py-2 px-4">
+                      <span className="text-[10px] font-bold text-black flex items-center gap-1 py-2 px-4">
                         ✓ Connected
                       </span>
                     ) : (
                       <>
                         <button
                           onClick={() => openRoleplayModal(b)}
-                          className="p-2 rounded-lg bg-black/[0.02] border border-black/[0.08] text-black/40 hover:text-white hover:bg-black/[0.04] transition-all flex items-center gap-2"
+                          className="p-2 rounded-lg bg-black/[0.02] border border-black/[0.08] text-black/60 hover:text-black hover:bg-black/[0.06] transition-all flex items-center gap-2"
                         >
                           <Mic size={14} />
                           <span className="text-[10px] font-bold uppercase tracking-widest hidden xl:block">Mock Pitch</span>
@@ -536,8 +536,8 @@ export default function BuyerDiscoveryPage() {
                 <Search size={32} />
               </div>
               <div>
-                <p className="text-white font-bold">{buyers.length === 0 ? 'No Buyer Discoveries Yet' : 'No matches found'}</p>
-                <p className="text-sm text-black/40 mt-1 max-w-xs mx-auto">
+                <p className="text-black font-bold">{buyers.length === 0 ? 'No Buyer Discoveries Yet' : 'No matches found'}</p>
+                <p className="text-sm text-black/60 mt-1 max-w-xs mx-auto">
                   {buyers.length === 0 ? 'Select a startup and click "Discover Perfect Matches" to find your ideal healthcare buyers.' : 'Try adjusting your search or filters.'}
                 </p>
               </div>
@@ -565,12 +565,12 @@ export default function BuyerDiscoveryPage() {
               {/* Header */}
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-black/[0.02] border border-black/[0.08] flex items-center justify-center text-white text-base font-bold uppercase">
+                  <div className="w-9 h-9 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center text-black text-base font-bold uppercase">
                     {(connectModal.buyer_org || "?")[0]}
                   </div>
                   <div>
-                    <h3 className="text-[15px] font-bold text-white">{connectModal.buyer_org}</h3>
-                    <p className="text-[10px] text-black/40 uppercase tracking-widest">{connectModal.buyer_name} · {connectModal.match_score}% AI Match</p>
+                    <h3 className="text-[15px] font-bold text-black">{connectModal.buyer_org}</h3>
+                    <p className="text-[10px] text-black/50 uppercase tracking-widest">{connectModal.buyer_name} · {connectModal.match_score}% AI Match</p>
                   </div>
                 </div>
                 <button onClick={() => setConnectModal(null)} className="text-black/30 hover:text-white transition-colors"><X size={18} /></button>
@@ -601,10 +601,10 @@ export default function BuyerDiscoveryPage() {
                     {/* Email meta bar */}
                     <div className="px-4 py-3 border-b border-black/[0.06] flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
-                        <p className="text-[9px] text-black/30 uppercase tracking-widest font-bold mb-1">Subject</p>
-                        <p className="text-[13px] font-bold text-white leading-snug">{generatedEmail.subject}</p>
+                        <p className="text-[9px] text-black/40 uppercase tracking-widest font-bold mb-1">Subject</p>
+                        <p className="text-[13px] font-bold text-black leading-snug">{generatedEmail.subject}</p>
                       </div>
-                      <span className="text-[9px] text-black/20 font-mono mt-1 shrink-0">{generatedEmail.wordCount}w</span>
+                      <span className="text-[9px] text-black/30 font-mono mt-1 shrink-0">{generatedEmail.wordCount}w</span>
                     </div>
 
                     {/* Email body */}
@@ -612,7 +612,7 @@ export default function BuyerDiscoveryPage() {
                       <p className="text-[11px] text-black/30 uppercase tracking-widest font-bold mb-3 flex items-center gap-1.5">
                         <Mail size={10} /> To: {generatedEmail.recipientName} · {connectModal.buyer_org}
                       </p>
-                      <pre className="text-[12px] text-white/70 leading-relaxed whitespace-pre-wrap font-sans">
+                      <pre className="text-[12px] text-black/80 leading-relaxed whitespace-pre-wrap font-sans">
                         {generatedEmail.body}
                       </pre>
                     </div>

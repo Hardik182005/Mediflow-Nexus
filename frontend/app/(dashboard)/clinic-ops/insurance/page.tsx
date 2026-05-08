@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -83,8 +83,8 @@ export default function InsurancePage() {
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Insurance Intelligence</h1>
-          <p className="text-sm text-black/40 mt-1">AI-powered VOB analysis, verification & denial prediction</p>
+          <h1 className="text-2xl font-bold text-black">Insurance Intelligence</h1>
+          <p className="text-sm text-black/60 mt-1">AI-powered VOB analysis, verification & denial prediction</p>
         </div>
         <button onClick={() => setTab("analyzer")} className="btn-primary flex items-center gap-2">
           <Brain size={15} /> AI Analyzer
@@ -100,8 +100,8 @@ export default function InsurancePage() {
                 <s.icon size={18} className="text-black/60" />
               </div>
               <div>
-                <p className="text-lg font-bold text-white">{s.value}</p>
-                <p className="text-xs text-black/40">{s.label}</p>
+                <p className="text-lg font-bold text-black">{s.value}</p>
+                <p className="text-xs text-black/50">{s.label}</p>
               </div>
             </div>
           </motion.div>
@@ -113,7 +113,7 @@ export default function InsurancePage() {
         {(["records", "analyzer"] as Tab[]).map((t) => (
           <button key={t} onClick={() => setTab(t)}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all capitalize ${
-              tab === t ? "bg-white text-black" : "text-black/40 hover:text-white/70"
+              tab === t ? "bg-white text-black border border-black/10 shadow-sm" : "text-black/40 hover:text-black/60"
             }`}
           >
             {t === "analyzer" ? "🧠 AI Analyzer" : "📋 VOB Records"}
@@ -141,8 +141,8 @@ export default function InsurancePage() {
                     {loading ? (
                       <tr>
                         <td colSpan={5} className="text-center py-20">
-                          <Loader2 className="w-8 h-8 text-white/10 animate-spin mx-auto mb-2" />
-                          <p className="text-xs text-black/20">Loading insurance cases...</p>
+                          <Loader2 className="w-8 h-8 text-black/10 animate-spin mx-auto mb-2" />
+                          <p className="text-xs text-black/40">Loading insurance cases...</p>
                         </td>
                       </tr>
                     ) : cases.length === 0 ? (
@@ -167,7 +167,7 @@ export default function InsurancePage() {
                                   {(c.patient_name || "?")[0]}
                                 </div>
                                 <div>
-                                  <p className="text-sm font-medium text-white">{c.patient_name || "Unknown"}</p>
+                                  <p className="text-sm font-medium text-black">{c.patient_name || "Unknown"}</p>
                                 </div>
                               </div>
                             </td>
@@ -210,9 +210,9 @@ export default function InsurancePage() {
                     <div className="absolute inset-0 rounded-full border-2 border-t-white border-white/10 animate-spin" />
                   </div>
                   <div className="text-center space-y-1">
-                    <p className="text-white font-semibold text-sm">Running AI VOB Analysis</p>
-                    <p className="text-black/40 text-xs">Checking coverage, PA requirements, denial risk & revenue impact...</p>
-                    <p className="text-black/20 text-[11px]">This may take 15–30 seconds</p>
+                    <p className="text-black font-semibold text-sm">Running AI VOB Analysis</p>
+                    <p className="text-black/60 text-xs">Checking coverage, PA requirements, denial risk & revenue impact...</p>
+                    <p className="text-black/40 text-[11px]">This may take 15–30 seconds</p>
                   </div>
                   <div className="flex gap-1">
                     {[0, 1, 2, 3, 4].map((i) => (
@@ -230,10 +230,10 @@ export default function InsurancePage() {
 
               {phase === "error" && (
                 <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white border border-black/[0.07] rounded-2xl p-5 space-y-3">
-                  <p className="text-sm font-semibold text-white flex items-center gap-2">
+                  <p className="text-sm font-semibold text-black flex items-center gap-2">
                     <AlertTriangle size={15} className="text-black/60" /> Analysis Failed
                   </p>
-                  <p className="text-xs text-black/50">{error}</p>
+                  <p className="text-xs text-black/60">{error}</p>
                   <button onClick={handleReset} className="btn-primary text-xs">← Try Again</button>
                 </motion.div>
               )}
