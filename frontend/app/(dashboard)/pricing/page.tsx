@@ -67,13 +67,13 @@ export default function PricingPage() {
       {/* Header */}
       <div className="text-center pt-4">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.03] border border-black/[0.08] text-[12px] font-medium text-black/50 mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-black text-[12px] font-medium text-black mb-6">
             <Shield size={12} /> SOC2 + HIPAA Compliant
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-black tracking-tight mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
             Simple, transparent pricing
           </h1>
-          <p className="text-black/45 max-w-xl mx-auto text-[15px] leading-relaxed">
+          <p className="text-black max-w-xl mx-auto text-[15px] leading-relaxed">
             Start free. Scale when ready. No hidden fees. Cancel anytime.
           </p>
         </motion.div>
@@ -90,17 +90,17 @@ export default function PricingPage() {
             className={`relative rounded-2xl p-8 flex flex-col transition-all duration-200 ${
               tier.highlight
                 ? "bg-black text-white border-2 border-black shadow-2xl scale-[1.02]"
-                : "bg-white border border-black/[0.08] hover:border-black/15 hover:shadow-lg"
+                : "bg-white border border-black hover:border-black hover:shadow-lg"
             }`}
           >
             {tier.badge && (
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-black text-white text-[10px] font-bold uppercase tracking-widest border border-white/20">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-black text-white text-[10px] font-bold uppercase tracking-widest border border-black">
                 {tier.badge}
               </div>
             )}
 
             <div className="flex items-center gap-3 mb-5">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${tier.highlight ? "bg-white/10" : "bg-black/[0.05] border border-black/[0.08]"}`}>
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${tier.highlight ? "bg-white/10" : "bg-white border border-black"}`}>
                 <tier.icon size={18} className={tier.highlight ? "text-white" : "text-black"} />
               </div>
               <h3 className={`text-[17px] font-bold ${tier.highlight ? "text-white" : "text-black"}`}>{tier.name}</h3>
@@ -108,16 +108,16 @@ export default function PricingPage() {
 
             <div className="mb-4">
               <span className={`text-4xl font-bold tracking-tight ${tier.highlight ? "text-white" : "text-black"}`}>{tier.price}</span>
-              <span className={`text-[13px] ml-1 ${tier.highlight ? "text-white/50" : "text-black/40"}`}>{tier.period}</span>
+              <span className={`text-[13px] ml-1 ${tier.highlight ? "text-white" : "text-black"}`}>{tier.period}</span>
             </div>
 
-            <p className={`text-[13px] mb-6 leading-relaxed ${tier.highlight ? "text-white/60" : "text-black/50"}`}>{tier.description}</p>
+            <p className={`text-[13px] mb-6 leading-relaxed ${tier.highlight ? "text-white" : "text-black"}`}>{tier.description}</p>
 
             <div className="space-y-2.5 flex-1 mb-8">
               {tier.features.map((f) => (
                 <div key={f} className="flex items-start gap-2.5">
-                  <Check size={14} className={`mt-0.5 flex-shrink-0 ${tier.highlight ? "text-white/70" : "text-black/50"}`} />
-                  <span className={`text-[13px] ${tier.highlight ? "text-white/75" : "text-black/60"}`}>{f}</span>
+                  <Check size={14} className={`mt-0.5 flex-shrink-0 ${tier.highlight ? "text-white" : "text-black"}`} />
+                  <span className={`text-[13px] ${tier.highlight ? "text-white" : "text-black"}`}>{f}</span>
                 </div>
               ))}
             </div>
@@ -139,7 +139,7 @@ export default function PricingPage() {
       {/* Enterprise Banner */}
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-black rounded-2xl p-8 text-center">
         <h3 className="text-[20px] font-bold text-white mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>Need a custom deployment?</h3>
-        <p className="text-white/50 text-[13.5px] max-w-lg mx-auto mb-6 leading-relaxed">
+        <p className="text-white text-[13.5px] max-w-lg mx-auto mb-6 leading-relaxed">
           We offer white-label, on-premise, and custom API integrations for hospital networks and health systems across India, Singapore, and ASEAN markets.
         </p>
         <button
@@ -160,13 +160,13 @@ export default function PricingPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35 + i * 0.05 }}
-              className="bg-white border border-black/[0.07] rounded-xl p-5 hover:border-black/12 transition-colors"
+              className="bg-white border border-black rounded-xl p-5 hover:border-black transition-colors"
             >
               <div className="flex items-start gap-3">
-                <HelpCircle size={14} className="text-black/30 mt-0.5 flex-shrink-0" />
+                <HelpCircle size={14} className="text-black mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-[13.5px] font-semibold text-black mb-1.5">{faq.q}</p>
-                  <p className="text-[12.5px] text-black/50 leading-relaxed">{faq.a}</p>
+                  <p className="text-[12.5px] text-black leading-relaxed">{faq.a}</p>
                 </div>
               </div>
             </motion.div>

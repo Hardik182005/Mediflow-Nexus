@@ -93,10 +93,10 @@ export default function Dashboard() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-[24px] font-bold text-black tracking-tight font-serif">Executive Summary</h1>
-          <p className="text-[13px] text-black/40 font-medium">Real-time revenue intelligence and operational metrics.</p>
+          <p className="text-[13px] text-black font-medium">Real-time revenue intelligence and operational metrics.</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="bg-black/5 p-1 rounded-lg flex border border-black/5">
+          <div className="bg-black/5 p-1 rounded-lg flex border border-black">
             {["7d", "30d", "90d", "1y"].map((range) => (
               <button
                 key={range}
@@ -104,14 +104,14 @@ export default function Dashboard() {
                 className={`px-3 py-1.5 text-[12px] font-bold rounded-md transition-all ${
                   timeRange === range 
                     ? "bg-black text-white shadow-md" 
-                    : "text-black/40 hover:text-black"
+                    : "text-black hover:text-black"
                 }`}
               >
                 {range.toUpperCase()}
               </button>
             ))}
           </div>
-          <button onClick={handleExport} className="bg-white border border-black/10 text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-black/5 transition-all flex items-center gap-2 shadow-sm">
+          <button onClick={handleExport} className="bg-white border border-black text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-black/5 transition-all flex items-center gap-2 shadow-sm">
             <Download size={14} />
             Export Report
           </button>
@@ -121,20 +121,20 @@ export default function Dashboard() {
       {/* KPI Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {kpiData.map((kpi, index) => (
-          <div key={index} className="bg-white border border-black/[0.05] rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div key={index} className="bg-white border border-black rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-3">
               <div className="p-2 rounded-lg bg-black text-white">
                 {kpi.icon}
               </div>
               <div className={`flex items-center gap-1 text-[11px] font-bold px-2 py-1 rounded-md ${
-                kpi.isPositive ? "text-black bg-black/5" : "text-black/40 bg-black/[0.02]"
+                kpi.isPositive ? "text-black bg-black/5" : "text-black bg-white"
               }`}>
                 {kpi.isPositive ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
                 {kpi.change}
               </div>
             </div>
             <h3 className="text-[24px] font-bold text-black tracking-tight">{kpi.value}</h3>
-            <p className="text-[12px] text-black/40 font-bold uppercase tracking-wider mt-1">{kpi.title}</p>
+            <p className="text-[12px] text-black font-bold uppercase tracking-wider mt-1">{kpi.title}</p>
           </div>
         ))}
       </div>
@@ -142,20 +142,20 @@ export default function Dashboard() {
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Revenue Chart */}
-        <div className="bg-white border border-black/[0.05] rounded-3xl p-6 shadow-sm">
+        <div className="bg-white border border-black rounded-3xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h3 className="text-[16px] font-bold text-black font-serif">Revenue Trajectory</h3>
-              <p className="text-[11px] text-black/40 uppercase tracking-widest font-bold mt-1">Projected vs Actual</p>
+              <p className="text-[11px] text-black uppercase tracking-widest font-bold mt-1">Projected vs Actual</p>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-black"></div>
-                <span className="text-[11px] text-black/60 font-bold">Actual</span>
+                <span className="text-[11px] text-black font-bold">Actual</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-black/10"></div>
-                <span className="text-[11px] text-black/60 font-bold">Projected</span>
+                <span className="text-[11px] text-black font-bold">Projected</span>
               </div>
             </div>
           </div>
@@ -183,13 +183,13 @@ export default function Dashboard() {
         </div>
 
         {/* Denial Distribution Bar Chart */}
-        <div className="bg-white border border-black/[0.05] rounded-3xl p-6 shadow-sm">
+        <div className="bg-white border border-black rounded-3xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h3 className="text-[16px] font-bold text-black font-serif">Denial Distribution</h3>
-              <p className="text-[11px] text-black/40 uppercase tracking-widest font-bold mt-1">By Category</p>
+              <p className="text-[11px] text-black uppercase tracking-widest font-bold mt-1">By Category</p>
             </div>
-            <button className="text-[11px] text-black/60 hover:text-black font-bold uppercase tracking-tight transition-colors">View All</button>
+            <button className="text-[11px] text-black hover:text-black font-bold uppercase tracking-tight transition-colors">View All</button>
           </div>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -210,33 +210,33 @@ export default function Dashboard() {
       {/* Bottom Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Activity Feed */}
-        <div className="bg-white border border-black/[0.05] rounded-3xl overflow-hidden shadow-sm">
-          <div className="p-6 border-b border-black/[0.05] flex items-center justify-between">
+        <div className="bg-white border border-black rounded-3xl overflow-hidden shadow-sm">
+          <div className="p-6 border-b border-black flex items-center justify-between">
             <div>
               <h3 className="text-[15px] font-bold text-black">Real-Time Intelligence</h3>
-              <p className="text-[11px] text-black/40 font-bold uppercase tracking-widest mt-1">Latest AI Actions</p>
+              <p className="text-[11px] text-black font-bold uppercase tracking-widest mt-1">Latest AI Actions</p>
             </div>
             <div className="px-2 py-1 bg-black text-white text-[10px] font-bold rounded uppercase">Live</div>
           </div>
           <div className="divide-y divide-black/[0.05]">
             {recentActivities.map((activity) => (
-              <div key={activity.id} className="p-5 flex gap-4 hover:bg-black/[0.02] transition-colors cursor-pointer">
+              <div key={activity.id} className="p-5 flex gap-4 hover:bg-white transition-colors cursor-pointer">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  activity.status === 'success' ? 'bg-black text-white' : 'bg-black/5 text-black/40'
+                  activity.status === 'success' ? 'bg-black text-white' : 'bg-black/5 text-black'
                 }`}>
                   {activity.type === 'Verification' ? <ShieldAlert size={16} /> : <Activity size={16} />}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-start mb-1">
                     <p className="text-[14px] font-bold text-black">{activity.patient}</p>
-                    <span className="text-[11px] text-black/30 font-bold">{activity.time}</span>
+                    <span className="text-[11px] text-black font-bold">{activity.time}</span>
                   </div>
-                  <p className="text-[13px] text-black/60 leading-relaxed">{activity.description}</p>
+                  <p className="text-[13px] text-black leading-relaxed">{activity.description}</p>
                 </div>
               </div>
             ))}
           </div>
-          <div className="p-4 bg-black/[0.02] text-center">
+          <div className="p-4 bg-white text-center">
             <button className="text-[12px] font-bold text-black hover:underline transition-all">
               View All Intelligence Logs
             </button>
@@ -244,19 +244,19 @@ export default function Dashboard() {
         </div>
 
         {/* Copilot Mini */}
-        <div className="bg-white border border-black/[0.05] rounded-3xl p-6 flex flex-col shadow-sm relative overflow-hidden">
+        <div className="bg-white border border-black rounded-3xl p-6 flex flex-col shadow-sm relative overflow-hidden">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center shadow-xl">
               <Bot size={24} className="text-white" />
             </div>
             <div>
               <h3 className="text-[16px] font-bold text-black">MediFlow Copilot</h3>
-              <p className="text-[11px] text-black/40 font-bold uppercase tracking-widest">AI Assistant Active</p>
+              <p className="text-[11px] text-black font-bold uppercase tracking-widest">AI Assistant Active</p>
             </div>
           </div>
 
-          <div className="flex-1 bg-black/[0.02] border border-black/[0.05] rounded-2xl p-6 flex flex-col justify-end space-y-6">
-            <div className="bg-white border border-black/[0.05] p-4 rounded-2xl rounded-bl-none shadow-sm text-[13px] text-black leading-relaxed font-medium">
+          <div className="flex-1 bg-white border border-black rounded-2xl p-6 flex flex-col justify-end space-y-6">
+            <div className="bg-white border border-black p-4 rounded-2xl rounded-bl-none shadow-sm text-[13px] text-black leading-relaxed font-medium">
               I've detected a spike in denials from <strong>Blue Cross</strong> for procedure code <strong>99214</strong>. Would you like me to draft an appeal template?
             </div>
             
@@ -264,7 +264,7 @@ export default function Dashboard() {
               <button className="text-[11px] bg-black text-white px-4 py-2 rounded-full font-bold shadow-md hover:bg-black/90 transition-all">
                 Yes, draft template
               </button>
-              <button className="text-[11px] bg-white border border-black/10 text-black px-4 py-2 rounded-full font-bold hover:bg-black/5 transition-all">
+              <button className="text-[11px] bg-white border border-black text-black px-4 py-2 rounded-full font-bold hover:bg-black/5 transition-all">
                 Show affected claims
               </button>
             </div>
@@ -273,7 +273,7 @@ export default function Dashboard() {
               <input 
                 type="text" 
                 placeholder="Ask Copilot anything..." 
-                className="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-[13px] text-black placeholder:text-black/30 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all"
+                className="w-full bg-white border border-black rounded-xl px-4 py-3 text-[13px] text-black placeholder:text-black focus:outline-none focus:ring-2 focus:ring-black/5 transition-all"
               />
               <button className="absolute right-3 top-1/2 -translate-y-1/2 bg-black text-white p-1.5 rounded-lg">
                 <ArrowUpRight size={14} />

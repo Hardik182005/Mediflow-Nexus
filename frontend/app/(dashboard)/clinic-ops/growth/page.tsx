@@ -44,34 +44,34 @@ export default function GrowthPage() {
     fetchReferrals();
   }, []);
 
-  if (loading) return <div className="flex items-center justify-center py-32"><Loader2 className="w-8 h-8 text-white/10 animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center py-32"><Loader2 className="w-8 h-8 text-white animate-spin" /></div>;
 
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto">
       <div>
         <h1 className="text-2xl font-bold text-white">Growth Intelligence</h1>
-        <p className="text-sm text-black/40 mt-1">Referral network, patient retention & growth opportunities</p>
+        <p className="text-sm text-black mt-1">Referral network, patient retention & growth opportunities</p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white border border-black/[0.07] rounded-2xl-static p-5">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white border border-black rounded-2xl-static p-5">
           <h3 className="text-sm font-semibold text-white mb-4">Top Referrers</h3>
           <div className="space-y-3">
             {referrals.map((r) => (
-              <div key={r.id} className="flex items-center justify-between p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
+              <div key={r.id} className="flex items-center justify-between p-3 rounded-lg bg-white border border-black">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-black/[0.04] border border-black/[0.08] flex items-center justify-center text-white text-xs font-bold">
+                  <div className="w-8 h-8 rounded-full bg-white border border-black flex items-center justify-center text-white text-xs font-bold">
                     {(r.referrerName || r.referrer_name || "?").split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">{r.referrerName || r.referrer_name}</p>
-                    <p className="text-xs text-black/40">{r.referrerType || r.referrer_type} • {r.patientCount || r.patient_count} patients</p>
+                    <p className="text-xs text-black">{r.referrerType || r.referrer_type} • {r.patientCount || r.patient_count} patients</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-semibold text-white">${((r.revenue || 0) / 1000).toFixed(0)}K</p>
                   <div className="flex items-center gap-1 text-xs">
-                    {r.trend === "up" ? <ArrowUpRight size={12} className="text-black" /> : r.trend === "down" ? <ArrowDownRight size={12} className="text-black/40" /> : <Minus size={12} className="text-black/20" />}
-                    <span className="text-black/40">{r.conversionRate || r.conversion_rate}% conv</span>
+                    {r.trend === "up" ? <ArrowUpRight size={12} className="text-black" /> : r.trend === "down" ? <ArrowDownRight size={12} className="text-black" /> : <Minus size={12} className="text-black" />}
+                    <span className="text-black">{r.conversionRate || r.conversion_rate}% conv</span>
                   </div>
                 </div>
               </div>
@@ -79,21 +79,21 @@ export default function GrowthPage() {
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black/[0.07] rounded-2xl-static p-5">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black rounded-2xl-static p-5">
           <div className="flex items-center gap-2 mb-4">
             <UserMinus size={16} className="text-black" />
             <h3 className="text-sm font-semibold text-white">Patient Drop-off Predictions</h3>
           </div>
           <div className="space-y-3">
             {dropoffs.map((d, i) => (
-              <div key={d.name} className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
+              <div key={d.name} className="p-3 rounded-lg bg-white border border-black">
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm font-medium text-white">{d.name}</p>
-                  <span className="text-xs font-bold text-black/60">{d.risk}% risk</span>
+                  <span className="text-xs font-bold text-black">{d.risk}% risk</span>
                 </div>
-                <p className="text-xs text-black/40 mb-2">Stage: {d.stage}</p>
-                <p className="text-xs text-black/40">{d.reason}</p>
-                <div className="h-1.5 bg-black/[0.04] border border-black/[0.08] rounded-full mt-2 overflow-hidden">
+                <p className="text-xs text-black mb-2">Stage: {d.stage}</p>
+                <p className="text-xs text-black">{d.reason}</p>
+                <div className="h-1.5 bg-white border border-black rounded-full mt-2 overflow-hidden">
                   <motion.div initial={{ width: 0 }} animate={{ width: `${d.risk}%` }} transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }} className="h-full rounded-full bg-white" />
                 </div>
               </div>
@@ -102,7 +102,7 @@ export default function GrowthPage() {
         </motion.div>
       </div>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-white border border-black/[0.07] rounded-2xl-static p-5">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-white border border-black rounded-2xl-static p-5">
         <div className="flex items-center gap-2 mb-4">
           <Lightbulb size={16} className="text-black" />
           <h3 className="text-sm font-semibold text-white">Growth Opportunity Engine</h3>
@@ -117,7 +117,7 @@ export default function GrowthPage() {
               <p className="text-xs text-[#908fa0] mb-3">{opp.reason}</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-bold text-white">{opp.revenue}</span>
-                <span className="text-xs text-black/40">{opp.confidence}% confidence</span>
+                <span className="text-xs text-black">{opp.confidence}% confidence</span>
               </div>
             </motion.div>
           ))}

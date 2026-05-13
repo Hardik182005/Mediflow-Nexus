@@ -47,7 +47,7 @@ export default function RevenuePage() {
       )}
       <div>
         <h1 className="text-2xl font-bold text-black">Revenue Intelligence</h1>
-        <p className="text-sm text-black/60 mt-1">Reimbursement prediction, leakage detection & CPT profitability</p>
+        <p className="text-sm text-black mt-1">Reimbursement prediction, leakage detection & CPT profitability</p>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
@@ -56,19 +56,19 @@ export default function RevenuePage() {
           { label: "Avg Reimbursement", value: "$1,080", change: 2.1, icon: TrendingUp },
           { label: "Collection Rate", value: "94.2%", change: 1.8, icon: Zap },
         ].map((s, i) => (
-          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-4">
+          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black rounded-2xl p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center"><s.icon size={18} className="text-black" /></div>
-                <div><p className="text-lg font-bold text-black">{s.value}</p><p className="text-xs text-black/50">{s.label}</p></div>
+                <div className="w-9 h-9 rounded-xl bg-white border border-black flex items-center justify-center"><s.icon size={18} className="text-black" /></div>
+                <div><p className="text-lg font-bold text-black">{s.value}</p><p className="text-xs text-black">{s.label}</p></div>
               </div>
-              <span className="text-xs font-semibold text-black/60">{s.change >= 0 ? "+" : ""}{s.change}%</span>
+              <span className="text-xs font-semibold text-black">{s.change >= 0 ? "+" : ""}{s.change}%</span>
             </div>
           </motion.div>
         ))}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black/[0.07] rounded-2xl p-5">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black rounded-2xl p-5">
           <h3 className="text-sm font-semibold text-black mb-4">Revenue vs Predicted</h3>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
@@ -86,22 +86,22 @@ export default function RevenuePage() {
             </ResponsiveContainer>
           </div>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-white border border-black/[0.07] rounded-2xl-static p-5">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-white border border-black rounded-2xl-static p-5">
           <h3 className="text-sm font-semibold text-black mb-4">Revenue Leakage Detector</h3>
           <div className="space-y-3">
             {leakageItems.map((item) => (
-              <div key={item.source} className="flex items-center justify-between p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
+              <div key={item.source} className="flex items-center justify-between p-3 rounded-lg bg-white border border-black">
                 <div className="flex items-center gap-3">
                   <div className={`w-2 h-2 rounded-full ${item.severity === "high" ? "bg-black" : item.severity === "medium" ? "bg-black/40" : "bg-black/10"}`} />
-                  <span className="text-sm text-black/60">{item.source}</span>
+                  <span className="text-sm text-black">{item.source}</span>
                 </div>
-                <span className="text-sm font-semibold text-black/40">{formatCurrency(item.amount)}</span>
+                <span className="text-sm font-semibold text-black">{formatCurrency(item.amount)}</span>
               </div>
             ))}
           </div>
         </motion.div>
       </div>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-white border border-black/[0.07] rounded-2xl-static overflow-hidden">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-white border border-black rounded-2xl-static overflow-hidden">
         <div className="p-5 pb-0"><h3 className="text-sm font-semibold text-black">CPT Profitability Engine</h3></div>
         <div className="overflow-x-auto">
           <table className="data-table">
@@ -110,18 +110,18 @@ export default function RevenuePage() {
               {cptProfitability.map((c) => (
                 <tr key={c.code}>
                   <td><code className="text-sm text-black bg-black/5 px-2 py-0.5 rounded">{c.code}</code></td>
-                  <td className="text-sm text-black/60">{c.name}</td>
+                  <td className="text-sm text-black">{c.name}</td>
                   <td className="text-sm text-black font-medium">{formatCurrency(c.revenue)}</td>
-                  <td className="text-sm text-black/20">{formatCurrency(c.cost)}</td>
+                  <td className="text-sm text-black">{formatCurrency(c.cost)}</td>
                   <td>
                     <div className="flex items-center gap-2">
-                      <div className="w-12 h-1.5 bg-black/[0.04] border border-black/[0.08] rounded-full overflow-hidden">
+                      <div className="w-12 h-1.5 bg-white border border-black rounded-full overflow-hidden">
                         <div className="h-full rounded-full bg-black" style={{ width: `${c.margin}%` }} />
                       </div>
-                      <span className="text-xs font-semibold text-black/60">{c.margin}%</span>
+                      <span className="text-xs font-semibold text-black">{c.margin}%</span>
                     </div>
                   </td>
-                  <td className="text-sm text-black/20">{c.volume}</td>
+                  <td className="text-sm text-black">{c.volume}</td>
                   <td className="text-sm font-semibold text-black">{formatCurrency(c.revenue * c.volume)}</td>
                 </tr>
               ))}

@@ -98,7 +98,7 @@ export default function DenialsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-black">Denial Intelligence</h1>
-          <p className="text-sm text-black/60 mt-1">Prediction, analysis, fix recommendations & auto-appeals</p>
+          <p className="text-sm text-black mt-1">Prediction, analysis, fix recommendations & auto-appeals</p>
         </div>
         <button onClick={() => handleGenerateAppeal()} disabled={generatingAppealId === 'header'} className="btn-primary flex items-center gap-2">
           {generatingAppealId === 'header' ? <Loader2 size={16} className="animate-spin" /> : <FileText size={16} />}
@@ -113,10 +113,10 @@ export default function DenialsPage() {
           { label: "Appeals Pending", value: "6", icon: Shield, color: "black" },
           { label: "Overturn Rate", value: "62%", icon: TrendingDown, color: "black" },
         ].map((s, i) => (
-          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-4">
+          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black rounded-2xl p-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center"><s.icon size={18} className="text-black" /></div>
-              <div><p className="text-lg font-bold text-black">{s.value}</p><p className="text-xs text-black/50">{s.label}</p></div>
+              <div className="w-9 h-9 rounded-xl bg-white border border-black flex items-center justify-center"><s.icon size={18} className="text-black" /></div>
+              <div><p className="text-lg font-bold text-black">{s.value}</p><p className="text-xs text-black">{s.label}</p></div>
             </div>
           </motion.div>
         ))}
@@ -124,7 +124,7 @@ export default function DenialsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Denial by Reason Chart */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black/[0.07] rounded-2xl p-5">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white border border-black rounded-2xl p-5">
           <h3 className="text-sm font-semibold text-black mb-4">Denials by Reason</h3>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
@@ -142,44 +142,44 @@ export default function DenialsPage() {
         {/* Denial Cards */}
         <div className="space-y-4">
           {loading ? (
-            <div className="bg-white border border-black/[0.07] rounded-2xl p-12 text-center">
-              <Loader2 className="w-8 h-8 text-black/20 animate-spin mx-auto mb-2" />
-              <p className="text-sm text-black/20">Loading denial data...</p>
+            <div className="bg-white border border-black rounded-2xl p-12 text-center">
+              <Loader2 className="w-8 h-8 text-black animate-spin mx-auto mb-2" />
+              <p className="text-sm text-black">Loading denial data...</p>
             </div>
           ) : denials.length === 0 ? (
-            <div className="bg-white border border-black/[0.07] rounded-2xl p-12 text-center">
-              <Shield size={32} className="mx-auto mb-3 text-black/10" />
-              <p className="text-sm text-black/40">No active denials found.</p>
-              <p className="text-xs text-black/30 mt-1">Denials from insurance cases will appear here.</p>
+            <div className="bg-white border border-black rounded-2xl p-12 text-center">
+              <Shield size={32} className="mx-auto mb-3 text-black" />
+              <p className="text-sm text-black">No active denials found.</p>
+              <p className="text-xs text-black mt-1">Denials from insurance cases will appear here.</p>
             </div>
           ) : denials.map((d, i) => (
-            <motion.div key={d.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-4">
+            <motion.div key={d.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.05 }} className="bg-white border border-black rounded-2xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <div>
                   <p className="text-sm font-semibold text-black">{d.patient_name || "Patient"}</p>
-                  <p className="text-xs text-black/60">{d.insurance_provider} • CPT {d.cpt_code}</p>
+                  <p className="text-xs text-black">{d.insurance_provider} • CPT {d.cpt_code}</p>
                 </div>
                 <span className={`badge ${statusBadge[d.status] || "badge-neutral"}`}>{d.status}</span>
               </div>
               <div className="flex items-center justify-between mb-3">
-                <p className="text-xs text-black/60">{d.denial_reason || "Review required"}</p>
+                <p className="text-xs text-black">{d.denial_reason || "Review required"}</p>
                 <p className="text-sm font-bold text-black">{formatCurrency(d.claim_amount || 0)}</p>
               </div>
               <div className="mb-3">
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-black/40">Risk Score</span>
+                  <span className="text-black">Risk Score</span>
                   <span className="text-black font-bold">{d.denial_risk_score || 0}%</span>
                 </div>
-                <div className="h-1.5 bg-black/[0.04] border border-black/[0.08] rounded-full overflow-hidden">
+                <div className="h-1.5 bg-white border border-black rounded-full overflow-hidden">
                   <div className="h-full rounded-full bg-black" style={{ width: `${d.denial_risk_score || 0}%` }} />
                 </div>
               </div>
               {expandedId === d.id && (
-                <div className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06] mb-3 text-xs text-black/40 space-y-1">
-                  <p><strong className="text-black/60">Case ID:</strong> {d.id}</p>
-                  <p><strong className="text-black/60">Provider:</strong> {d.insurance_provider}</p>
-                  <p><strong className="text-black/60">Deductible:</strong> {formatCurrency(d.deductible || 0)}</p>
-                  <p><strong className="text-black/60">Created:</strong> {new Date(d.created_at).toLocaleDateString()}</p>
+                <div className="p-3 rounded-lg bg-white border border-black mb-3 text-xs text-black space-y-1">
+                  <p><strong className="text-black">Case ID:</strong> {d.id}</p>
+                  <p><strong className="text-black">Provider:</strong> {d.insurance_provider}</p>
+                  <p><strong className="text-black">Deductible:</strong> {formatCurrency(d.deductible || 0)}</p>
+                  <p><strong className="text-black">Created:</strong> {new Date(d.created_at).toLocaleDateString()}</p>
                 </div>
               )}
               <div className="flex gap-2 mt-3">

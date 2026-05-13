@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 const statusOptions = ['intake', 'verified', 'authorized', 'in_treatment', 'completed', 'dropped'];
 
 const getStatusBadge = (status: string) => {
-  return "bg-black/[0.04] text-black border-black/[0.1]";
+  return "bg-white text-black border-black";
 };
 
 const getScoreColor = (score: number) => {
@@ -96,7 +96,7 @@ export default function PatientIntakePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-black">Patient Intake Intelligence</h1>
-          <p className="text-sm text-black/60 mt-1">Smart intake, document tracking & readiness scoring</p>
+          <p className="text-sm text-black mt-1">Smart intake, document tracking & readiness scoring</p>
         </div>
         <button 
           onClick={() => setShowModal(true)}
@@ -109,14 +109,14 @@ export default function PatientIntakePage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s, i) => (
-          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-4">
+          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black rounded-2xl p-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-black/[0.02] border border-black/[0.06] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-white border border-black flex items-center justify-center">
                 <s.icon size={18} style={{ color: s.color }} />
               </div>
               <div>
                 <p className="text-lg font-bold text-black">{s.value}</p>
-                <p className="text-xs text-black/50">{s.label}</p>
+                <p className="text-xs text-black">{s.label}</p>
               </div>
             </div>
           </motion.div>
@@ -139,12 +139,12 @@ export default function PatientIntakePage() {
       </div>
 
       {/* Table */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="bg-white border border-black/[0.07] rounded-2xl-static overflow-hidden">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="bg-white border border-black rounded-2xl-static overflow-hidden">
         <div className="overflow-x-auto">
           {loading ? (
             <div className="py-20 flex flex-col items-center justify-center gap-4">
-              <Loader2 className="w-8 h-8 text-black/20 animate-spin" />
-              <p className="text-sm text-black/20">Accessing secure health records...</p>
+              <Loader2 className="w-8 h-8 text-black animate-spin" />
+              <p className="text-sm text-black">Accessing secure health records...</p>
             </div>
           ) : (
             <table className="data-table">
@@ -171,41 +171,41 @@ export default function PatientIntakePage() {
                     >
                       <td>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-black/[0.04] text-white flex items-center justify-center text-xs font-bold border border-black/[0.08] uppercase">
+                          <div className="w-8 h-8 rounded-full bg-white text-white flex items-center justify-center text-xs font-bold border border-black uppercase">
                             {p.first_name[0]}{p.last_name[0]}
                           </div>
                           <div>
                             <p className="text-sm font-medium text-black">{p.first_name} {p.last_name}</p>
-                            <p className="text-[10px] font-mono text-black/40">{p.id.slice(0, 8)}</p>
+                            <p className="text-[10px] font-mono text-black">{p.id.slice(0, 8)}</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p className="text-sm text-black/60">{p.insurance_provider}</p>
-                        <p className="text-xs text-black/20">{p.policy_number}</p>
+                        <p className="text-sm text-black">{p.insurance_provider}</p>
+                        <p className="text-xs text-black">{p.policy_number}</p>
                       </td>
-                      <td><code className="text-xs bg-black/[0.02] border border-black/[0.06] text-[#c7c4d7] px-1.5 py-0.5 rounded">{p.diagnosis_code || 'N/A'}</code></td>
+                      <td><code className="text-xs bg-white border border-black text-[#c7c4d7] px-1.5 py-0.5 rounded">{p.diagnosis_code || 'N/A'}</code></td>
                       <td><span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${getStatusBadge(p.status)}`}>{p.status.replace("_", " ")}</span></td>
                       <td>
                         <div className="flex items-center gap-2">
-                          <div className="w-16 h-1.5 bg-black/[0.04] rounded-full overflow-hidden">
+                          <div className="w-16 h-1.5 bg-white rounded-full overflow-hidden">
                             <div 
                               className="h-full rounded-full bg-black" 
                               style={{ width: `${p.treatment_readiness_score}%` }} 
                             />
                           </div>
-                          <span className="text-xs font-semibold text-black/60">{p.treatment_readiness_score}</span>
+                          <span className="text-xs font-semibold text-black">{p.treatment_readiness_score}</span>
                         </div>
                       </td>
                       <td>
                         <div className="flex items-center gap-2">
-                          <div className="w-16 h-1.5 bg-black/[0.04] rounded-full overflow-hidden">
+                          <div className="w-16 h-1.5 bg-white rounded-full overflow-hidden">
                             <div 
                               className="h-full rounded-full bg-black" 
                               style={{ width: `${p.document_completeness}%` }} 
                             />
                           </div>
-                          <span className="text-xs font-semibold text-black/60">{p.document_completeness}%</span>
+                          <span className="text-xs font-semibold text-black">{p.document_completeness}%</span>
                         </div>
                       </td>
                     </motion.tr>
@@ -213,7 +213,7 @@ export default function PatientIntakePage() {
                 </AnimatePresence>
                 {!loading && filteredPatients.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="text-center py-20 text-black/20 italic">No patients found. Click "New Patient" to begin.</td>
+                    <td colSpan={6} className="text-center py-20 text-black italic">No patients found. Click "New Patient" to begin.</td>
                   </tr>
                 )}
               </tbody>
@@ -231,13 +231,13 @@ export default function PatientIntakePage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-xl bg-white border border-black/10 rounded-2xl shadow-2xl overflow-hidden"
+              className="relative w-full max-w-xl bg-white border border-black rounded-2xl shadow-2xl overflow-hidden"
             >
-              <div className="px-6 py-4 border-b border-black/10 flex items-center justify-between">
+              <div className="px-6 py-4 border-b border-black flex items-center justify-between">
                 <h3 className="text-lg font-bold text-black flex items-center gap-2">
                   <UserPlus size={18} className="text-black" /> New Patient Intake
                 </h3>
-                <button onClick={() => setShowModal(false)} className="text-black/40 hover:text-black transition-colors">
+                <button onClick={() => setShowModal(false)} className="text-black hover:text-black transition-colors">
                   <X size={20} />
                 </button>
               </div>
@@ -245,33 +245,33 @@ export default function PatientIntakePage() {
               <form onSubmit={handleAddPatient} className="p-6 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-black/40 uppercase tracking-widest">First Name</label>
+                    <label className="text-xs font-bold text-black uppercase tracking-widest">First Name</label>
                     <input required className="input-field" value={formData.first_name} onChange={(e) => setFormData({...formData, first_name: e.target.value})} placeholder="Jane" />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-black/40 uppercase tracking-widest">Last Name</label>
+                    <label className="text-xs font-bold text-black uppercase tracking-widest">Last Name</label>
                     <input required className="input-field" value={formData.last_name} onChange={(e) => setFormData({...formData, last_name: e.target.value})} placeholder="Doe" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-black/40 uppercase tracking-widest">Insurance Provider</label>
+                    <label className="text-xs font-bold text-black uppercase tracking-widest">Insurance Provider</label>
                     <input className="input-field" value={formData.insurance_provider} onChange={(e) => setFormData({...formData, insurance_provider: e.target.value})} placeholder="UnitedHealthcare" />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-black/40 uppercase tracking-widest">Policy ID</label>
+                    <label className="text-xs font-bold text-black uppercase tracking-widest">Policy ID</label>
                     <input className="input-field" value={formData.policy_number} onChange={(e) => setFormData({...formData, policy_number: e.target.value})} placeholder="UHC-9988-X" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-black/40 uppercase tracking-widest">Diagnosis Code (ICD-10)</label>
+                    <label className="text-xs font-bold text-black uppercase tracking-widest">Diagnosis Code (ICD-10)</label>
                     <input className="input-field" value={formData.diagnosis_code} onChange={(e) => setFormData({...formData, diagnosis_code: e.target.value})} placeholder="F32.9" />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-black/40 uppercase tracking-widest">Intake Status</label>
+                    <label className="text-xs font-bold text-black uppercase tracking-widest">Intake Status</label>
                     <select className="input-field" value={formData.status} onChange={(e) => setFormData({...formData, status: e.target.value})}>
                       {statusOptions.map(opt => (
                         <option key={opt} value={opt}>{opt.replace("_", " ")}</option>

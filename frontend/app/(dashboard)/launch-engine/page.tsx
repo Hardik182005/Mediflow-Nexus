@@ -65,10 +65,10 @@ export default function LaunchEngine() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-[24px] font-bold text-black tracking-tight font-serif">Launch Engine</h1>
-          <p className="text-[13px] text-black/40 font-medium">Accelerate GTM and automate buyer discovery.</p>
+          <p className="text-[13px] text-black font-medium">Accelerate GTM and automate buyer discovery.</p>
         </div>
         <div className="flex gap-3">
-          <button className="bg-white border border-black/10 text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-black/5 transition-all shadow-sm">View Sequences</button>
+          <button className="bg-white border border-black text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-black/5 transition-all shadow-sm">View Sequences</button>
           <button onClick={() => setShowCampaignModal(true)} className="bg-black text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-black/90 transition-all flex items-center gap-2 shadow-lg">
             <Zap size={14} />
             Start Campaign
@@ -84,44 +84,44 @@ export default function LaunchEngine() {
           { title: "Conversion Rate", value: "8.4%", change: "-0.5%", icon: <BarChart3 size={16} />, positive: false },
           { title: "Pipeline Value", value: "$4.2M", change: "+$800k", icon: <DollarSign size={16} />, positive: true },
         ].map((kpi, i) => (
-          <div key={i} className="bg-white border border-black/[0.05] rounded-2xl p-5 shadow-sm">
+          <div key={i} className="bg-white border border-black rounded-2xl p-5 shadow-sm">
             <div className="flex items-start justify-between mb-3">
               <div className="p-2 rounded-lg bg-black text-white">
                 {kpi.icon}
               </div>
               <div className={`flex items-center gap-1 text-[11px] font-bold px-2 py-1 rounded-md ${
-                kpi.positive ? "text-black bg-black/5" : "text-black/40 bg-black/[0.02]"
+                kpi.positive ? "text-black bg-black/5" : "text-black bg-white"
               }`}>
                 {kpi.positive ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
                 {kpi.change}
               </div>
             </div>
             <h3 className="text-[24px] font-bold text-black tracking-tight">{kpi.value}</h3>
-            <p className="text-[12px] text-black/40 font-bold uppercase tracking-wider mt-1">{kpi.title}</p>
+            <p className="text-[12px] text-black font-bold uppercase tracking-wider mt-1">{kpi.title}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Chart */}
-        <div className="bg-white border border-black/[0.05] rounded-3xl p-6 shadow-sm lg:col-span-2">
+        <div className="bg-white border border-black rounded-3xl p-6 shadow-sm lg:col-span-2">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h3 className="text-[16px] font-bold text-black font-serif">Pipeline Generation</h3>
-              <p className="text-[11px] text-black/40 uppercase tracking-widest font-bold mt-1">Lead to Close Velocity</p>
+              <p className="text-[11px] text-black uppercase tracking-widest font-bold mt-1">Lead to Close Velocity</p>
             </div>
              <div className="flex items-center gap-4">
                <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-black"></div>
-                <span className="text-[11px] text-black/60 font-bold">Closed</span>
+                <span className="text-[11px] text-black font-bold">Closed</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-black/40"></div>
-                <span className="text-[11px] text-black/60 font-bold">Qualified</span>
+                <span className="text-[11px] text-black font-bold">Qualified</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-black/10"></div>
-                <span className="text-[11px] text-black/60 font-bold">Leads</span>
+                <span className="text-[11px] text-black font-bold">Leads</span>
               </div>
             </div>
           </div>
@@ -144,15 +144,15 @@ export default function LaunchEngine() {
         </div>
 
         {/* Campaign Activity */}
-        <div id="active-sequences" className="bg-white border border-black/[0.05] rounded-3xl overflow-hidden shadow-sm flex flex-col">
-          <div className="p-6 border-b border-black/[0.05] flex items-center justify-between">
+        <div id="active-sequences" className="bg-white border border-black rounded-3xl overflow-hidden shadow-sm flex flex-col">
+          <div className="p-6 border-b border-black flex items-center justify-between">
             <div>
               <h3 className="text-[15px] font-bold text-black">Active Sequences</h3>
-              <p className="text-[11px] text-black/40 font-bold uppercase tracking-widest mt-1">Outbound Status</p>
+              <p className="text-[11px] text-black font-bold uppercase tracking-widest mt-1">Outbound Status</p>
             </div>
             <button
               onClick={() => setCompactView(!compactView)}
-              className={`p-2 rounded-lg hover:bg-black/5 text-black/40 transition-colors ${compactView ? "bg-black text-white" : ""}`}
+              className={`p-2 rounded-lg hover:bg-black/5 text-black transition-colors ${compactView ? "bg-black text-white" : ""}`}
             >
               <Layers size={16} />
             </button>
@@ -160,17 +160,17 @@ export default function LaunchEngine() {
           
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
              {sequences.map((seq, i) => (
-                <div key={i} className={`bg-black/[0.02] border border-black/[0.05] rounded-2xl p-4 transition-all ${compactView ? "py-2" : ""}`}>
+                <div key={i} className={`bg-white border border-black rounded-2xl p-4 transition-all ${compactView ? "py-2" : ""}`}>
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h4 className="text-[13px] font-bold text-black">{seq.name}</h4>
-                      {!compactView && <p className="text-[11px] text-black/40 font-bold uppercase mt-0.5 tracking-tight">{seq.type} Sequence</p>}
+                      {!compactView && <p className="text-[11px] text-black font-bold uppercase mt-0.5 tracking-tight">{seq.type} Sequence</p>}
                     </div>
                    <span className="bg-black text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-tighter">{seq.status}</span>
                  </div>
                  {!compactView && (
                    <div className="space-y-2">
-                     <div className="flex justify-between text-[10px] font-bold text-black/40 uppercase tracking-widest">
+                     <div className="flex justify-between text-[10px] font-bold text-black uppercase tracking-widest">
                        <span>Progress</span>
                        <span>{seq.progress}%</span>
                      </div>
@@ -203,19 +203,19 @@ export default function LaunchEngine() {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-md bg-white border border-black/10 rounded-3xl p-8 shadow-2xl space-y-6"
+              className="w-full max-w-md bg-white border border-black rounded-3xl p-8 shadow-2xl space-y-6"
             >
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-bold text-black font-serif">Launch Campaign</h3>
-                <button onClick={() => setShowCampaignModal(false)} className="text-black/30 hover:text-black"><X size={20} /></button>
+                <button onClick={() => setShowCampaignModal(false)} className="text-black hover:text-black"><X size={20} /></button>
               </div>
               <div className="space-y-4">
                 <div>
-                  <label className="text-[12px] font-bold text-black/40 uppercase tracking-widest mb-2 block">Campaign Name</label>
-                  <input value={campaignName} onChange={(e) => setCampaignName(e.target.value)} className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-[14px] text-black focus:outline-none focus:ring-2 focus:ring-black/5" placeholder="e.g. Q3 Hospital Outreach" />
+                  <label className="text-[12px] font-bold text-black uppercase tracking-widest mb-2 block">Campaign Name</label>
+                  <input value={campaignName} onChange={(e) => setCampaignName(e.target.value)} className="w-full bg-white border border-black rounded-xl px-4 py-3 text-[14px] text-black focus:outline-none focus:ring-2 focus:ring-black/5" placeholder="e.g. Q3 Hospital Outreach" />
                 </div>
                 <div>
-                  <label className="text-[12px] font-bold text-black/40 uppercase tracking-widest mb-2 block">Channel</label>
+                  <label className="text-[12px] font-bold text-black uppercase tracking-widest mb-2 block">Channel</label>
                   <div className="grid grid-cols-3 gap-3">
                     {[
                       { label: "Email", icon: <Mail size={14} /> },
@@ -228,7 +228,7 @@ export default function LaunchEngine() {
                         className={`flex flex-col items-center justify-center gap-2 py-4 rounded-xl text-[11px] font-bold transition-all border ${
                           campaignType === ch.label
                             ? "bg-black text-white border-black"
-                            : "bg-white border-black/10 text-black/40 hover:text-black hover:border-black/20"
+                            : "bg-white border-black text-black hover:text-black hover:border-black"
                         }`}
                       >
                         {ch.icon} {ch.label}
@@ -237,8 +237,8 @@ export default function LaunchEngine() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-[12px] font-bold text-black/40 uppercase tracking-widest mb-2 block">Target Audience</label>
-                  <input value={campaignTarget} onChange={(e) => setCampaignTarget(e.target.value)} className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-[14px] text-black focus:outline-none focus:ring-2 focus:ring-black/5" placeholder="e.g. Multi-specialty clinics" />
+                  <label className="text-[12px] font-bold text-black uppercase tracking-widest mb-2 block">Target Audience</label>
+                  <input value={campaignTarget} onChange={(e) => setCampaignTarget(e.target.value)} className="w-full bg-white border border-black rounded-xl px-4 py-3 text-[14px] text-black focus:outline-none focus:ring-2 focus:ring-black/5" placeholder="e.g. Multi-specialty clinics" />
                 </div>
               </div>
               <button

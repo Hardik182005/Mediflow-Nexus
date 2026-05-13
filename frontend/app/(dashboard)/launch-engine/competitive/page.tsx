@@ -28,47 +28,47 @@ export default function CompetitivePage() {
     fetchCompetitors();
   }, []);
 
-  if (loading) return <div className="flex items-center justify-center py-32"><Loader2 className="w-8 h-8 text-black/20 animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center py-32"><Loader2 className="w-8 h-8 text-black animate-spin" /></div>;
 
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto">
       <div>
         <h1 className="text-2xl font-bold text-black">Competitive Intelligence</h1>
-        <p className="text-sm text-black/60 mt-1">Track competitors, positioning & market differentiation</p>
+        <p className="text-sm text-black mt-1">Track competitors, positioning & market differentiation</p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         {competitors.map((c, i) => (
-          <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-5">
+          <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black rounded-2xl p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-black/[0.04] border border-black/[0.08] flex items-center justify-center"><Swords size={18} className="text-black/40" /></div>
+                <div className="w-10 h-10 rounded-xl bg-white border border-black flex items-center justify-center"><Swords size={18} className="text-black" /></div>
                 <div>
                   <h3 className="text-sm font-semibold text-black">{c.competitor_name}</h3>
-                  <p className="text-xs text-black/40">{c.category}</p>
+                  <p className="text-xs text-black">{c.category}</p>
                 </div>
               </div>
               <span className="badge badge-neutral">{c.threat_level} threat</span>
             </div>
             <div className="grid grid-cols-2 gap-2 mb-3">
-              <div className="p-2 rounded bg-black/[0.02] border border-black/[0.06]"><p className="text-[10px] text-black/30 uppercase font-bold tracking-tight">Market Share</p><p className="text-xs font-bold text-black">{c.market_share}</p></div>
-              <div className="p-2 rounded bg-black/[0.02] border border-black/[0.06]"><p className="text-[10px] text-black/30 uppercase font-bold tracking-tight">Pricing</p><p className="text-xs font-bold text-black">{c.pricing}</p></div>
+              <div className="p-2 rounded bg-white border border-black"><p className="text-[10px] text-black uppercase font-bold tracking-tight">Market Share</p><p className="text-xs font-bold text-black">{c.market_share}</p></div>
+              <div className="p-2 rounded bg-white border border-black"><p className="text-[10px] text-black uppercase font-bold tracking-tight">Pricing</p><p className="text-xs font-bold text-black">{c.pricing}</p></div>
             </div>
             <div className="mb-3">
-              <p className="text-xs text-black/60 font-bold mb-1">Strengths</p>
+              <p className="text-xs text-black font-bold mb-1">Strengths</p>
               <div className="flex flex-wrap gap-1">
-                {(c.strengths || []).map((s: string) => <span key={s} className="text-[10px] px-2 py-0.5 rounded-full bg-black/[0.04] text-black/70 border border-black/[0.08] font-medium">{s}</span>)}
+                {(c.strengths || []).map((s: string) => <span key={s} className="text-[10px] px-2 py-0.5 rounded-full bg-white text-black border border-black font-medium">{s}</span>)}
               </div>
             </div>
             <div className="mb-3">
-              <p className="text-xs text-black/40 font-bold mb-1">Weaknesses</p>
+              <p className="text-xs text-black font-bold mb-1">Weaknesses</p>
               <div className="flex flex-wrap gap-1">
-                {(c.weaknesses || []).map((w: string) => <span key={w} className="text-[10px] px-2 py-0.5 rounded-full bg-black/[0.02] text-black/40 border border-black/[0.06] font-medium">{w}</span>)}
+                {(c.weaknesses || []).map((w: string) => <span key={w} className="text-[10px] px-2 py-0.5 rounded-full bg-white text-black border border-black font-medium">{w}</span>)}
               </div>
             </div>
             {(c.recent_launches || []).length > 0 && (
-              <div className="p-2.5 rounded-lg bg-black/[0.02] border border-black/[0.06]">
-                <p className="text-[10px] text-black/30 font-bold uppercase tracking-widest mb-1">Recent Launches</p>
-                <p className="text-xs text-black/70">{c.recent_launches.join(", ")}</p>
+              <div className="p-2.5 rounded-lg bg-white border border-black">
+                <p className="text-[10px] text-black font-bold uppercase tracking-widest mb-1">Recent Launches</p>
+                <p className="text-xs text-black">{c.recent_launches.join(", ")}</p>
               </div>
             )}
           </motion.div>

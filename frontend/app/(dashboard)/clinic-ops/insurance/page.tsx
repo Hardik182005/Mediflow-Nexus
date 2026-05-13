@@ -39,7 +39,7 @@ export default function InsurancePage() {
       case 'verified': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
       case 'denied': return 'bg-red-500/10 text-red-400 border-red-500/20';
       case 'pending': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-      default: return 'bg-white/10 text-black/60 border-white/20';
+      default: return 'bg-white/10 text-black border-black';
     }
   };
 
@@ -84,7 +84,7 @@ export default function InsurancePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-black">Insurance Intelligence</h1>
-          <p className="text-sm text-black/60 mt-1">AI-powered VOB analysis, verification & denial prediction</p>
+          <p className="text-sm text-black mt-1">AI-powered VOB analysis, verification & denial prediction</p>
         </div>
         <button onClick={() => setTab("analyzer")} className="btn-primary flex items-center gap-2">
           <Brain size={15} /> AI Analyzer
@@ -94,14 +94,14 @@ export default function InsurancePage() {
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s, i) => (
-          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black/[0.07] rounded-2xl p-4">
+          <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black rounded-2xl p-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-black/[0.02] border border-black/[0.08] flex items-center justify-center">
-                <s.icon size={18} className="text-black/60" />
+              <div className="w-9 h-9 rounded-xl bg-white border border-black flex items-center justify-center">
+                <s.icon size={18} className="text-black" />
               </div>
               <div>
                 <p className="text-lg font-bold text-black">{s.value}</p>
-                <p className="text-xs text-black/50">{s.label}</p>
+                <p className="text-xs text-black">{s.label}</p>
               </div>
             </div>
           </motion.div>
@@ -109,11 +109,11 @@ export default function InsurancePage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 p-1 bg-black/[0.02] border border-black/[0.06] rounded-xl w-fit">
+      <div className="flex items-center gap-1 p-1 bg-white border border-black rounded-xl w-fit">
         {(["records", "analyzer"] as Tab[]).map((t) => (
           <button key={t} onClick={() => setTab(t)}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all capitalize ${
-              tab === t ? "bg-white text-black border border-black/10 shadow-sm" : "text-black/40 hover:text-black/60"
+              tab === t ? "bg-white text-black border border-black shadow-sm" : "text-black hover:text-black"
             }`}
           >
             {t === "analyzer" ? "🧠 AI Analyzer" : "📋 VOB Records"}
@@ -125,7 +125,7 @@ export default function InsurancePage() {
         {/* Records Tab */}
         {tab === "records" && (
           <motion.div key="records" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-            <div className="bg-white border border-black/[0.07] rounded-2xl-static overflow-hidden">
+            <div className="bg-white border border-black rounded-2xl-static overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="data-table">
                   <thead>
@@ -141,13 +141,13 @@ export default function InsurancePage() {
                     {loading ? (
                       <tr>
                         <td colSpan={5} className="text-center py-20">
-                          <Loader2 className="w-8 h-8 text-black/10 animate-spin mx-auto mb-2" />
-                          <p className="text-xs text-black/40">Loading insurance cases...</p>
+                          <Loader2 className="w-8 h-8 text-black animate-spin mx-auto mb-2" />
+                          <p className="text-xs text-black">Loading insurance cases...</p>
                         </td>
                       </tr>
                     ) : cases.length === 0 ? (
                       <tr>
-                        <td colSpan={5} className="text-center py-20 text-black/20 italic text-sm">
+                        <td colSpan={5} className="text-center py-20 text-black italic text-sm">
                           No active insurance cases. Start an AI VOB analysis to generate records.
                         </td>
                       </tr>
@@ -163,7 +163,7 @@ export default function InsurancePage() {
                           >
                             <td>
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded bg-black/[0.02] border border-black/[0.07] flex items-center justify-center text-[10px] font-bold text-black/40 group-hover:text-white transition-colors">
+                                <div className="w-8 h-8 rounded bg-white border border-black flex items-center justify-center text-[10px] font-bold text-black group-hover:text-white hover:bg-black transition-colors">
                                   {(c.patient_name || "?")[0]}
                                 </div>
                                 <div>
@@ -171,9 +171,9 @@ export default function InsurancePage() {
                                 </div>
                               </div>
                             </td>
-                            <td><code className="text-xs bg-black/[0.03] border border-black/[0.08] text-black/60 px-1.5 py-0.5 rounded">{c.cpt_code}</code></td>
+                            <td><code className="text-xs bg-white border border-black text-black px-1.5 py-0.5 rounded">{c.cpt_code}</code></td>
                             <td><span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${getStatusBadge(c.status)}`}>{c.status}</span></td>
-                            <td className="text-xs text-black/40">{c.insurance_provider}</td>
+                            <td className="text-xs text-black">{c.insurance_provider}</td>
                             <td>
                               <div className="flex items-center gap-2">
                                 <span className={`text-xs font-bold ${(c.denial_risk_score || 0) > 70 ? 'text-red-400' : 'text-emerald-400'}`}>
@@ -206,13 +206,13 @@ export default function InsurancePage() {
                 <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                   className="flex flex-col items-center justify-center py-24 space-y-5">
                   <div className="relative w-14 h-14">
-                    <div className="absolute inset-0 rounded-full border-2 border-white/10 animate-ping" />
-                    <div className="absolute inset-0 rounded-full border-2 border-t-white border-white/10 animate-spin" />
+                    <div className="absolute inset-0 rounded-full border-2 border-black animate-ping" />
+                    <div className="absolute inset-0 rounded-full border-2 border-t-white border-black animate-spin" />
                   </div>
                   <div className="text-center space-y-1">
                     <p className="text-black font-semibold text-sm">Running AI VOB Analysis</p>
-                    <p className="text-black/60 text-xs">Checking coverage, PA requirements, denial risk & revenue impact...</p>
-                    <p className="text-black/40 text-[11px]">This may take 15–30 seconds</p>
+                    <p className="text-black text-xs">Checking coverage, PA requirements, denial risk & revenue impact...</p>
+                    <p className="text-black text-[11px]">This may take 15–30 seconds</p>
                   </div>
                   <div className="flex gap-1">
                     {[0, 1, 2, 3, 4].map((i) => (
@@ -229,11 +229,11 @@ export default function InsurancePage() {
               )}
 
               {phase === "error" && (
-                <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white border border-black/[0.07] rounded-2xl p-5 space-y-3">
+                <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white border border-black rounded-2xl p-5 space-y-3">
                   <p className="text-sm font-semibold text-black flex items-center gap-2">
-                    <AlertTriangle size={15} className="text-black/60" /> Analysis Failed
+                    <AlertTriangle size={15} className="text-black" /> Analysis Failed
                   </p>
-                  <p className="text-xs text-black/60">{error}</p>
+                  <p className="text-xs text-black">{error}</p>
                   <button onClick={handleReset} className="btn-primary text-xs">← Try Again</button>
                 </motion.div>
               )}
