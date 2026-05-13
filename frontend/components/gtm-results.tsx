@@ -368,6 +368,3 @@ export default function GTMResults({ strategy, onReset }: Props) {
     </div>
   );
 }
-    </div>
-  );
-}

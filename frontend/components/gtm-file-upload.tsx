@@ -156,85 +156,6 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
   return (
     <div className="space-y-5">
       {/* Header */}
-export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
-  const [files, setFiles] = useState<UploadedFile[]>([]);
-  const [textContext, setTextContext] = useState("");
-  const [dragging, setDragging] = useState(false);
-  const [errors, setErrors] = useState<string[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const processFiles = useCallback(async (incoming: File[]) => {
-    const newErrors: string[] = [];
-    const newFiles: UploadedFile[] = [];
-
-    for (const file of incoming) {
-      if (files.length + newFiles.length >= MAX_FILES) {
-        newErrors.push(`Max ${MAX_FILES} files allowed`);
-        break;
-      }
-
-      const sizeMB = file.size / (1024 * 1024);
-      if (sizeMB > MAX_FILE_MB) {
-        newErrors.push(`"${file.name}" exceeds ${MAX_FILE_MB} MB limit`);
-        continue;
-      }
-
-      const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
-      const supportedExts = Object.values(ACCEPTED).flat().map((e) => e.replace(".", ""));
-      if (!supportedExts.includes(ext)) {
-        newErrors.push(`"${file.name}" — format .${ext} not supported`);
-        continue;
-      }
-
-      // Read as base64
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const result = reader.result as string;
-          // Strip data URL prefix — keep only the base64 payload
-          resolve(result.split(",")[1]);
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-
-      newFiles.push({
-        id: `${Date.now()}-${Math.random()}`,
-        name: file.name,
-        ext,
-        base64,
-        label: guessDocumentType(file.name, ext),
-        sizeKB: Math.round(file.size / 1024),
-        mimeType: file.type,
-      });
-    }
-
-    setFiles((prev) => [...prev, ...newFiles]);
-    setErrors(newErrors);
-  }, [files.length]);
-
-  const onDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setDragging(false);
-    processFiles(Array.from(e.dataTransfer.files));
-  }, [processFiles]);
-
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) processFiles(Array.from(e.target.files));
-    e.target.value = "";
-  };
-
-  const removeFile = (id: string) => setFiles((prev) => prev.filter((f) => f.id !== id));
-
-  const updateLabel = (id: string, label: string) => {
-    setFiles((prev) => prev.map((f) => (f.id === id ? { ...f, label } : f)));
-  };
-
-  const canGenerate = (files.length > 0 || textContext.trim().length > 10) && !isLoading;
-
-  return (
-    <div className="space-y-5">
-      {/* Header */}
       <div>
         <h1 className="text-[20px] font-bold text-black tracking-tight">GTM Intelligence Engine</h1>
         <p className="text-[13px] text-black/40 mt-1">
@@ -359,9 +280,6 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
         <span>✦ Gemini 1.5 Pro multimodal</span>
         <span>✦ 11-section output</span>
       </div>
-    </div>
-  );
-}
     </div>
   );
 }
