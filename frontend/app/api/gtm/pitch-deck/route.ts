@@ -90,7 +90,7 @@ export async function POST(req: Request) {
       total_beds: 500
     };
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const prompt = `
       You are an enterprise sales expert for healthcare startups.
       Generate a hyper-personalized 8-slide pitch deck in JSON format for this specific match.

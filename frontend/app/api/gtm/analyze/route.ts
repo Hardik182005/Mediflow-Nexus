@@ -170,9 +170,9 @@ export async function POST(req: NextRequest) {
       if (!buyersRaw) return NextResponse.json({ error: "Buyer dataset not found" }, { status: 500 });
       const buyersData = JSON.parse(buyersRaw);
 
-      // Try Gemini first, fallback to local matching if rate-limited/unavailable
+        // Try Gemini first
       try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
         
         const gtmContext = gtmData ? `
           AI-GENERATED GTM STRATEGY (CRITICAL MATCHING CRITERIA):
@@ -213,39 +213,65 @@ export async function POST(req: NextRequest) {
         const text = result.response.text().replace(/```json|```/g, "").trim();
         return NextResponse.json(JSON.parse(text));
       } catch (geminiErr) {
-        console.warn("Gemini unavailable for discovery, using local keyword matching:", (geminiErr as Error).message?.substring(0, 80));
-        
-        // ── Local Fallback: keyword-based scoring ──
-        const gtmKeywords = gtmData ? JSON.stringify(gtmData).toLowerCase().split(/\W+/) : [];
-        const startupKeywords = [
-          startup.name, startup.description, startup.solution_type,
-          startup.target_market, startup.category, ...gtmKeywords
-        ].filter(Boolean).join(" ").toLowerCase().split(/\W+/);
+        console.warn("Gemini unavailable for discovery, trying Groq fallback...");
+        try {
+          const Groq = (await import("groq-sdk")).default;
+          const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
+          
+          const gtmContext = gtmData ? `
+            AI-GENERATED GTM STRATEGY (CRITICAL MATCHING CRITERIA):
+            - Ideal Customer Profile: ${JSON.stringify(gtmData.icp)}
+            - Target Buyer Personas: ${JSON.stringify(gtmData.buyerPersona)}
+          ` : '';
 
-        const scored = buyersData.map((buyer: any) => {
-          const buyerText = [
-            ...(buyer.key_challenges || []),
-            ...(buyer.match_tags || []),
-            ...(buyer.specialties || []),
-            buyer.name, buyer.type
-          ].join(" ").toLowerCase();
+          const prompt = `Match this startup to 5 potential buyers from the dataset. 
+            STARTUP: ${startup.name}, Description: ${startup.description}. 
+            ${gtmContext}
+            BUYER DATASET: ${JSON.stringify(buyersData.slice(0, 50))}
+            Return JSON with "matches" array: [{ "name", "organization", "score", "reason" }]`;
 
-          let hits = 0;
-          for (const kw of startupKeywords) {
-            if (kw.length > 3 && buyerText.includes(kw)) hits++;
-          }
-          const score = Math.min(98, 60 + hits * 5 + (buyer.open_to_pilots ? 5 : 0) + (buyer.size === "Enterprise" ? 3 : 0));
-          const dm = buyer.decision_makers?.[0];
-          return {
-            name: dm?.name || "Decision Maker",
-            organization: buyer.name,
-            score,
-            reason: `Matches on ${hits} keywords from startup profile. Key challenges: ${(buyer.key_challenges || []).slice(0, 2).join(", ")}.`
-          };
-        });
+          const groqCompletion = await groq.chat.completions.create({
+            messages: [{ role: "user", content: prompt }],
+            model: "llama3-70b-8192",
+            temperature: 0.2,
+          });
+          const groqText = groqCompletion.choices[0]?.message?.content?.replace(/```json|```/g, "").trim() || "";
+          return NextResponse.json(JSON.parse(groqText));
+        } catch (groqErr) {
+          console.warn("Groq also failed, using local keyword matching:", (groqErr as Error).message);
+          
+          // ── Local Fallback: keyword-based scoring ──
+          const gtmKeywords = gtmData ? JSON.stringify(gtmData).toLowerCase().split(/\W+/) : [];
+          const startupKeywords = [
+            startup.name, startup.description, startup.solution_type,
+            startup.target_market, startup.category, ...gtmKeywords
+          ].filter(Boolean).join(" ").toLowerCase().split(/\W+/);
 
-        scored.sort((a: any, b: any) => b.score - a.score);
-        return NextResponse.json({ matches: scored.slice(0, 5) });
+          const scored = buyersData.map((buyer: any) => {
+            const buyerText = [
+              ...(buyer.key_challenges || []),
+              ...(buyer.match_tags || []),
+              ...(buyer.specialties || []),
+              buyer.name, buyer.type
+            ].join(" ").toLowerCase();
+
+            let hits = 0;
+            for (const kw of startupKeywords) {
+              if (kw.length > 3 && buyerText.includes(kw)) hits++;
+            }
+            const score = Math.min(98, 60 + hits * 5 + (buyer.open_to_pilots ? 5 : 0) + (buyer.size === "Enterprise" ? 3 : 0));
+            const dm = buyer.decision_makers?.[0];
+            return {
+              name: dm?.name || "Decision Maker",
+              organization: buyer.name,
+              score,
+              reason: `Matches on ${hits} keywords from startup profile. Key challenges: ${(buyer.key_challenges || []).slice(0, 2).join(", ")}.`
+            };
+          });
+
+          scored.sort((a: any, b: any) => b.score - a.score);
+          return NextResponse.json({ matches: scored.slice(0, 5) });
+        }
       }
     }
 
@@ -262,68 +288,75 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No files or context provided" }, { status: 400 });
     }
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
-      systemInstruction: GTM_SYSTEM_PROMPT,
-    });
+    try {
+      const model = genAI.getGenerativeModel({
+        model: "gemini-2.0-flash",
+        systemInstruction: GTM_SYSTEM_PROMPT,
+      });
 
-    // ── Build content parts ───────────────────────────────────
-    const parts: Part[] = [];
+      // ── Build content parts ───────────────────────────────────
+      const parts: Part[] = [];
+      parts.push({ text: "Analyze the following healthcare startup documents and generate a complete GTM strategy as JSON:" });
 
-    // Opening instruction
-    parts.push({
-      text: "Analyze the following healthcare startup documents and generate a complete GTM strategy as JSON:",
-    });
+      for (const file of files ?? []) {
+        const mimeType = MIME_MAP[file.ext.toLowerCase()] ?? "application/octet-stream";
+        if (mimeType === "application/octet-stream") continue;
 
-    // File parts (inline base64)
-    for (const file of files ?? []) {
-      const mimeType = MIME_MAP[file.ext.toLowerCase()] ?? "application/octet-stream";
-
-      // Skip unsupported binary formats gracefully
-      if (mimeType === "application/octet-stream") {
-        parts.push({ text: `[File "${file.name}" could not be read directly — skipping]` });
-        continue;
+        parts.push({ text: `--- ${file.label.toUpperCase()} (${file.name}) ---` });
+        parts.push({ inlineData: { mimeType, data: file.base64 } });
       }
 
-      parts.push({ text: `--- ${file.label.toUpperCase()} (${file.name}) ---` });
-      parts.push({
-        inlineData: {
-          mimeType,
-          data: file.base64,
-        },
-      });
+      if (textContext?.trim()) {
+        parts.push({ text: `--- ADDITIONAL CONTEXT ---\n${textContext.trim()}` });
+      }
+
+      const buyersRaw = loadBuyersJson();
+      if (buyersRaw) {
+        parts.push({ text: `\n\n--- BUYER DATASET (USE FOR sampleBuyerProfiles) ---\n${buyersRaw}\n--- END BUYER DATASET ---\n` });
+      }
+
+      const result = await model.generateContent({ contents: [{ role: "user", parts }] });
+      const rawText = result.response.text().trim();
+
+      const jsonText = rawText
+        .replace(/^```json\s*/i, "")
+        .replace(/^```\s*/i, "")
+        .replace(/\s*```$/i, "")
+        .trim();
+
+      const parsed = JSON.parse(jsonText);
+      return NextResponse.json({ strategy: parsed }, { status: 200 });
+
+    } catch (geminiErr: any) {
+      console.error("[GTM Analyze] Gemini error, trying Groq fallback:", geminiErr.message);
+      
+      try {
+        const Groq = (await import("groq-sdk")).default;
+        const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
+        
+        // Simple text-based conversion of parts for Groq (multimodal won't work easily)
+        const textParts = parts.filter(p => p.text).map(p => p.text).join("\n");
+        
+        const groqCompletion = await groq.chat.completions.create({
+          messages: [
+            { role: "system", content: GTM_SYSTEM_PROMPT },
+            { role: "user", content: textParts }
+          ],
+          model: "llama3-70b-8192",
+          temperature: 0.1,
+        });
+        
+        const groqText = groqCompletion.choices[0]?.message?.content?.replace(/```json|```/g, "").trim() || "";
+        return NextResponse.json({ strategy: JSON.parse(groqText) }, { status: 200 });
+      } catch (fallbackErr) {
+        throw geminiErr; // If Groq also fails, throw original Gemini error for UI to handle
+      }
     }
-
-    // Optional free-text context
-    if (textContext?.trim()) {
-      parts.push({ text: `--- ADDITIONAL CONTEXT ---\n${textContext.trim()}` });
-    }
-
-    // Inject buyers dataset for sampleBuyerProfiles
-    const buyersRaw = loadBuyersJson();
-    if (buyersRaw) {
-      parts.push({ text: `\n\n--- BUYER DATASET (USE FOR sampleBuyerProfiles) ---\n${buyersRaw}\n--- END BUYER DATASET ---\n` });
-    } else {
-      console.warn("[GTM Analyze] Could not load buyers.json dataset from any known path");
-    }
-
-    const result = await model.generateContent({ contents: [{ role: "user", parts }] });
-    const rawText = result.response.text().trim();
-
-    const jsonText = rawText
-      .replace(/^```json\s*/i, "")
-      .replace(/^```\s*/i, "")
-      .replace(/\s*```$/i, "")
-      .trim();
-
-    let parsed;
-    try {
-      parsed = JSON.parse(jsonText);
-    } catch {
-      return NextResponse.json({ raw: rawText }, { status: 200 });
-    }
-
-    return NextResponse.json({ strategy: parsed }, { status: 200 });
+  } catch (err: unknown) {
+    console.error("[GTM Analyze Error]", err);
+    const message = err instanceof Error ? err.message : "Internal server error";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
   } catch (err: unknown) {
     console.error("[GTM Analyze Error]", err);
     const message = err instanceof Error ? err.message : "Internal server error";

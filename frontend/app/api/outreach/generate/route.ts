@@ -138,7 +138,7 @@ RETURN JSON ONLY in this exact format:
   "wordCount": 0
 }`;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const result = await model.generateContent(prompt);
     const raw = result.response.text().trim()
       .replace(/^```json\s*/i, "")

@@ -37,7 +37,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Messages array is required" }, { status: 400 });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     // Build chat history for Gemini
     const chatHistory = messages.slice(0, -1).map((msg: any) => ({

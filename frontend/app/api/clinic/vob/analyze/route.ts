@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     }
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
+      model: "gemini-2.0-flash",
       systemInstruction: VOB_SYSTEM_PROMPT,
     });
 

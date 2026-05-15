@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       Keep it short, conversational, and meant to be spoken aloud. (Max 2-3 sentences).
     `;
 
-    const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = ai.getGenerativeModel({ model: "gemini-2.0-flash" });
     const response = await model.generateContent(prompt);
 
     const reply = response.response.text() || "That sounds interesting, but how does it integrate with our existing EHR systems?";
