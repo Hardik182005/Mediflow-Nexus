@@ -1,15 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { VertexAI } from "@google-cloud/vertexai";
 import { NextResponse } from "next/server";
 import { FALLBACK_COPILOT_RESPONSES } from "@/lib/fallback-responses";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-
-async function geminiWithTimeout(promise: Promise<any>, timeoutMs = 8000) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error("TIMEOUT")), timeoutMs))
-  ]);
-}
 
 const SYSTEM_PROMPT = `You are MediFlow Copilot — an elite healthcare intelligence assistant embedded inside the MediFlow Nexus platform.
 
@@ -29,6 +21,13 @@ Rules:
 5. When recommending actions, prioritize revenue impact.
 6. You can reference MediFlow Nexus features like "check the Denial Intelligence page" or "run a VOB analysis."`;
 
+async function geminiWithTimeout(promise: Promise<any>, timeoutMs = 12000) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error("TIMEOUT")), timeoutMs))
+  ]);
+}
+
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
@@ -37,37 +36,53 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Messages array is required" }, { status: 400 });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
-    // Build chat history for Gemini
-    const chatHistory = messages.slice(0, -1).map((msg: any) => ({
-      role: msg.role === "user" ? "user" : "model",
-      parts: [{ text: msg.content }],
-    }));
-
-    const chat = model.startChat({
-      history: [
-        { role: "user", parts: [{ text: "System instruction: " + SYSTEM_PROMPT }] },
-        { role: "model", parts: [{ text: "Understood. I am MediFlow Copilot, ready to assist with healthcare intelligence, RCM, VOB, GTM strategy, and clinical operations. How can I help?" }] },
-        ...chatHistory,
-      ],
-    });
-
     const lastMessage = messages[messages.length - 1];
 
+    // TRY VERTEX AI FIRST
     try {
+      console.log("[Copilot] Attempting Vertex AI Chat...");
+      const vertexAI = new VertexAI({
+        project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026",
+        location: process.env.GCP_LOCATION || "us-central1"
+      });
+
+      const vertexModel = vertexAI.getGenerativeModel({
+        model: "gemini-2.0-flash",
+        systemInstruction: { role: "system", parts: [{ text: SYSTEM_PROMPT }] }
+      });
+
+      const history = messages.slice(0, -1).map((msg: any) => ({
+        role: msg.role === "user" ? "user" : "model",
+        parts: [{ text: msg.content }]
+      }));
+
+      const chat = vertexModel.startChat({ history });
       const result = await geminiWithTimeout(chat.sendMessage(lastMessage.content));
-      const response = (result as any).response.text();
+      const response = (result as any).response.candidates?.[0]?.content?.parts?.[0]?.text || "";
       return NextResponse.json({ reply: response });
-    } catch (timeoutErr) {
-      // Gemini timeout or error — use fallback
-      console.warn("Copilot: Gemini timeout, using fallback");
-      const query = lastMessage.content.toLowerCase();
-      const fallbackKey = query.includes("denial") ? "denial" : query.includes("vob") || query.includes("insurance") ? "vob" : "default";
-      return NextResponse.json({ reply: FALLBACK_COPILOT_RESPONSES[fallbackKey] });
+
+    } catch (vertexErr) {
+      console.error("[Copilot] Vertex AI failed, falling back to Google AI SDK:", (vertexErr as Error).message);
+
+      // FALLBACK TO GOOGLE AI SDK
+      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", systemInstruction: SYSTEM_PROMPT });
+
+      const chatHistory = messages.slice(0, -1).map((msg: any) => ({
+        role: msg.role === "user" ? "user" : "model",
+        parts: [{ text: msg.content }],
+      }));
+
+      const chat = model.startChat({ history: chatHistory });
+      const result = await geminiWithTimeout(chat.sendMessage(lastMessage.content));
+      const response = result.response.text();
+      return NextResponse.json({ reply: response });
     }
   } catch (error: any) {
-    console.error("Copilot error:", error);
-    return NextResponse.json({ reply: FALLBACK_COPILOT_RESPONSES["default"] });
+    console.error("Copilot Fatal Error:", error);
+    const lastMessage = (await req.clone().json()).messages.pop();
+    const query = lastMessage?.content?.toLowerCase() || "";
+    const fallbackKey = query.includes("denial") ? "denial" : query.includes("vob") || query.includes("insurance") ? "vob" : "default";
+    return NextResponse.json({ reply: FALLBACK_COPILOT_RESPONSES[fallbackKey] });
   }
 }

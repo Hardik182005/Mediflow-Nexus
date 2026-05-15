@@ -68,7 +68,9 @@ jobs:
               NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }},\
               GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }},\
               ELEVENLABS_API_KEY=${{ secrets.ELEVENLABS_API_KEY }},\
-              RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" \
+              RESEND_API_KEY=${{ secrets.RESEND_API_KEY }},\
+              GCP_PROJECT_ID=${{ env.PROJECT_ID }},\
+              GCP_LOCATION=${{ env.REGION }}" \
             --quiet
 
       - name: Get service URL

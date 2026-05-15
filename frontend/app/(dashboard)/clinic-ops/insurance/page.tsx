@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldCheck, AlertTriangle, CheckCircle2, Clock, Loader2, Brain } from "lucide-react";
+import { ShieldCheck, AlertTriangle, CheckCircle2, Clock, Loader2, Brain, Zap } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import VOBInputPanel from "@/components/vob-input-panel";
 import VOBResults from "@/components/vob-results";
@@ -83,8 +83,13 @@ export default function InsurancePage() {
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-black">Insurance Intelligence</h1>
-          <p className="text-sm text-black mt-1">Gemini 2.0 Flash-powered VOB analysis, verification & denial prediction</p>
+          <h1 className="text-2xl font-bold text-black flex items-center gap-3">
+            Insurance Intelligence
+            <span className="bg-black text-white text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-mono uppercase tracking-widest">
+              <Zap size={10} fill="currentColor" /> High Capacity
+            </span>
+          </h1>
+          <p className="text-sm text-black mt-1">Enterprise-grade Vertex AI pipeline with Gemini 2.0 Flash-powered analysis</p>
         </div>
         <button onClick={() => setTab("analyzer")} className="btn-primary flex items-center gap-2">
           <Brain size={15} /> AI Analyzer

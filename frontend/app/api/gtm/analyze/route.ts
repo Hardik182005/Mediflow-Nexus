@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI, Part } from "@google/generative-ai";
+import { VertexAI } from "@google-cloud/vertexai";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import fs from "fs";
@@ -23,7 +24,6 @@ const MIME_MAP: Record<string, string> = {
   mp3: "audio/mp3",
   wav: "audio/wav",
   ogg: "audio/ogg",
-  // PPT/PPTX/DOCX are not natively supported — handled as plain text if possible
 };
 
 const GTM_SYSTEM_PROMPT = `You are an expert Healthcare Go-To-Market (GTM) Strategist AI.
@@ -111,26 +111,20 @@ You MUST return ONLY a valid JSON object (no markdown, no code fences, no explan
 }
 
 RULES:
-- Read and extract information from ALL provided files (PDFs, slides, videos, images, documents)
+- Read and extract information from ALL provided files
 - Be specific, use healthcare-specific language
 - If data is missing, make reasonable expert assumptions
-- Output must be investor-ready quality
-- Return ONLY the JSON object, nothing else
-- VERY IMPORTANT: For 'buyerDiscovery.sampleBuyerProfiles', YOU MUST ONLY select 3-5 organizations from the provided 'BUYER DATASET' in the context. Use their exact 'name' for 'orgName', 'type' for 'type', and provide a 'reason' explaining why they are an ideal fit based on their specific 'key_challenges' and 'specialties'.`;
+- VERY IMPORTANT: For 'buyerDiscovery.sampleBuyerProfiles', YOU MUST ONLY select 3-5 organizations from the provided 'BUYER DATASET' in the context.`;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-
-// Resolve buyers.json — check /data/ first, then root
 function loadBuyersJson(): string | null {
   const candidates = [
     path.join(process.cwd(), "data", "buyers.json"),
     path.join(process.cwd(), "buyers.json"),
-    path.join(process.cwd(), "..", "buyers.json"),
-    path.join(process.cwd(), "..", "data", "buyers.json"),
+    path.join(process.cwd(), "public", "data", "buyers.json"),
   ];
   for (const p of candidates) {
     try {
-      return fs.readFileSync(p, "utf-8");
+      if (fs.existsSync(p)) return fs.readFileSync(p, "utf-8");
     } catch { /* try next */ }
   }
   return null;
@@ -140,221 +134,76 @@ export async function POST(req: NextRequest) {
   try {
     const supabase = await createClient();
     const body = await req.json() as any;
-    console.log("Analyze API hit", { discoveryMode: body.discoveryMode, startupId: body.startupId });
-
     const { files, textContext, discoveryMode, startupId } = body;
 
-    // ── Discovery Mode ────────────────────────────────────
+    // ── Shared Logic: Discovery Mode ──
     if (discoveryMode && startupId) {
-      // Fetch startup and its latest GTM strategy
-      const { data: startup } = await supabase
-        .from('startup_profiles')
-        .select('*')
-        .eq('id', startupId)
-        .single();
-
+      const { data: startup } = await supabase.from('startup_profiles').select('*').eq('id', startupId).single();
       if (!startup) return NextResponse.json({ error: "Startup not found" }, { status: 404 });
 
-      // Fetch the generated GTM Strategy
-      const { data: gtmRecord } = await supabase
-        .from('gtm_recommendations')
-        .select('strategy_json')
-        .eq('startup_id', startupId)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .maybeSingle();
-
+      const { data: gtmRecord } = await supabase.from('gtm_recommendations').select('strategy_json').eq('startup_id', startupId).order('created_at', { ascending: false }).limit(1).maybeSingle();
       const gtmData = gtmRecord?.strategy_json || null;
 
       const buyersRaw = loadBuyersJson();
       if (!buyersRaw) return NextResponse.json({ error: "Buyer dataset not found" }, { status: 500 });
       const buyersData = JSON.parse(buyersRaw);
 
-        // Try Gemini first
+      const prompt = `Match this startup to 5 potential buyers.
+        STARTUP: ${startup.name}, Description: ${startup.description}.
+        GTM CONTEXT: ${JSON.stringify(gtmData?.icp || {})}
+        BUYER DATASET: ${JSON.stringify(buyersData.slice(0, 50))}
+        RETURN JSON: { "matches": [{ "name", "organization", "score", "reason" }] }`;
+
       try {
+        const vertexAI = new VertexAI({ project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026", location: process.env.GCP_LOCATION || "us-central1" });
+        const model = vertexAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        const result = await model.generateContent(prompt);
+        const text = (result.response.candidates?.[0]?.content?.parts?.[0]?.text as string || "").replace(/```json|```/g, "").trim();
+        return NextResponse.json(JSON.parse(text));
+      } catch (err) {
+        // Fallback to Google AI
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-        
-        const gtmContext = gtmData ? `
-          AI-GENERATED GTM STRATEGY (CRITICAL MATCHING CRITERIA):
-          - Ideal Customer Profile: ${JSON.stringify(gtmData.icp)}
-          - Target Buyer Personas: ${JSON.stringify(gtmData.buyerPersona)}
-          - Value Proposition: ${JSON.stringify(gtmData.productIntelligence?.valueProposition)}
-          - ROI Impact: ${JSON.stringify(gtmData.roiImpact)}
-        ` : '';
-
-        const prompt = `
-          You are an expert MedTech Market Analyst. 
-          Match this startup to the best 5 potential buyers from the provided dataset. Pay deep attention to the AI-Generated GTM Strategy if provided.
-          
-          STARTUP PROFILE:
-          - Name: ${startup.name}
-          - Description: ${startup.description}
-          - Solution Type: ${startup.solution_type}
-          - Target Market: ${startup.target_market}
-          ${gtmContext}
-          
-          BUYER DATASET (Top 100 sample):
-          ${JSON.stringify(buyersData.slice(0, 100))}
-          
-          TASK:
-          1. Select exactly 5 entities from the dataset that have the absolute highest synergy with the startup's profile and GTM strategy.
-          2. Assign a match score (0-100).
-          3. Provide a 1-sentence "AI Match Rationale" for each explaining WHY they are a perfect fit based on their specific challenges.
-          
-          RETURN JSON ONLY in this format:
-          {
-            "matches": [
-              { "name": "Contact Person", "organization": "Hospital Name", "score": 95, "reason": "Rationale here" }
-            ]
-          }
-        `;
-
         const result = await model.generateContent(prompt);
         const text = result.response.text().replace(/```json|```/g, "").trim();
         return NextResponse.json(JSON.parse(text));
-      } catch (geminiErr) {
-        console.warn("Gemini unavailable for discovery, trying Groq fallback...");
-        try {
-          const Groq = (await import("groq-sdk")).default;
-          const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
-          
-          const gtmContext = gtmData ? `
-            AI-GENERATED GTM STRATEGY (CRITICAL MATCHING CRITERIA):
-            - Ideal Customer Profile: ${JSON.stringify(gtmData.icp)}
-            - Target Buyer Personas: ${JSON.stringify(gtmData.buyerPersona)}
-          ` : '';
-
-          const prompt = `Match this startup to 5 potential buyers from the dataset. 
-            STARTUP: ${startup.name}, Description: ${startup.description}. 
-            ${gtmContext}
-            BUYER DATASET: ${JSON.stringify(buyersData.slice(0, 50))}
-            Return JSON with "matches" array: [{ "name", "organization", "score", "reason" }]`;
-
-          const groqCompletion = await groq.chat.completions.create({
-            messages: [{ role: "user", content: prompt }],
-            model: "llama3-70b-8192",
-            temperature: 0.2,
-          });
-          const groqText = groqCompletion.choices[0]?.message?.content?.replace(/```json|```/g, "").trim() || "";
-          return NextResponse.json(JSON.parse(groqText));
-        } catch (groqErr) {
-          console.warn("Groq also failed, using local keyword matching:", (groqErr as Error).message);
-          
-          // ── Local Fallback: keyword-based scoring ──
-          const gtmKeywords = gtmData ? JSON.stringify(gtmData).toLowerCase().split(/\W+/) : [];
-          const startupKeywords = [
-            startup.name, startup.description, startup.solution_type,
-            startup.target_market, startup.category, ...gtmKeywords
-          ].filter(Boolean).join(" ").toLowerCase().split(/\W+/);
-
-          const scored = buyersData.map((buyer: any) => {
-            const buyerText = [
-              ...(buyer.key_challenges || []),
-              ...(buyer.match_tags || []),
-              ...(buyer.specialties || []),
-              buyer.name, buyer.type
-            ].join(" ").toLowerCase();
-
-            let hits = 0;
-            for (const kw of startupKeywords) {
-              if (kw.length > 3 && buyerText.includes(kw)) hits++;
-            }
-            const score = Math.min(98, 60 + hits * 5 + (buyer.open_to_pilots ? 5 : 0) + (buyer.size === "Enterprise" ? 3 : 0));
-            const dm = buyer.decision_makers?.[0];
-            return {
-              name: dm?.name || "Decision Maker",
-              organization: buyer.name,
-              score,
-              reason: `Matches on ${hits} keywords from startup profile. Key challenges: ${(buyer.key_challenges || []).slice(0, 2).join(", ")}.`
-            };
-          });
-
-          scored.sort((a: any, b: any) => b.score - a.score);
-          return NextResponse.json({ matches: scored.slice(0, 5) });
-        }
       }
     }
 
-    // ── Standard GTM Generation Mode ──────────────────────
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey || apiKey === "your_gemini_api_key_here") {
-      return NextResponse.json(
-        { error: "GEMINI_API_KEY not configured. Add your key to .env.local and restart the dev server." },
-        { status: 500 }
-      );
-    }
-
-    if ((!files || files.length === 0) && !textContext) {
-      return NextResponse.json({ error: "No files or context provided" }, { status: 400 });
-    }
-
-    try {
-      const model = genAI.getGenerativeModel({
-        model: "gemini-2.0-flash",
-        systemInstruction: GTM_SYSTEM_PROMPT,
-      });
-
-      // ── Build content parts ───────────────────────────────────
-      const parts: Part[] = [];
-      parts.push({ text: "Analyze the following healthcare startup documents and generate a complete GTM strategy as JSON:" });
-
-      for (const file of files ?? []) {
-        const mimeType = MIME_MAP[file.ext.toLowerCase()] ?? "application/octet-stream";
-        if (mimeType === "application/octet-stream") continue;
-
+    // ── Standard Mode: Strategy Generation ──
+    const parts: any[] = [];
+    for (const file of files ?? []) {
+      const mimeType = MIME_MAP[file.ext.toLowerCase().replace(".", "")] ?? "application/octet-stream";
+      if (mimeType !== "application/octet-stream") {
         parts.push({ text: `--- ${file.label.toUpperCase()} (${file.name}) ---` });
         parts.push({ inlineData: { mimeType, data: file.base64 } });
       }
+    }
+    if (textContext?.trim()) parts.push({ text: `--- CONTEXT ---\n${textContext.trim()}` });
+    const buyers = loadBuyersJson();
+    if (buyers) parts.push({ text: `\n\n--- BUYER DATASET ---\n${buyers}\n` });
 
-      if (textContext?.trim()) {
-        parts.push({ text: `--- ADDITIONAL CONTEXT ---\n${textContext.trim()}` });
-      }
-
-      const buyersRaw = loadBuyersJson();
-      if (buyersRaw) {
-        parts.push({ text: `\n\n--- BUYER DATASET (USE FOR sampleBuyerProfiles) ---\n${buyersRaw}\n--- END BUYER DATASET ---\n` });
-      }
-
+    try {
+      const vertexAI = new VertexAI({ project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026", location: process.env.GCP_LOCATION || "us-central1" });
+      const model = vertexAI.getGenerativeModel({
+        model: "gemini-2.0-flash",
+        systemInstruction: { role: "system", parts: [{ text: GTM_SYSTEM_PROMPT }] }
+      });
+      const result = await model.generateContent({ contents: [{ role: "user", parts }] });
+      const rawText = result.response.candidates?.[0]?.content?.parts?.[0]?.text as string || "";
+      const jsonText = rawText.replace(/```json\s*/gi, "").replace(/```\s*/gi, "").trim();
+      return NextResponse.json({ strategy: JSON.parse(jsonText) });
+    } catch (err: any) {
+      console.warn("Vertex failed, using Google AI SDK:", err.message);
+      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", systemInstruction: GTM_SYSTEM_PROMPT });
       const result = await model.generateContent({ contents: [{ role: "user", parts }] });
       const rawText = result.response.text().trim();
-
-      const jsonText = rawText
-        .replace(/^```json\s*/i, "")
-        .replace(/^```\s*/i, "")
-        .replace(/\s*```$/i, "")
-        .trim();
-
-      const parsed = JSON.parse(jsonText);
-      return NextResponse.json({ strategy: parsed }, { status: 200 });
-
-    } catch (geminiErr: any) {
-      console.error("[GTM Analyze] Gemini error, trying Groq fallback:", geminiErr.message);
-      
-      try {
-        const Groq = (await import("groq-sdk")).default;
-        const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
-        
-        // Simple text-based conversion of parts for Groq
-        const textParts = textContext || "Analyze healthcare startup potential.";
-        
-        const groqCompletion = await groq.chat.completions.create({
-          messages: [
-            { role: "system", content: GTM_SYSTEM_PROMPT },
-            { role: "user", content: textParts }
-          ],
-          model: "llama3-70b-8192",
-          temperature: 0.1,
-        });
-        
-        const groqText = groqCompletion.choices[0]?.message?.content?.replace(/```json|```/g, "").trim() || "";
-        return NextResponse.json({ strategy: JSON.parse(groqText) }, { status: 200 });
-      } catch (fallbackErr) {
-        console.error("[GTM Analyze] Both Gemini and Groq failed.");
-        return NextResponse.json({ error: "GTM Intelligence engine is temporarily unavailable. Please check your API keys." }, { status: 500 });
-      }
+      const jsonText = rawText.replace(/```json\s*/gi, "").replace(/```\s*/gi, "").trim();
+      return NextResponse.json({ strategy: JSON.parse(jsonText) });
     }
-  } catch (err: unknown) {
-    console.error("[GTM Analyze Fatal Error]", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  } catch (err: any) {
+    console.error("Fatal GTM Error:", err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

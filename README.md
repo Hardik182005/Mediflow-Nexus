@@ -82,9 +82,10 @@ graph TD
 | Component | Technology | Role |
 |-----------|------------|------|
 | **Frontend** | Next.js (Standalone Mode) | Ultra-fast production builds with optimized NFT tracing. |
-| **Intelligence** | Gemini 2.0 Flash | Next-generation multi-modal processing for medical OCR and strategic analysis. |
+| **Intelligence** | Gemini 2.0 Flash (Vertex AI) | Enterprise-grade multimodal processing with high-capacity rate limits. |
+| **Primary Fallback** | Gemini 2.0 Flash (AI SDK) | High-speed redundancy for continuous system availability. |
 | **Voice Synthesis** | ElevenLabs | High-fidelity voice cloning for pitch narration and outreach. |
-| **Inference Fallback** | Groq (Llama-3) | High-speed redundancy for heavy analytical reasoning. |
+| **Strategic Fallback**| Groq (Llama-3) | Ultra-low latency fallback for text-based strategic reasoning. |
 | **Backend/Auth** | Supabase | Secure, type-safe database with strict Row-Level Security (RLS). |
 | **Infrastructure** | Google Cloud Run | Scalable, serverless deployment via Docker & Artifact Registry. |
 
