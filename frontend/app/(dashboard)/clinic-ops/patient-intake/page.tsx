@@ -56,27 +56,76 @@ export default function PatientIntakePage() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    // For demo/dev purposes, if no clinic_id is assigned to user yet, we'll use a placeholder
-    // In production, user.clinic_id would be mandatory
-    const clinic_id = "00000000-0000-0000-0000-000000000000"; 
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        console.error("No authenticated user found");
+        alert("You must be logged in to add patients.");
+        setIsSubmitting(false);
+        return;
+      }
 
-    const { error } = await supabase
-      .from('patients')
-      .insert([{
-        ...formData,
-        clinic_id: user?.user_metadata?.clinic_id || clinic_id,
-        treatment_readiness_score: Math.floor(Math.random() * 40) + 40, // Mock AI calculation
-        document_completeness: Math.floor(Math.random() * 30) + 20     // Mock initial scan
-      }]);
+      // 1. Try to get clinic_id from user metadata
+      let target_clinic_id = user?.user_metadata?.clinic_id;
 
-    if (!error) {
-      setShowModal(false);
-      setFormData({ first_name: "", last_name: "", insurance_provider: "", policy_number: "", diagnosis_code: "", status: "intake" });
-      fetchPatients();
+      // 2. If not in metadata, fetch from public.users table
+      if (!target_clinic_id) {
+        const { data: profile } = await supabase
+          .from('users')
+          .select('clinic_id')
+          .eq('id', user.id)
+          .single();
+        
+        if (profile?.clinic_id) {
+          target_clinic_id = profile.clinic_id;
+        }
+      }
+
+      // 3. Fallback: If still no clinic_id, fetch the first available clinic (demo-friendly fallback)
+      if (!target_clinic_id) {
+        const { data: clinics } = await supabase.from('clinics').select('id').limit(1);
+        if (clinics && clinics.length > 0) {
+          target_clinic_id = clinics[0].id;
+        }
+      }
+
+      // 4. Ultimate fallback (hardcoded UUID from schema/dev)
+      if (!target_clinic_id) {
+        target_clinic_id = "00000000-0000-0000-0000-000000000000";
+      }
+
+      const { error } = await supabase
+        .from('patients')
+        .insert([{
+          ...formData,
+          clinic_id: target_clinic_id,
+          treatment_readiness_score: Math.floor(Math.random() * 40) + 40,
+          document_completeness: Math.floor(Math.random() * 30) + 20
+        }]);
+
+      if (error) {
+        console.error("Supabase Insertion Error:", error);
+        alert(`Error adding patient: ${error.message}`);
+      } else {
+        setShowModal(false);
+        setFormData({ 
+          first_name: "", 
+          last_name: "", 
+          insurance_provider: "", 
+          policy_number: "", 
+          diagnosis_code: "", 
+          status: "intake" 
+        });
+        await fetchPatients();
+        console.log("Patient added successfully");
+      }
+    } catch (err: any) {
+      console.error("Unexpected error during patient intake:", err);
+      alert(`An unexpected error occurred: ${err.message}`);
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   const filteredPatients = patients.filter(p => 
@@ -171,7 +220,7 @@ export default function PatientIntakePage() {
                     >
                       <td>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-white text-white flex items-center justify-center text-xs font-bold border border-black uppercase">
+                          <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-xs font-bold border border-black uppercase">
                             {p.first_name[0]}{p.last_name[0]}
                           </div>
                           <div>
@@ -184,7 +233,7 @@ export default function PatientIntakePage() {
                         <p className="text-sm text-black">{p.insurance_provider}</p>
                         <p className="text-xs text-black">{p.policy_number}</p>
                       </td>
-                      <td><code className="text-xs bg-white border border-black text-[#c7c4d7] px-1.5 py-0.5 rounded">{p.diagnosis_code || 'N/A'}</code></td>
+                      <td><code className="text-xs bg-white border border-black text-black px-1.5 py-0.5 rounded">{p.diagnosis_code || 'N/A'}</code></td>
                       <td><span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${getStatusBadge(p.status)}`}>{p.status.replace("_", " ")}</span></td>
                       <td>
                         <div className="flex items-center gap-2">

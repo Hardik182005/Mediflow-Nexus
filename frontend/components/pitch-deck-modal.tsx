@@ -382,8 +382,12 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
                   </div>
                 ))}
               </div>
-              <div className="aspect-video rounded-2xl bg-black/[0.02] border border-black/[0.05] flex items-center justify-center">
-                <p className="text-xs text-black/30 uppercase font-bold tracking-widest">Architecture Diagram Placeholder</p>
+              <div className="aspect-video rounded-2xl bg-black/[0.02] border border-black/[0.05] flex items-center justify-center overflow-hidden">
+                <img 
+                  src="/healthcare-ai-architecture.png" 
+                  alt="Architecture Diagram" 
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                />
               </div>
             </div>
           </div>
