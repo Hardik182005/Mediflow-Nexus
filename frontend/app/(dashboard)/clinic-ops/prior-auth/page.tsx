@@ -113,7 +113,7 @@ export default function PriorAuthPage() {
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto">
       {notification && (
-        <div className="fixed top-6 right-6 z-50 px-4 py-3 rounded-xl bg-white text-black text-sm font-medium shadow-lg animate-fade-in">
+        <div className="fixed top-6 right-6 z-50 px-4 py-3 rounded-xl bg-black text-white text-sm font-medium shadow-lg animate-fade-in">
           {notification}
         </div>
       )}
@@ -159,7 +159,7 @@ export default function PriorAuthPage() {
           <motion.div key={pa.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.05 }} className="bg-white border border-black rounded-2xl p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white border border-black flex items-center justify-center text-white text-sm font-bold">
+                <div className="w-10 h-10 rounded-xl bg-black border border-black flex items-center justify-center text-white text-sm font-bold">
                   {(pa.patient_name || "?").split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                 </div>
                 <div>

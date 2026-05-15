@@ -145,9 +145,9 @@ export default function Sidebar() {
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
           {navigation.filter((group) => {
             const isStartup = pathname.startsWith('/launch-engine');
-            const isClinic = pathname.startsWith('/clinic-ops') || pathname === '/dashboard';
+            const isClinic = pathname.startsWith('/clinic-ops') || pathname.startsWith('/dashboard') || pathname.startsWith('/reports') || pathname.startsWith('/marketplace') || pathname.startsWith('/copilot') || pathname.startsWith('/settings') || pathname.startsWith('/pricing');
             if (isStartup && group.section === "Clinic Intelligence") return false;
-            if (isClinic && group.section === "Startup Engine") return false;
+            if ((isClinic && !isStartup) && group.section === "Startup Engine") return false;
             return true;
           }).map((group) => (
             <div key={group.section}>

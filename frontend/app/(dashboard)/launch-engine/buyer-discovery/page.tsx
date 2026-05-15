@@ -311,7 +311,7 @@ export default function BuyerDiscoveryPage() {
     <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       {/* Toast */}
       {notification && (
-        <div className="fixed top-6 right-6 z-50 px-4 py-3 rounded-xl bg-white text-black text-sm font-bold shadow-2xl animate-fade-in border border-white">
+        <div className="fixed top-6 right-6 z-50 px-4 py-3 rounded-xl bg-black text-white text-sm font-bold shadow-2xl animate-fade-in">
           {notification}
         </div>
       )}
@@ -324,9 +324,9 @@ export default function BuyerDiscoveryPage() {
           <select 
             value={selectedStartupId} 
             onChange={(e) => setSelectedStartupId(e.target.value)}
-            className="bg-black text-xs font-bold text-black px-4 py-2.5 rounded-lg border border-black outline-none cursor-pointer hover:border-black transition-all"
+            className="bg-white text-xs font-bold text-black px-4 py-2.5 rounded-lg border border-black outline-none cursor-pointer hover:bg-black/5 transition-all"
           >
-            {startups.map(s => <option key={s.id} value={s.id} className="bg-black">{s.name}</option>)}
+            {startups.map(s => <option key={s.id} value={s.id} className="bg-white text-black">{s.name}</option>)}
           </select>
           <button 
             onClick={handleDiscover}
@@ -417,7 +417,7 @@ export default function BuyerDiscoveryPage() {
 
       {loading ? (
         <div className="py-20 flex flex-col items-center justify-center gap-4">
-          <Loader2 className="w-8 h-8 text-white animate-spin" />
+          <Loader2 className="w-8 h-8 text-black animate-spin" />
           <p className="text-sm text-black">Analyzing market opportunities...</p>
         </div>
       ) : (
@@ -581,7 +581,7 @@ export default function BuyerDiscoveryPage() {
                 <button
                   onClick={() => handleGenerateEmail(connectModal)}
                   disabled={isGeneratingEmail}
-                  className="w-full mb-5 flex items-center justify-center gap-2 py-3 rounded-xl bg-white text-black text-sm font-bold hover:bg-white/90 transition-all disabled:opacity-50"
+                  className="w-full mb-5 flex items-center justify-center gap-2 py-3 rounded-xl bg-black text-white text-sm font-bold hover:bg-black/90 transition-all disabled:opacity-50"
                 >
                   {isGeneratingEmail
                     ? <><Loader2 size={16} className="animate-spin" /> Generating personalised email...</>
