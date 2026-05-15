@@ -39,7 +39,6 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
       const res = await fetch("/api/voice/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Use an older sounding professional voice for buyer
         body: JSON.stringify({ text, voiceId: "CwhCGxEEOz3iNgzA3XJQ" }), 
       });
       if (res.ok) {
@@ -83,8 +82,6 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
     setIsProcessing(true);
 
     try {
-      // Very simple local echo for the hackathon (in real app, call Gemini API here to simulate buyer)
-      // Since we don't have a specific Gemini endpoint for roleplay built yet, let's just make one on the fly
       const res = await fetch("/api/voice/roleplay", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -125,10 +122,10 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
         animate={{ opacity: 1, scale: 1, y: 0 }}
         className="relative w-full max-w-2xl bg-white border border-black/[0.08] rounded-2xl flex flex-col overflow-hidden h-[600px]"
       >
-        <div className="flex items-center justify-between p-5 border-b border-white/[0.05] bg-black/[0.02]">
+        <div className="flex items-center justify-between p-5 border-b border-black/[0.07] bg-black/[0.02]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-              <ShieldCheck size={20} className="text-blue-500" />
+            <div className="w-10 h-10 rounded-xl bg-black/5 border border-black/10 flex items-center justify-center">
+              <ShieldCheck size={20} className="text-black" />
             </div>
             <div>
               <h2 className="text-sm font-bold text-black">Live Mock Pitch Simulator</h2>
@@ -143,17 +140,17 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {messages.map((m, i) => (
             <div key={i} className={`flex gap-4 ${m.role === "user" ? "flex-row-reverse" : ""}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${m.role === "user" ? "bg-white/10" : "bg-blue-500/20 text-blue-400"}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${m.role === "user" ? "bg-black/5" : "bg-black/10 text-black"}`}>
                 {m.role === "user" ? <User size={14} /> : <ShieldCheck size={14} />}
               </div>
               <div className={`flex flex-col gap-2 max-w-[80%] ${m.role === "user" ? "items-end" : "items-start"}`}>
-                <div className={`p-4 rounded-2xl text-sm leading-relaxed ${m.role === "user" ? "bg-black/[0.04] text-black rounded-tr-sm" : "bg-blue-500/10 border border-blue-500/20 text-blue-900 rounded-tl-sm"}`}>
+                <div className={`p-4 rounded-2xl text-sm leading-relaxed ${m.role === "user" ? "bg-black/[0.04] text-black rounded-tr-sm" : "bg-black/[0.03] border border-black/10 text-black rounded-tl-sm"}`}>
                   {m.text}
                 </div>
                 {m.role === "buyer" && m.audioUrl && (
                   <button 
                     onClick={() => handlePlayAudio(m.audioUrl!)}
-                    className="flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-widest text-blue-400/60 hover:text-blue-400 transition-colors"
+                    className="flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-widest text-black/40 hover:text-black transition-colors"
                   >
                     {isPlaying && audioRef.current?.src === m.audioUrl ? <Square size={12} /> : <Volume2 size={12} />}
                     {isPlaying && audioRef.current?.src === m.audioUrl ? "Stop Audio" : "Replay Audio"}
@@ -164,10 +161,10 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
           ))}
           {isProcessing && (
             <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
-                <Loader2 size={14} className="text-blue-400 animate-spin" />
+              <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center shrink-0">
+                <Loader2 size={14} className="text-black animate-spin" />
               </div>
-              <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-900/50 text-sm rounded-tl-sm">
+              <div className="p-4 rounded-2xl bg-black/[0.03] border border-black/10 text-black/50 text-sm rounded-tl-sm">
                 Thinking...
               </div>
             </div>
@@ -175,7 +172,7 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
           <div ref={chatEndRef} />
         </div>
 
-        <div className="p-4 border-t border-white/[0.05] bg-black/20">
+        <div className="p-4 border-t border-black/[0.07] bg-black/[0.02]">
           <div className="flex items-center gap-2 relative">
             <input 
               type="text" 
@@ -183,7 +180,7 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               placeholder="Type your pitch or response..."
-              className="flex-1 bg-black/[0.02] border border-black/[0.08] rounded-xl py-3 pl-4 pr-12 text-sm text-black placeholder-black/30 focus:outline-none focus:border-black/20"
+              className="flex-1 bg-white border border-black/[0.08] rounded-xl py-3 pl-4 pr-12 text-sm text-black placeholder-black/30 focus:outline-none focus:border-black/20"
             />
             <button 
               onClick={handleSend}

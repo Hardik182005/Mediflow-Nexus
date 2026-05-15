@@ -2,6 +2,9 @@ export interface VOBInput {
   id: string;
   type: "Insurance Card" | "Benefits PDF" | "Manual Form" | "Clinical Context";
   content: string;
+  fileBase64?: string;
+  mimeType?: string;
+  fileName?: string;
 }
 
 export interface VOBReport {

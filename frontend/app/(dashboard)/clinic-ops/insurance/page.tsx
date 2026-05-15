@@ -36,10 +36,10 @@ export default function InsurancePage() {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'verified': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-      case 'denied': return 'bg-red-500/10 text-red-400 border-red-500/20';
-      case 'pending': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-      default: return 'bg-black/ text-black border-black';
+      case 'verified': return 'bg-black text-white border-black';
+      case 'denied': return 'bg-white text-black border-black border-2';
+      case 'pending': return 'bg-white text-black border-black border-dashed';
+      default: return 'bg-white text-black border-black';
     }
   };
 
@@ -49,7 +49,7 @@ export default function InsurancePage() {
       const res = await fetch("/api/clinic/vob/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ inputs: inputs.map(i => ({ type: i.type, content: i.content })) }),
+        body: JSON.stringify({ inputs: inputs.map(i => ({ type: i.type, content: i.content, fileBase64: i.fileBase64, mimeType: i.mimeType, fileName: i.fileName })) }),
       });
       const data = await res.json();
       if (data.report) {
@@ -176,7 +176,7 @@ export default function InsurancePage() {
                             <td className="text-xs text-black">{c.insurance_provider}</td>
                             <td>
                               <div className="flex items-center gap-2">
-                                <span className={`text-xs font-bold ${(c.denial_risk_score || 0) > 70 ? 'text-red-400' : 'text-emerald-400'}`}>
+                                <span className={`text-xs font-bold text-black`}>
                                   {c.denial_risk_score || 0}%
                                 </span>
                               </div>

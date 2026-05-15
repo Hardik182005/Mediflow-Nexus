@@ -83,7 +83,7 @@ RULES:
 export async function POST(req: NextRequest) {
   try {
     const { inputs } = await req.json() as {
-      inputs: { type: string; content: string }[];
+      inputs: { type: string; content: string; fileBase64?: string; fileName?: string; mimeType?: string }[];
     };
 
     if (!inputs || inputs.length === 0) {
@@ -104,13 +104,25 @@ export async function POST(req: NextRequest) {
       systemInstruction: VOB_SYSTEM_PROMPT,
     });
 
-    const userContent = inputs
-      .map((inp) => `--- ${inp.type.toUpperCase()} ---\n${inp.content.trim()}`)
-      .join("\n\n");
+    const prompt = `Analyze the following insurance inputs and generate a clinic-ready VOB intelligence report as JSON:\n\n`;
+    
+    const parts: any[] = [{ text: prompt }];
 
-    const prompt = `Analyze the following insurance inputs and generate a clinic-ready VOB intelligence report as JSON:\n\n${userContent}`;
+    for (const inp of inputs) {
+      if (inp.fileBase64) {
+        parts.push({ text: `--- ${inp.type.toUpperCase()} (${inp.fileName}) ---\n` });
+        parts.push({
+          inlineData: {
+            data: inp.fileBase64,
+            mimeType: inp.mimeType || "application/pdf"
+          }
+        });
+      } else {
+        parts.push({ text: `--- ${inp.type.toUpperCase()} ---\n${inp.content.trim()}\n\n` });
+      }
+    }
 
-    const result = await model.generateContent(prompt);
+    const result = await model.generateContent(parts);
     const rawText = result.response.text().trim();
 
     const jsonText = rawText

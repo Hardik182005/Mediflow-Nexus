@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 "use client";
 
 import { useState } from "react";
@@ -9,7 +9,7 @@ function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
   const copy = () => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); };
   return (
-    <button onClick={copy} className="btn-ghost p-1.5 text-black/30 hover:text-white/70">
+    <button onClick={copy} className="btn-ghost p-1.5 text-black/30 hover:text-black/70">
       {copied ? <Check size={12} className="text-black/60" /> : <Copy size={12} />}
     </button>
   );
@@ -21,7 +21,7 @@ function Section({ title, icon, badge, badgeVariant = "neutral", children, defau
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const badgeStyle = {
-    high: "bg-white/10 text-white border border-white/20",
+    high: "bg-white/10 text-black border border-white/20",
     medium: "bg-black/[0.04] text-black/60 border border-white/10",
     low: "bg-black/[0.02] text-black/30 border border-black/[0.06]",
     neutral: "bg-black/[0.04] text-black/40 border border-white/[0.08]",
@@ -32,7 +32,7 @@ function Section({ title, icon, badge, badgeVariant = "neutral", children, defau
       <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-4 text-left hover:bg-black/[0.02] transition-colors">
         <div className="flex items-center gap-3">
           <span className="text-black/60">{icon}</span>
-          <span className="text-sm font-semibold text-white">{title}</span>
+          <span className="text-sm font-semibold text-black">{title}</span>
           {badge && <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${badgeStyle}`}>{badge}</span>}
         </div>
         <ChevronDown size={13} className={`text-black/20 transition-transform ${open ? "rotate-180" : ""}`} />
@@ -46,20 +46,20 @@ function Field({ label, value }: { label: string; value: string }) {
   return (
     <div className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
       <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1">{label}</p>
-      <p className="text-sm text-white/70">{value || "—"}</p>
+      <p className="text-sm text-black/70">{value || "—"}</p>
     </div>
   );
 }
 
 function RiskPill({ level }: { level: "Low" | "Medium" | "High" }) {
-  const styles = { High: "bg-white/10 text-white border-white/20", Medium: "bg-black/[0.04] text-black/60 border-white/10", Low: "bg-black/[0.02] text-black/30 border-black/[0.06]" };
+  const styles = { High: "bg-white/10 text-black border-white/20", Medium: "bg-black/[0.04] text-black/60 border-white/10", Low: "bg-black/[0.02] text-black/30 border-black/[0.06]" };
   return <span className={`text-xs px-3 py-1 rounded-full border font-semibold ${styles[level]}`}>{level} Risk</span>;
 }
 
 function StatusPill({ status }: { status: string }) {
   const isGood = ["Active", "Covered", "Not Required", "Ready", "Proceed with scheduling"].includes(status);
   const isBad = ["Inactive", "Not Covered", "Required", "Not Ready", "Hold until prior auth"].includes(status);
-  const style = isGood ? "bg-white/10 text-white border-white/20" : isBad ? "bg-black/[0.03] text-black/40 border-white/[0.08]" : "bg-black/[0.04] text-black/50 border-black/[0.08]";
+  const style = isGood ? "bg-white/10 text-black border-white/20" : isBad ? "bg-black/[0.03] text-black/40 border-white/[0.08]" : "bg-black/[0.04] text-black/50 border-black/[0.08]";
   return <span className={`text-xs px-3 py-1 rounded-full border font-semibold ${style}`}>{status}</span>;
 }
 
@@ -76,7 +76,7 @@ function ScoreRing({ score }: { score: number }) {
         <span className={`absolute inset-0 flex items-center justify-center text-sm font-bold ${color}`}>{score}</span>
       </div>
       <div>
-        <p className="text-xs font-semibold text-white">Data Confidence</p>
+        <p className="text-xs font-semibold text-black">Data Confidence</p>
         <p className="text-[10px] text-black/30">{score >= 75 ? "High confidence" : score >= 50 ? "Moderate — review assumptions" : "Low — verify manually"}</p>
       </div>
     </div>
@@ -104,7 +104,7 @@ export default function VOBResults({ report, onReset }: Props) {
             <Shield size={16} className="text-black" />
           </div>
           <div>
-            <p className="text-sm font-bold text-white">{is.patientName}</p>
+            <p className="text-sm font-bold text-black">{is.patientName}</p>
             <p className="text-xs text-black/30">{is.payerName} · {is.planType} · {is.memberId}</p>
           </div>
           <StatusPill status={is.coverageStatus} />
@@ -115,11 +115,11 @@ export default function VOBResults({ report, onReset }: Props) {
       {/* Operational Recommendation Banner */}
       <div className="p-4 rounded-xl bg-black/[0.03] border border-black/[0.08] flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          {or_.action.includes("Proceed") ? <CheckCircle size={18} className="text-white mt-0.5" /> :
+          {or_.action.includes("Proceed") ? <CheckCircle size={18} className="text-black mt-0.5" /> :
            or_.action.includes("Hold") ? <Clock size={18} className="text-black/40 mt-0.5" /> :
            <AlertTriangle size={18} className="text-black/60 mt-0.5" />}
           <div>
-            <p className="text-sm font-bold text-white">{or_.action}</p>
+            <p className="text-sm font-bold text-black">{or_.action}</p>
             <p className="text-xs text-black/40 mt-0.5">{or_.reasoning}</p>
           </div>
         </div>
@@ -189,11 +189,11 @@ export default function VOBResults({ report, onReset }: Props) {
           <div className="grid grid-cols-2 gap-2">
             <div className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.08] text-center">
               <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold mb-1">Patient Responsibility Est.</p>
-              <p className="text-lg font-bold text-white">{cb.patientResponsibilityEstimate}</p>
+              <p className="text-lg font-bold text-black">{cb.patientResponsibilityEstimate}</p>
             </div>
             <div className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.08] text-center">
               <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold mb-1">Expected Reimbursement</p>
-              <p className="text-lg font-bold text-white">{cb.expectedReimbursement}</p>
+              <p className="text-lg font-bold text-black">{cb.expectedReimbursement}</p>
             </div>
           </div>
           {cb.notes.length > 0 && (
@@ -256,11 +256,11 @@ export default function VOBResults({ report, onReset }: Props) {
           <div className="grid grid-cols-2 gap-2">
             <div className="p-3 rounded-lg bg-black/[0.03] border border-white/[0.08] text-center">
               <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1">Expected Reimbursement</p>
-              <p className="text-base font-bold text-white">{ri.expectedReimbursementRange}</p>
+              <p className="text-base font-bold text-black">{ri.expectedReimbursementRange}</p>
             </div>
             <div className="p-3 rounded-lg bg-black/[0.03] border border-white/[0.08] text-center">
               <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1">Patient Responsibility</p>
-              <p className="text-base font-bold text-white">{ri.patientResponsibilityRange}</p>
+              <p className="text-base font-bold text-black">{ri.patientResponsibilityRange}</p>
             </div>
           </div>
           <div className="flex gap-2">
@@ -285,7 +285,7 @@ export default function VOBResults({ report, onReset }: Props) {
       <Section title="Operational Recommendation" icon={<CheckCircle size={15} />} badge={or_.action.split(" ").slice(0, 2).join(" ")} defaultOpen>
         <div className="space-y-3">
           <div className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.08]">
-            <p className="text-sm font-semibold text-white mb-1">{or_.action}</p>
+            <p className="text-sm font-semibold text-black mb-1">{or_.action}</p>
             <p className="text-xs text-black/50">{or_.reasoning}</p>
           </div>
           {or_.urgentActions.length > 0 && (
@@ -320,7 +320,7 @@ export default function VOBResults({ report, onReset }: Props) {
             <div className="space-y-1">
               {ps.nextSteps.map((s, i) => (
                 <div key={i} className="flex gap-3 items-start">
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-black/[0.04] text-white text-[10px] font-bold flex items-center justify-center">{i + 1}</span>
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-black/[0.04] text-black text-[10px] font-bold flex items-center justify-center">{i + 1}</span>
                   <p className="text-xs text-black/60 pt-0.5">{s}</p>
                 </div>
               ))}

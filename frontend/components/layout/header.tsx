@@ -48,7 +48,7 @@ export default function Header() {
 
         {/* Live indicator */}
         <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/[0.03] border border-black/[0.05]">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+          <div className="w-1.5 h-1.5 rounded-full bg-black animate-pulse"></div>
           <span className="text-[10.5px] font-semibold text-black/50 uppercase tracking-wider">Live</span>
         </div>
       </div>
@@ -70,15 +70,38 @@ export default function Header() {
             <Bell size={15} />
             <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-black rounded-full border border-white"></span>
           </button>
-          <button className="p-2 rounded-lg hover:bg-black/[0.04] text-black/40 hover:text-black transition-colors">
+          <button 
+            onClick={() => window.location.href = "/settings"}
+            className="p-2 rounded-lg hover:bg-black/[0.04] text-black/40 hover:text-black transition-colors"
+          >
             <Settings size={15} />
           </button>
 
           <div className="w-px h-5 bg-black/[0.07] mx-1"></div>
 
-          <button className="bg-black text-white text-[12.5px] font-semibold py-1.5 px-4 rounded-lg hover:bg-zinc-800 transition-colors">
-            New Workspace
+          <button 
+            onClick={() => window.location.href = "/"}
+            className="p-2 rounded-lg hover:bg-black/[0.04] text-black/40 hover:text-black transition-colors"
+            title="Back to Landing"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </button>
+
+          {pathname.startsWith("/launch-engine") ? (
+            <button 
+              onClick={() => window.location.href = "/dashboard"}
+              className="bg-black text-white text-[12.5px] font-semibold py-1.5 px-4 rounded-lg hover:bg-zinc-800 transition-colors"
+            >
+              Switch to Clinic Ops
+            </button>
+          ) : (
+            <button 
+              onClick={() => window.location.href = "/launch-engine"}
+              className="bg-black text-white text-[12.5px] font-semibold py-1.5 px-4 rounded-lg hover:bg-zinc-800 transition-colors"
+            >
+              Switch to Startup Engine
+            </button>
+          )}
         </div>
       </div>
     </header>

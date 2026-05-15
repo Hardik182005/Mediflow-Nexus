@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -177,8 +177,8 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
     <div className="h-full flex flex-col space-y-6 max-w-3xl mx-auto py-4">
       <div className="flex items-center justify-between border-b border-black/10 pb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-            <MessageSquareText size={20} className="text-blue-500" />
+          <div className="w-10 h-10 rounded-xl bg-black/5 border border-black/10 flex items-center justify-center">
+            <MessageSquareText size={20} className="text-black" />
           </div>
           <div>
             <h2 className="text-xl font-bold text-black">AI Outreach Drafter</h2>
@@ -205,10 +205,10 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
           </div>
           
           {voiceMemoUrl && (
-            <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-between">
+            <div className="p-4 rounded-xl bg-black/5 border border-black/10 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Volume2 size={18} className="text-blue-600" />
-                <span className="text-xs font-bold text-blue-800 uppercase tracking-widest">AI Voice Memo Ready</span>
+                <Volume2 size={18} className="text-black" />
+                <span className="text-xs font-bold text-black uppercase tracking-widest">AI Voice Memo Ready</span>
               </div>
               <audio src={voiceMemoUrl} controls className="h-8 max-w-[200px]" />
             </div>
@@ -227,7 +227,7 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
               onClick={handleCopy}
               className="flex-1 bg-white text-black border border-black/20 hover:bg-black/5 transition-all rounded-xl py-3 text-xs uppercase font-bold tracking-widest flex items-center justify-center gap-2"
             >
-              {copied ? <CheckCircle2 size={16} className="text-emerald-500" /> : <Copy size={16} />}
+              {copied ? <CheckCircle2 size={16} className="text-black" /> : <Copy size={16} />}
               {copied ? "Copied" : "Copy to Clipboard"}
             </button>
             <button className="flex-1 bg-black text-white hover:bg-black/80 transition-all rounded-xl py-3 text-xs uppercase font-bold tracking-widest flex items-center justify-center gap-2">
@@ -262,21 +262,21 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
         return (
           <div className="space-y-8 h-full flex flex-col justify-center">
             <div className="flex items-center gap-3">
-              <AlertTriangle className="text-amber-500" size={24} />
+              <AlertTriangle className="text-black" size={24} />
               <h2 className="text-2xl font-bold text-black">{deck.slide2.title}</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
                 {deck.slide2.pain_points.map((p, i) => (
                   <div key={i} className="flex items-start gap-3 p-4 rounded-xl bg-black/[0.02] border border-black/[0.05]">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-black mt-2" />
                     <p className="text-sm text-black/70 leading-relaxed">{p}</p>
                   </div>
                 ))}
               </div>
-              <div className="flex flex-col items-center justify-center p-8 rounded-2xl bg-amber-500/[0.05] border border-amber-500/20">
-                <p className="text-5xl font-bold text-amber-500">{deck.slide2.key_stat}</p>
-                <p className="text-xs text-amber-500/60 uppercase font-bold tracking-widest mt-2">Critical Impact Stat</p>
+              <div className="flex flex-col items-center justify-center p-8 rounded-2xl bg-black/[0.03] border border-black/20">
+                <p className="text-5xl font-bold text-black">{deck.slide2.key_stat}</p>
+                <p className="text-xs text-black/60 uppercase font-bold tracking-widest mt-2">Critical Impact Stat</p>
               </div>
             </div>
           </div>
@@ -286,14 +286,14 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
           <div className="space-y-8 h-full flex flex-col justify-center">
             <h2 className="text-2xl font-bold text-black">{deck.slide3.title}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="p-8 rounded-2xl bg-red-500/[0.05] border border-red-500/20 flex flex-col items-center justify-center text-center">
-                <p className="text-4xl font-bold text-red-500">{deck.slide3.revenue_at_risk}</p>
-                <p className="text-[10px] text-red-500/60 uppercase font-bold tracking-widest mt-2">Revenue At Risk (Next 12 Months)</p>
+              <div className="p-8 rounded-2xl bg-black/[0.03] border border-black/20 flex flex-col items-center justify-center text-center">
+                <p className="text-4xl font-bold text-black">{deck.slide3.revenue_at_risk}</p>
+                <p className="text-[10px] text-black/60 uppercase font-bold tracking-widest mt-2">Revenue At Risk (Next 12 Months)</p>
               </div>
               <div className="space-y-4">
                 {deck.slide3.consequences.map((c, i) => (
                   <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-black/[0.02] border border-black/[0.05]">
-                    <X size={16} className="text-red-500/60" />
+                    <X size={16} className="text-black/60" />
                     <p className="text-sm text-black/70">{c}</p>
                   </div>
                 ))}
@@ -304,8 +304,8 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
       case 4:
         return (
           <div className="space-y-8 h-full flex flex-col justify-center max-w-3xl mx-auto text-center">
-            <div className="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-4">
-              <Zap size={32} className="text-blue-500" />
+            <div className="w-16 h-16 rounded-2xl bg-black/5 border border-black/10 flex items-center justify-center mx-auto mb-4">
+              <Zap size={32} className="text-black" />
             </div>
             <h2 className="text-2xl font-bold text-black leading-relaxed">
               {deck.slide4.solution_line}
@@ -328,8 +328,8 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
             <h2 className="text-2xl font-bold text-black text-center">{deck.slide5.title}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {deck.slide5.proof_points.map((p, i) => (
-                <div key={i} className="p-6 rounded-2xl bg-emerald-500/[0.05] border border-emerald-500/20 flex items-start gap-4">
-                  <CheckCircle2 size={20} className="text-emerald-500 mt-0.5 shrink-0" />
+                <div key={i} className="p-6 rounded-2xl bg-black/[0.03] border border-black/10 flex items-start gap-4">
+                  <CheckCircle2 size={20} className="text-black mt-0.5 shrink-0" />
                   <p className="text-sm text-black/70 leading-relaxed">{p}</p>
                 </div>
               ))}
@@ -341,16 +341,16 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
           <div className="space-y-8 h-full flex flex-col justify-center">
             <div className="flex items-center justify-between border-b border-black/10 pb-6">
               <h2 className="text-2xl font-bold text-black">ROI Calculator</h2>
-              <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-[10px] font-bold uppercase tracking-widest">
+              <div className="px-3 py-1 rounded-full bg-black/5 border border-black/10 text-black text-[10px] font-bold uppercase tracking-widest">
                 Targeted for {buyerName}
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { label: "Current Loss", value: deck.slide6.current_loss, icon: AlertTriangle, color: "text-red-500" },
-                { label: "Potential Savings", value: deck.slide6.savings, icon: TrendingUp, color: "text-emerald-500" },
-                { label: "Payback Period", value: deck.slide6.payback_period, icon: Zap, color: "text-blue-500" },
-                { label: "Year 1 ROI", value: deck.slide6.year1_roi, icon: DollarSign, color: "text-emerald-500" },
+                { label: "Current Loss", value: deck.slide6.current_loss, icon: AlertTriangle, color: "text-black" },
+                { label: "Potential Savings", value: deck.slide6.savings, icon: TrendingUp, color: "text-black" },
+                { label: "Payback Period", value: deck.slide6.payback_period, icon: Zap, color: "text-black" },
+                { label: "Year 1 ROI", value: deck.slide6.year1_roi, icon: DollarSign, color: "text-black" },
               ].map((item, i) => (
                 <div key={i} className="p-5 rounded-2xl bg-black/[0.02] border border-black/[0.05] space-y-2">
                   <item.icon size={16} className={item.color} />
@@ -361,7 +361,7 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
             </div>
             <div className="p-6 rounded-2xl bg-black/[0.03] border border-black/[0.1] mt-4">
               <div className="h-2 w-full bg-black/[0.05] rounded-full overflow-hidden">
-                <div className="h-full bg-emerald-500 w-[75%]" />
+                <div className="h-full bg-black w-[75%]" />
               </div>
               <p className="text-[10px] text-black/40 mt-3 text-center uppercase font-bold tracking-widest">Efficiency Improvement Projection</p>
             </div>
@@ -375,8 +375,8 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
               <div className="space-y-4">
                 {deck.slide7.tech_points.map((p, i) => (
                   <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-black/[0.02] border border-black/[0.05]">
-                    <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                      <Rocket size={14} className="text-blue-500" />
+                    <div className="w-8 h-8 rounded-lg bg-black/5 border border-black/10 flex items-center justify-center">
+                      <Rocket size={14} className="text-black" />
                     </div>
                     <p className="text-sm text-black/70">{p}</p>
                   </div>
@@ -443,7 +443,7 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
               <button 
                 onClick={handlePlayAudio} 
                 disabled={isGeneratingAudio}
-                className={`px-3 py-2 rounded-lg flex items-center gap-2 transition-all text-xs font-bold uppercase tracking-widest ${isPlaying ? 'bg-blue-500/10 text-blue-600' : 'hover:bg-black/5 text-black/60 hover:text-black'}`}
+                className={`px-3 py-2 rounded-lg flex items-center gap-2 transition-all text-xs font-bold uppercase tracking-widest ${isPlaying ? 'bg-black/5 text-black' : 'hover:bg-black/5 text-black/60 hover:text-black'}`}
               >
                 {isGeneratingAudio ? <Loader2 size={16} className="animate-spin" /> : (isPlaying ? <Square size={16} /> : <Volume2 size={16} />)}
                 {isGeneratingAudio ? "Generating..." : (isPlaying ? "Stop Pitch" : "Play Pitch")}

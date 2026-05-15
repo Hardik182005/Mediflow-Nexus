@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useMemo } from "react";
 import { FileBarChart, Download, Filter, Calendar, ChevronDown, CheckCircle2, Loader2, X, Mail, Clock, Repeat, BarChart, ShieldCheck, Users, Briefcase } from "lucide-react";
@@ -108,16 +108,51 @@ export default function Reports() {
     showToast("✅ Reports synchronized successfully.");
   };
 
-  const handleDownload = (report: Report) => {
-    const content = JSON.stringify({ report: report.name, generatedAt: new Date().toISOString(), status: report.status }, null, 2);
-    const blob = new Blob([content], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${report.name.toLowerCase().replace(/\s+/g, "-")}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast(`📥 Downloaded: ${report.name}`);
+  const handleDownload = async (report: Report) => {
+    try {
+      const { jsPDF } = await import("jspdf");
+      const doc = new jsPDF();
+      
+      // Basic PDF styling
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(22);
+      doc.text("Mediflow Nexus Intelligence", 20, 20);
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(16);
+      doc.text(`Report: ${report.name}`, 20, 40);
+      
+      doc.setFontSize(12);
+      doc.text(`Category: ${report.category}`, 20, 50);
+      doc.text(`Generated: ${new Date().toLocaleString()}`, 20, 60);
+      doc.text(`Status: ${report.status}`, 20, 70);
+      
+      doc.line(20, 80, 190, 80);
+      
+      doc.text("Report Summary:", 20, 95);
+      doc.setFont("helvetica", "italic");
+      doc.text("This is an AI-generated synthetic report for Mediflow Nexus.", 20, 105);
+      doc.text("Full data analysis and metrics are available in the dashboard.", 20, 115);
+      
+      // Footer
+      doc.setFontSize(10);
+      doc.text("Confidential - Mediflow Nexus", 20, 280);
+      
+      doc.save(`${report.name.toLowerCase().replace(/\s+/g, "-")}.pdf`);
+      showToast(`📥 Downloaded PDF: ${report.name}`);
+    } catch (err) {
+      console.error("PDF generation error:", err);
+      // Fallback to JSON if jsPDF fails to load
+      const content = JSON.stringify({ report: report.name, generatedAt: new Date().toISOString(), status: report.status }, null, 2);
+      const blob = new Blob([content], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${report.name.toLowerCase().replace(/\s+/g, "-")}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast(`📥 Downloaded JSON: ${report.name}`);
+    }
   };
 
   const handleScheduleSubmit = async () => {

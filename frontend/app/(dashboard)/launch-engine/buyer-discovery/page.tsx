@@ -345,7 +345,7 @@ export default function BuyerDiscoveryPage() {
           <FileText size={16} className="text-black" />
           Supplemental Product Context (Optional)
         </h2>
-        <ContextFileUpload onChange={(files: any) => setProductFiles(files)} />
+        <ContextFileUpload onChange={setProductFiles as any} />
       </div>
 
       {/* Metrics Row */}

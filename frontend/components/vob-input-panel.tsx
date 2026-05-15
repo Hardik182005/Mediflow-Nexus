@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
-import { useState } from "react";
-import { Plus, Trash2, Zap, CreditCard, FileText, ClipboardList, Stethoscope } from "lucide-react";
+import { useState, useRef } from "react";
+import { Plus, Trash2, Zap, CreditCard, FileText, ClipboardList, Stethoscope, Upload, X } from "lucide-react";
 import type { VOBInput } from "@/types/vob";
 
 const INPUT_TYPES: VOBInput["type"][] = [
@@ -52,21 +52,52 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
     setInputs((prev) => prev.map((i) => (i.id === id ? { ...i, content } : i)));
   };
 
-  const canGenerate = inputs.some((i) => i.content.trim().length > 10) && !isLoading;
+  const handleFileUpload = async (id: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    const file = e.target.files[0];
+    
+    const base64 = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve((reader.result as string).split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+    setInputs((prev) => prev.map((i) => (i.id === id ? {
+      ...i,
+      fileBase64: base64,
+      fileName: file.name,
+      mimeType: file.type,
+      content: ""
+    } : i)));
+    
+    e.target.value = "";
+  };
+
+  const removeFile = (id: string) => {
+    setInputs((prev) => prev.map((i) => (i.id === id ? {
+      ...i,
+      fileBase64: undefined,
+      fileName: undefined,
+      mimeType: undefined
+    } : i)));
+  };
+
+  const canGenerate = inputs.some((i) => i.content.trim().length > 10 || i.fileBase64) && !isLoading;
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-[16px] font-bold text-white">AI Insurance Analyzer</h2>
+          <h2 className="text-[16px] font-bold text-black">AI Insurance Analyzer</h2>
           <p className="text-[12px] text-black/40 mt-0.5">
-            Paste insurance card, benefits, or clinical data — get a full VOB report instantly.
+            Upload documents or paste clinical data — get a full VOB report instantly.
           </p>
         </div>
         <button
           onClick={addInput}
           disabled={inputs.length >= 4}
-          className="btn-secondary flex items-center gap-2 text-xs disabled:opacity-30"
+          className="btn-secondary flex items-center gap-2 text-xs disabled:opacity-30 border border-black/10"
         >
           <Plus size={12} /> Add Input
         </button>
@@ -74,35 +105,65 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {inputs.map((inp, idx) => (
-          <div key={inp.id} className="bg-white border border-black/[0.07] rounded-2xl p-4 space-y-3">
+          <div key={inp.id} className="bg-white border border-black/[0.1] shadow-sm rounded-2xl p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-black/20 text-[10px] font-bold">#{idx + 1}</span>
+                <span className="text-black/40 text-[10px] font-bold">#{idx + 1}</span>
                 <select
                   value={inp.type}
                   onChange={(e) => updateType(inp.id, e.target.value as VOBInput["type"])}
-                  className="bg-black/[0.04] border border-black/[0.08] text-white text-xs rounded-lg px-2.5 py-1.5 outline-none focus:border-white/30 cursor-pointer"
+                  className="bg-white border border-black/[0.1] text-black text-xs rounded-lg px-2.5 py-1.5 outline-none focus:border-black/30 cursor-pointer font-medium"
                 >
                   {INPUT_TYPES.map((t) => (
-                    <option key={t} value={t} className="bg-black">{t}</option>
+                    <option key={t} value={t}>{t}</option>
                   ))}
                 </select>
-                <span className="text-black/30">{TYPE_ICONS[inp.type]}</span>
+                <span className="text-black/40">{TYPE_ICONS[inp.type]}</span>
               </div>
-              {inputs.length > 1 && (
-                <button onClick={() => removeInput(inp.id)} className="btn-ghost p-1.5 text-black/20 hover:text-black/60">
-                  <Trash2 size={12} />
-                </button>
-              )}
+              <div className="flex items-center gap-1">
+                {!inp.fileBase64 && (
+                  <label className="cursor-pointer btn-secondary px-2 py-1 flex items-center gap-1.5 text-[10px] border border-black/10 text-black">
+                    <Upload size={10} /> Upload
+                    <input 
+                      type="file" 
+                      className="hidden" 
+                      accept=".pdf,.png,.jpg,.jpeg,.txt"
+                      onChange={(e) => handleFileUpload(inp.id, e)} 
+                    />
+                  </label>
+                )}
+                {inputs.length > 1 && (
+                  <button onClick={() => removeInput(inp.id)} className="btn-ghost p-1.5 text-black/40 hover:text-black/80">
+                    <Trash2 size={12} />
+                  </button>
+                )}
+              </div>
             </div>
-            <textarea
-              value={inp.content}
-              onChange={(e) => updateContent(inp.id, e.target.value)}
-              placeholder={TYPE_PLACEHOLDERS[inp.type]}
-              rows={5}
-              className="w-full bg-black/40 border border-white/[0.08] rounded-lg p-3 text-xs text-white/70 placeholder:text-black/20 outline-none focus:border-white/20 resize-none font-mono leading-relaxed transition-colors"
-            />
-            <span className="text-[10px] text-black/20">{inp.content.length} chars</span>
+            
+            {inp.fileBase64 ? (
+              <div className="w-full bg-black/[0.02] border border-black/[0.08] rounded-lg p-4 flex flex-col items-center justify-center gap-2 text-center h-[116px]">
+                <FileText size={24} className="text-black/40" />
+                <div>
+                  <p className="text-xs font-bold text-black truncate max-w-[200px]">{inp.fileName}</p>
+                  <p className="text-[10px] text-black/40 mt-0.5">Ready for AI Analysis</p>
+                </div>
+                <button onClick={() => removeFile(inp.id)} className="text-[10px] text-red-500 font-bold hover:underline flex items-center gap-1 mt-1">
+                  <X size={10} /> Remove File
+                </button>
+              </div>
+            ) : (
+              <textarea
+                value={inp.content}
+                onChange={(e) => updateContent(inp.id, e.target.value)}
+                placeholder={TYPE_PLACEHOLDERS[inp.type]}
+                rows={5}
+                className="w-full bg-white border border-black/[0.1] rounded-lg p-3 text-xs text-black placeholder:text-black/30 outline-none focus:border-black/30 resize-none font-mono leading-relaxed transition-colors shadow-sm"
+              />
+            )}
+            
+            {!inp.fileBase64 && (
+              <span className="text-[10px] text-black/40 font-medium block">{inp.content.length} chars</span>
+            )}
           </div>
         ))}
       </div>
@@ -110,12 +171,12 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
       <button
         onClick={() => onGenerate(inputs)}
         disabled={!canGenerate}
-        className="w-full btn-primary flex items-center justify-center gap-2 py-3 text-sm disabled:opacity-30 disabled:cursor-not-allowed"
+        className="w-full btn-primary flex items-center justify-center gap-2 py-3 text-sm disabled:opacity-30 disabled:cursor-not-allowed bg-black text-white hover:bg-black/90 font-bold shadow-md"
       >
         {isLoading ? (
           <>
-            <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-            Analyzing Insurance Data...
+            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            Analyzing Documents...
           </>
         ) : (
           <>
@@ -124,7 +185,7 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
           </>
         )}
       </button>
-      <p className="text-center text-[11px] text-black/20">
+      <p className="text-center text-[11px] text-black/40 font-medium">
         Powered by Gemini 1.5 Pro · Generates 8-section clinical intelligence report
       </p>
     </div>
