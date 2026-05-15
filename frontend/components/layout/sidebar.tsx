@@ -77,7 +77,16 @@ export default function Sidebar() {
   const [expandedItems, setExpandedItems] = useState<string[]>(["Clinic Ops", "Launch Engine"]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [activeMode, setActiveMode] = useState<'clinic' | 'startup'>('clinic');
   const supabase = createClient();
+
+  // Load persisted mode
+  useEffect(() => {
+    const saved = localStorage.getItem('mediflow-mode');
+    if (saved === 'startup' || saved === 'clinic') {
+      setActiveMode(saved);
+    }
+  }, []);
 
   useEffect(() => {
     const getUser = async () => {
@@ -87,12 +96,15 @@ export default function Sidebar() {
     getUser();
   }, [supabase.auth]);
 
-  // Auto-expand the correct section based on current route
+  // Update active mode based on path
   useEffect(() => {
     if (pathname.startsWith('/launch-engine')) {
+      setActiveMode('startup');
+      localStorage.setItem('mediflow-mode', 'startup');
       setExpandedItems((prev) => prev.includes("Launch Engine") ? prev : [...prev, "Launch Engine"]);
-    }
-    if (pathname.startsWith('/clinic-ops')) {
+    } else if (pathname.startsWith('/clinic-ops') || pathname.startsWith('/dashboard')) {
+      setActiveMode('clinic');
+      localStorage.setItem('mediflow-mode', 'clinic');
       setExpandedItems((prev) => prev.includes("Clinic Ops") ? prev : [...prev, "Clinic Ops"]);
     }
   }, [pathname]);
@@ -156,17 +168,15 @@ export default function Sidebar() {
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
           {navigation.filter((group) => {
-            const isStartup = pathname.startsWith('/launch-engine');
-            const isClinic = pathname.startsWith('/clinic-ops') || pathname.startsWith('/dashboard') || pathname.startsWith('/reports') || pathname.startsWith('/marketplace') || pathname.startsWith('/copilot') || pathname.startsWith('/settings') || pathname.startsWith('/pricing');
-            if (isStartup && group.section === "Clinic Intelligence") return false;
-            if ((isClinic && !isStartup) && group.section === "Startup Engine") return false;
+            if (activeMode === 'startup' && group.section === "Clinic Intelligence") return false;
+            if (activeMode === 'clinic' && group.section === "Startup Engine") return false;
             return true;
           }).map((group) => (
             <div key={group.section}>
               <div className="section-label px-3 mb-1.5">{group.section}</div>
               <div className="space-y-0.5">
                 {group.items.map((item) => {
-                  const isStartup = pathname.startsWith('/launch-engine');
+                  const isStartup = activeMode === 'startup';
                   if (isStartup && item.label === "Reports") return null;
 
                   // Dashboard redirects to GTM when in startup context
