@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { User, Building, Shield, Bell, Key, CreditCard, ChevronRight, Loader2, Check, X, Eye, EyeOff, Copy, MessageSquareText, Mic, Send } from "lucide-react";
@@ -284,7 +284,7 @@ export default function Settings() {
           {activeTab === "support" && (
             <div className={cardClass}>
               <h2 className="text-[15px] font-bold text-black mb-0.5">AI Support Agent</h2>
-              <p className="text-[12.5px] text-black mb-5">Powered by Gemini and ElevenLabs Voice Agents.</p>
+              <p className="text-[12.5px] text-black mb-5">Powered by GPT-4o and ElevenLabs Voice Agents.</p>
               <div className="bg-[#fafafa] border border-black rounded-2xl p-5 min-h-[280px] flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="flex gap-3">

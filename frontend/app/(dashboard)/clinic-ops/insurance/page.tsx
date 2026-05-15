@@ -89,7 +89,7 @@ export default function InsurancePage() {
               <Zap size={10} fill="currentColor" /> High Capacity
             </span>
           </h1>
-          <p className="text-sm text-black mt-1">Enterprise-grade Vertex AI pipeline with Gemini 2.0 Flash-powered analysis</p>
+          <p className="text-sm text-black mt-1">Enterprise-grade pipeline with GPT-4o-powered analysis</p>
         </div>
         <button onClick={() => setTab("analyzer")} className="btn-primary flex items-center gap-2">
           <Brain size={15} /> AI Analyzer

@@ -318,7 +318,7 @@ export default function BuyerDiscoveryPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-black tracking-tight">Buyer Discovery</h1>
-          <p className="text-sm text-black mt-1">Gemini 2.0 Flash-powered hospital & clinic targeting</p>
+          <p className="text-sm text-black mt-1">GPT-4o-powered hospital & clinic targeting</p>
         </div>
         <div className="flex items-center gap-3">
           <select 

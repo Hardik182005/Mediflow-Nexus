@@ -41,7 +41,7 @@ export default function PitchDeckModal({ isOpen, onClose, deck, buyerName, start
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // Use a slightly different voice for the memo (e.g. Rachel for outreach, or same)
-        body: JSON.stringify({ text: emailDraft, voiceId: "21m00Tcm4TlvDq8ikWAM" }),
+        body: JSON.stringify({ text: emailDraft, voiceId: "EXAVITQu4vr4xnSDxMaL" }),
       });
       if (res.ok) {
         const blob = await res.blob();

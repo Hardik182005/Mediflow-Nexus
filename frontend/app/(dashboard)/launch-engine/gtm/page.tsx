@@ -175,7 +175,7 @@ function GTMContent() {
               <div className="absolute inset-0 rounded-full border-2 border-t-black border-black animate-spin" />
             </div>
             <div className="text-center space-y-2 max-w-xs">
-              <p className="text-black font-semibold text-sm">Analyzing with Gemini 2.0 Flash</p>
+              <p className="text-black font-semibold text-sm">Analyzing with GPT-4o</p>
               <motion.p key={loadingStep} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className="text-black text-xs">{LOADING_STEPS[loadingStep]}</motion.p>
             </div>
           </motion.div>
@@ -183,7 +183,14 @@ function GTMContent() {
 
         {phase === "result" && strategy && (
           <motion.div key="result" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-            <GTMResults strategy={strategy} onReset={handleReset} />
+            <GTMResults 
+              strategy={strategy} 
+              onReset={handleReset}
+              onPracticePitch={(buyerOrg) => {
+                setRoleplayBuyer(buyerOrg);
+                setIsRoleplayOpen(true);
+              }}
+            />
           </motion.div>
         )}
 

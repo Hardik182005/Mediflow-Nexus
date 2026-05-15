@@ -265,7 +265,7 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
         {isLoading ? (
           <>
             <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-            Analyzing documents with Gemini AI...
+            Analyzing documents with GPT-4o AI...
           </>
         ) : (
           <>
@@ -277,7 +277,7 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
 
       <div className="flex items-center justify-center gap-4 text-[11px] text-black/20 font-medium">
         <span>✦ PDF · Video · Audio · Images</span>
-        <span>✦ Gemini 2.0 Flash multimodal</span>
+        <span>✦ GPT-4o multimodal</span>
         <span>✦ 11-section output</span>
       </div>
     </div>

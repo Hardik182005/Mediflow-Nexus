@@ -12,6 +12,7 @@ interface RoleplayModalProps {
 }
 
 export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: RoleplayModalProps) {
+  if (!isOpen) return null;
   const [messages, setMessages] = useState<{ role: "user" | "buyer"; text: string; audioUrl?: string }[]>([
     { role: "buyer", text: `Hi, I'm the procurement director at ${buyerOrg}. I understand you have a solution for us. What's your pitch?` }
   ]);
@@ -88,7 +89,7 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
       const res = await fetch("/api/voice/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, voiceId: "CwhCGxEEOz3iNgzA3XJQ" }), // Professional buyer voice
+        body: JSON.stringify({ text, voiceId: "CwhRBWXzGAHq8TQ4Fs17" }), // Professional buyer voice
       });
       if (res.ok) {
         const blob = await res.blob();

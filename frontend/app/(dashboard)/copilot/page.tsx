@@ -76,7 +76,7 @@ export default function Copilot() {
     { name: "Sales Pipeline", table: "sales_pipeline", icon: <Table size={14} />, description: "Deal tracking and buyer pipeline" },
     { name: "Marketplace Matches", table: "marketplace_matches", icon: <Sparkles size={14} />, description: "AI-matched buyer–startup connections" },
     { name: "GTM Recommendations", table: "gtm_recommendations", icon: <FileText size={14} />, description: "AI-generated go-to-market strategies" },
-    { name: "Gemini 2.0 Flash API", table: "External API", icon: <Bot size={14} />, description: "LLM-powered analysis and generation" },
+    { name: "GPT-4o API", table: "External API", icon: <Bot size={14} />, description: "LLM-powered analysis and generation" },
   ];
 
   return (
@@ -92,7 +92,7 @@ export default function Copilot() {
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span className="text-[11.5px] text-black font-medium">
-                {isLoading ? "Thinking…" : "Connected · Gemini 2.0 Flash"}
+                {isLoading ? "Thinking…" : "Connected · GPT-4o"}
               </span>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function Copilot() {
           </div>
           <div className="flex justify-between items-center mt-2 px-1">
             <p className="text-[11px] text-black">
-              Powered by Gemini 2.0 Flash · AI may make mistakes. Verify critical information.
+              Powered by GPT-4o · AI may make mistakes. Verify critical information.
             </p>
             <span className="text-[10.5px] text-black font-mono border border-black px-1.5 py-0.5 rounded bg-white">Enter ↵</span>
           </div>

@@ -1,20 +1,9 @@
 import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { VertexAI } from "@google-cloud/vertexai";
+import { callOpenAI, callOpenAIVision, callGroqFallback, cleanJsonResponse } from "@/lib/ai-provider";
 import { createClient } from "@/lib/supabase/server";
 import fs from "fs";
 import path from "path";
 import { FALLBACK_PITCH_DECK, FALLBACK_EMAIL_DRAFT } from "@/lib/fallback-responses";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-
-// Helper: race Gemini against a timeout
-async function geminiWithTimeout(promise: Promise<any>, timeoutMs = 30000) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error("TIMEOUT")), timeoutMs))
-  ]);
-}
 
 export async function POST(req: Request) {
   try {
@@ -25,11 +14,12 @@ export async function POST(req: Request) {
     // Handle email generation requests
     if (body.type === 'email') {
       try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-        const emailResult = await geminiWithTimeout(
-          model.generateContent(`Draft a professional sales outreach email based on this pitch deck data. Make it concise, specific, and action-oriented. Pitch deck: ${JSON.stringify(body.pitchDeck)}. Target: ${body.buyerOrg || 'the hospital'}. Return just the email text, no JSON.`)
+        const result = await callOpenAI(
+          "You are a B2B healthcare sales email writer. Return the email text only, no JSON.",
+          `Draft a professional sales outreach email based on this pitch deck data. Make it concise, specific, and action-oriented. Pitch deck: ${JSON.stringify(body.pitchDeck)}. Target: ${body.buyerOrg || 'the hospital'}. Return just the email text.`,
+          { maxTokens: 1024, jsonMode: false }
         );
-        return NextResponse.json({ email: (emailResult as any).response.text() });
+        return NextResponse.json({ email: result });
       } catch {
         return NextResponse.json({ email: FALLBACK_EMAIL_DRAFT });
       }
@@ -44,7 +34,7 @@ export async function POST(req: Request) {
       .eq('id', startupId)
       .single();
 
-    // 2. Fetch Buyer Match Data (to get the specific buyer details)
+    // 2. Fetch Buyer Match Data
     const { data: match } = await supabase
       .from('marketplace_matches')
       .select('*')
@@ -54,7 +44,6 @@ export async function POST(req: Request) {
     const actualBuyerOrg = buyerOrg || match?.buyer_org || "Target Organization";
     const actualMatchReason = matchReason || match?.match_reason || "Inefficiency and high costs.";
 
-    // Dynamic Fallback Generator (so it's never completely wrong even if API fails)
     const generateDynamicFallback = (startupData: any, targetOrg: string, reason: string) => ({
       slide1: { headline: `Accelerating ${targetOrg}'s Clinical Workflows`, subline: `AI-powered solution by ${startupData?.name || 'our platform'}` },
       slide2: { title: `${targetOrg}'s Current Challenge`, pain_points: [reason, "High operational costs", "Resource constraints"], key_stat: "High impact area" },
@@ -68,7 +57,7 @@ export async function POST(req: Request) {
 
     const fallbackDeck = startup ? generateDynamicFallback(startup, actualBuyerOrg, actualMatchReason) : FALLBACK_PITCH_DECK;
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({ pitchDeck: fallbackDeck });
     }
 
@@ -76,14 +65,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ pitchDeck: fallbackDeck });
     }
 
-    // 3. Load full buyer details for better ROI calculation
+    // 3. Load full buyer details
     const buyersPath = path.join(process.cwd(), "buyers.json");
-    let buyersData = [];
+    let buyersData: any[] = [];
     try {
       buyersData = JSON.parse(fs.readFileSync(buyersPath, "utf-8"));
-    } catch (e) {
-      // ignore
-    }
+    } catch { /* ignore */ }
     const fullBuyer = buyersData.find((b: any) => b.organization === actualBuyerOrg) || {
       organization: actualBuyerOrg,
       key_challenges: [actualMatchReason],
@@ -91,8 +78,6 @@ export async function POST(req: Request) {
       total_beds: 500
     };
 
-    // Will be used as fallback
-    const googleAIModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const prompt = `
       You are an enterprise sales expert for healthcare startups.
       Generate a hyper-personalized 8-slide pitch deck in JSON format for this specific match.
@@ -108,12 +93,9 @@ export async function POST(req: Request) {
       Estimated Beds: ${fullBuyer.total_beds || 500}
       Estimated Revenue: ${fullBuyer.annual_revenue || "₹500Cr+"}
       Their challenges: ${fullBuyer.key_challenges?.join(', ') || actualMatchReason}
-      Match Rationale (from previous AI analysis): ${actualMatchReason}
+      Match Rationale: ${actualMatchReason}
       
-      
-      If supplemental documents (PDFs, Videos, etc.) are provided in this request, PRIORITIZE extracting features, benefits, and exact terminology from them when building the pitch deck.
-      
-      ROI CALCULATION FORMULA (use this exact method):
+      ROI CALCULATION FORMULA:
       Monthly Revenue Loss = total_beds × avg_occupancy(70%) × avg_revenue_per_bed(₹8,000) × denial_rate(15%)
       Annual Savings = Monthly Revenue Loss × 12 × improvement_factor(40%)
       Show the real calculated numbers in Slide 6.
@@ -121,61 +103,59 @@ export async function POST(req: Request) {
       RETURN JSON ONLY with this exact structure:
       {
         "slide1": { "headline": "A punchy personalized headline", "subline": "Specific value prop" },
-        "slide2": { "title": "Their Current Crisis", "pain_points": ["Point 1", "Point 2", "Point 3"], "key_stat": "A striking currency/stat value" },
+        "slide2": { "title": "Their Current Crisis", "pain_points": ["Point 1", "Point 2", "Point 3"], "key_stat": "A striking stat" },
         "slide3": { "title": "The Cost of Inaction", "consequences": ["Consequence 1", "Consequence 2"], "revenue_at_risk": "Currency value" },
-        "slide4": { "solution_line": "The 60-word max solution description", "steps": ["Step 1", "Step 2", "Step 3"] },
+        "slide4": { "solution_line": "60-word max solution", "steps": ["Step 1", "Step 2", "Step 3"] },
         "slide5": { "title": "Social Proof & Results", "proof_points": ["Proof 1", "Proof 2"] },
-        "slide6": { "current_loss": "Currency", "savings": "Currency", "payback_period": "Number of days", "year1_roi": "Percentage" },
+        "slide6": { "current_loss": "Currency", "savings": "Currency", "payback_period": "Days", "year1_roi": "Percentage" },
         "slide7": { "integration_title": "Seamless Fit", "tech_points": ["Integration 1", "Integration 2"] },
-        "slide8": { "cta": "The specific ask (e.g. 30-day pilot)", "contact": "Contact info placeholders" }
+        "slide8": { "cta": "The specific ask", "contact": "Contact info" }
       }
       
-      Make every slide specific to ${fullBuyer.organization}. 
-      Return ONLY valid JSON.
+      Make every slide specific to ${fullBuyer.organization}. Return ONLY valid JSON.
     `;
 
-    const fileParts = productFiles && Array.isArray(productFiles) 
-      ? productFiles.map(f => ({
-          inlineData: {
-            data: f.base64,
-            mimeType: f.mimeType
-          }
-        }))
-      : [];
-
-    // Try Vertex AI first (enterprise-grade limits)
-    try {
-      console.log("[PitchDeck] Trying Vertex AI...");
-      const vertexAI = new VertexAI({
-        project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026",
-        location: process.env.GCP_LOCATION || "us-central1",
-      });
-      const vertexModel = vertexAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-      const result = await geminiWithTimeout(vertexModel.generateContent({ contents: [{ role: "user", parts: [{ text: prompt }, ...fileParts] }] }));
-      const rawText = (result as any).response.candidates?.[0]?.content?.parts?.[0]?.text as string || "";
-      const text = rawText.replace(/```json|```/g, "").trim();
-      return NextResponse.json({ pitchDeck: JSON.parse(text) });
-    } catch (vertexErr: any) {
-      console.warn("[PitchDeck] Vertex AI failed, trying Google AI SDK:", vertexErr.message);
+    // Build parts for vision (if product files attached)
+    const parts: any[] = [{ text: prompt }];
+    if (productFiles && Array.isArray(productFiles)) {
+      for (const f of productFiles) {
+        parts.push({ inlineData: { data: f.base64, mimeType: f.mimeType } });
+      }
     }
 
-    // Fallback to Google AI SDK
+    // PRIMARY: OpenAI GPT-4o
     try {
-      const result = await geminiWithTimeout(googleAIModel.generateContent([prompt, ...fileParts]));
-      const text = (result as any).response.text().replace(/```json|```/g, "").trim();
+      console.log("[PitchDeck] Using OpenAI GPT-4o...");
+      let rawText: string;
+      
+      if (productFiles && productFiles.length > 0) {
+        rawText = await callOpenAIVision(
+          "You are an enterprise sales pitch deck generator. Return valid JSON only.",
+          parts,
+          { maxTokens: 4096 }
+        );
+      } else {
+        rawText = await callOpenAI(
+          "You are an enterprise sales pitch deck generator. Return valid JSON only.",
+          prompt,
+          { maxTokens: 4096 }
+        );
+      }
+
+      const text = cleanJsonResponse(rawText);
       return NextResponse.json({ pitchDeck: JSON.parse(text) });
-    } catch (googleErr: any) {
-      console.warn("[PitchDeck] Google AI SDK failed, trying Groq:", googleErr.message);
+    } catch (openaiErr: any) {
+      console.warn("[PitchDeck] OpenAI failed, trying Groq:", openaiErr.message);
+
+      // FALLBACK: Groq
       try {
-        const Groq = (await import("groq-sdk")).default;
-        const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
-        const groqCompletion = await groq.chat.completions.create({
-          messages: [{ role: "user", content: prompt }],
-          model: "llama3-70b-8192",
-          temperature: 0.2,
-        });
-        const groqText = groqCompletion.choices[0]?.message?.content?.replace(/```json|```/g, "").trim() || "";
-        return NextResponse.json({ pitchDeck: JSON.parse(groqText) });
+        const groqResult = await callGroqFallback(
+          "You are an enterprise sales pitch deck generator. Return valid JSON only.",
+          prompt,
+          { maxTokens: 4096 }
+        );
+        const text = cleanJsonResponse(groqResult);
+        return NextResponse.json({ pitchDeck: JSON.parse(text) });
       } catch (groqErr) {
         console.warn("[PitchDeck] All engines failed — using fallback pitch deck");
         return NextResponse.json({ pitchDeck: fallbackDeck });
@@ -183,8 +163,6 @@ export async function POST(req: Request) {
     }
   } catch (error: any) {
     console.error("Pitch generation error:", error);
-    // Always fallback gracefully
     return NextResponse.json({ pitchDeck: FALLBACK_PITCH_DECK });
   }
 }
-// Trigger rebuild

@@ -9,7 +9,7 @@ import {
   LayoutDashboard, Building2, UserPlus, Shield, FileCheck, AlertTriangle,
   DollarSign, TrendingUp, Landmark, Rocket, Users, Search, Target,
   BarChart3, Store, FileBarChart, Bot, Settings, ChevronDown, ChevronRight,
-  Activity, Zap, Menu, X, LogOut, CreditCard
+  Activity, Zap, Menu, X, LogOut, CreditCard, Presentation
 } from "lucide-react";
 
 import { logout } from "@/app/login/actions";
@@ -54,8 +54,8 @@ const navigation: { section: string; items: NavItem[] }[] = [
           { label: "Onboarding", href: "/launch-engine/onboarding", icon: <Zap size={13} /> },
           { label: "Buyer Discovery", href: "/launch-engine/buyer-discovery", icon: <Search size={13} /> },
           { label: "GTM Engine", href: "/launch-engine/gtm", icon: <Target size={13} /> },
-          { label: "Sales Pipeline", href: "/launch-engine/sales-pipeline", icon: <BarChart3 size={13} /> },
-          { label: "Competitive Intel", href: "/launch-engine/competitive", icon: <Users size={13} /> },
+          { label: "Sales Pipeline", href: "/launch-engine/sales-pipeline", icon: <TrendingUp size={13} /> },
+          { label: "Competitive Intell", href: "/launch-engine/competitive", icon: <BarChart3 size={13} /> },
         ],
       },
     ],
@@ -87,6 +87,16 @@ export default function Sidebar() {
     getUser();
   }, [supabase.auth]);
 
+  // Auto-expand the correct section based on current route
+  useEffect(() => {
+    if (pathname.startsWith('/launch-engine')) {
+      setExpandedItems((prev) => prev.includes("Launch Engine") ? prev : [...prev, "Launch Engine"]);
+    }
+    if (pathname.startsWith('/clinic-ops')) {
+      setExpandedItems((prev) => prev.includes("Clinic Ops") ? prev : [...prev, "Clinic Ops"]);
+    }
+  }, [pathname]);
+
   const toggleExpand = (label: string) => {
     setExpandedItems((prev) =>
       prev.includes(label) ? prev.filter((i) => i !== label) : [...prev, label]
@@ -95,8 +105,10 @@ export default function Sidebar() {
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
-    return pathname.startsWith(href);
+    return pathname === href || (href !== "/dashboard" && pathname.startsWith(href + "/"));
   };
+
+  const isActiveExact = (href: string) => pathname === href;
 
   const userInitial = user?.user_metadata?.name?.[0] || user?.email?.[0] || 'U';
   const userName = user?.user_metadata?.name || 'MediFlow User';
@@ -157,8 +169,9 @@ export default function Sidebar() {
                   const isStartup = pathname.startsWith('/launch-engine');
                   if (isStartup && item.label === "Reports") return null;
 
+                  // Dashboard redirects to GTM when in startup context
                   const itemHref = item.label === "Dashboard"
-                    ? (isStartup ? "/launch-engine" : "/dashboard")
+                    ? (isStartup ? "/launch-engine/gtm" : "/dashboard")
                     : item.href;
 
                   return (
@@ -169,7 +182,7 @@ export default function Sidebar() {
                             onClick={() => toggleExpand(item.label)}
                             className={cn(
                               "sidebar-item w-full justify-between",
-                              isActive(item.href) && "active"
+                              pathname.startsWith(item.href) && "active"
                             )}
                           >
                             <span className="flex items-center gap-2.5">
@@ -186,11 +199,11 @@ export default function Sidebar() {
                             <div className="ml-3 mt-0.5 pl-4 border-l border-black/[0.06] space-y-0.5 py-1">
                               {item.children.map((child) => (
                                 <Link
-                                  key={child.href}
+                                  key={child.label}
                                   href={child.href}
                                   className={cn(
                                     "sidebar-item text-[12.5px]",
-                                    isActive(child.href) && "active"
+                                    isActiveExact(child.href) && "active"
                                   )}
                                   onClick={() => setMobileOpen(false)}
                                 >

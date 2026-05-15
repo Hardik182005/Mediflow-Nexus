@@ -1,6 +1,6 @@
 /**
  * Hardcoded fallback responses for demo scenarios.
- * Used when Gemini API is slow (>8s), rate-limited, or unavailable.
+ * Used when GPT-4o API is slow (>8s), rate-limited, or unavailable.
  * This is standard practice for hackathon demos.
  */
 

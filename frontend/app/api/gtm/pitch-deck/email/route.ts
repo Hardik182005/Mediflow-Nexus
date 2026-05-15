@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { VertexAI } from "@google-cloud/vertexai";
+import { callOpenAI } from "@/lib/ai-provider";
 import { createClient } from "@/lib/supabase/server";
 
 export async function POST(req: Request) {
@@ -38,30 +37,17 @@ export async function POST(req: Request) {
       5. Tone: Professional, clinically-aware, and business-focused.
       6. No fluff. Keep it under 150 words.
       
-      Return ONLY the email text. Use placeholders like [Name] for the recipient.
+      Return JSON: { "email": "full email text with subject line at top" }
     `;
 
-    // Try Vertex AI first
-    try {
-      const vertexAI = new VertexAI({
-        project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026",
-        location: process.env.GCP_LOCATION || "us-central1",
-      });
-      const model = vertexAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-      const result = await model.generateContent(prompt);
-      const email = (result.response.candidates?.[0]?.content?.parts?.[0]?.text as string || "").trim();
-      return NextResponse.json({ email });
-    } catch (vertexErr: any) {
-      console.warn("[PitchEmail] Vertex AI failed, falling back:", vertexErr.message);
-    }
+    const result = await callOpenAI(
+      "You are a B2B healthcare sales email writer. Return JSON with an 'email' key containing the full email.",
+      prompt,
+      { maxTokens: 1024 }
+    );
 
-    // Fallback to Google AI SDK
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(prompt);
-    const email = result.response.text().trim();
-
-    return NextResponse.json({ email });
+    const parsed = JSON.parse(result);
+    return NextResponse.json({ email: parsed.email || result });
   } catch (error: any) {
     console.error("Email drafting error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });

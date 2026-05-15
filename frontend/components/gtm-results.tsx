@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { 
   Copy, Check, ChevronDown, Cpu, Target, User, Lightbulb, 
-  Megaphone, PlayCircle, Search, BarChart3, PieChart, Hospital 
+  Megaphone, PlayCircle, Search, BarChart3, PieChart, Hospital, Mic 
 } from "lucide-react";
 import type { GTMStrategy } from "@/types/gtm";
 
@@ -53,9 +53,10 @@ function Row({ label, value }: { label: string; value: string }) {
 interface Props {
   strategy: GTMStrategy;
   onReset: () => void;
+  onPracticePitch: (buyerOrg: string) => void;
 }
 
-export default function GTMResults({ strategy, onReset }: Props) {
+export default function GTMResults({ strategy, onReset, onPracticePitch }: Props) {
   const { startupSummary: ss, productIntelligence: pi, icp, buyerPersona: bp, valueProposition: vp, messaging, demoStrategy, buyerDiscovery, salesStrategy, roiImpact, marketplaceMatch } = strategy;
 
   return (
@@ -223,6 +224,13 @@ export default function GTMResults({ strategy, onReset }: Props) {
             </div>
             <p className="text-xs text-black/50 leading-relaxed">{messaging.salesPitch}</p>
           </div>
+          <button 
+            onClick={() => onPracticePitch(bp.primaryBuyer.title)}
+            className="w-full btn-primary flex items-center justify-center gap-2 py-3 mt-2 text-xs font-bold"
+          >
+            <Mic size={14} />
+            Practice Interactive Pitch with {bp.primaryBuyer.title}
+          </button>
         </div>
       </Section>
 

@@ -1,4 +1,4 @@
-// Types for the GTM Strategy output from Gemini API
+// Types for the GTM Strategy output from GPT-4o API
 
 export interface StartupSummary {
   companyName: string;

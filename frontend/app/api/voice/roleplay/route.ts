@@ -1,27 +1,5 @@
 import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { VertexAI } from "@google-cloud/vertexai";
-
-async function generateReply(prompt: string): Promise<string> {
-  // Try Vertex AI first
-  try {
-    const vertexAI = new VertexAI({
-      project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026",
-      location: process.env.GCP_LOCATION || "us-central1",
-    });
-    const model = vertexAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(prompt);
-    return (result.response.candidates?.[0]?.content?.parts?.[0]?.text as string || "").trim();
-  } catch (err: any) {
-    console.warn("[Roleplay] Vertex AI failed, falling back to Google AI SDK:", err.message);
-  }
-
-  // Fallback to Google AI SDK
-  const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-  const model = ai.getGenerativeModel({ model: "gemini-2.0-flash" });
-  const response = await model.generateContent(prompt);
-  return response.response.text().trim();
-}
+import { callOpenAI } from "@/lib/ai-provider";
 
 export async function POST(req: Request) {
   try {
@@ -38,11 +16,17 @@ export async function POST(req: Request) {
       
       Respond directly to their pitch. Be professional but ask a tough, realistic question about ROI, integration (like Epic/Cerner), clinical workflow, or security.
       Keep it short, conversational, and meant to be spoken aloud. (Max 2-3 sentences).
+      Return JSON: { "reply": "your response here" }
     `;
 
-    const reply = await generateReply(prompt);
+    const result = await callOpenAI(
+      "You are a tough healthcare buyer in a roleplay. Return JSON with a 'reply' key.",
+      prompt,
+      { maxTokens: 512, temperature: 0.7 }
+    );
 
-    return NextResponse.json({ reply: reply || "That sounds interesting, but how does it integrate with our existing EHR systems?" });
+    const parsed = JSON.parse(result);
+    return NextResponse.json({ reply: parsed.reply || "That sounds interesting, but how does it integrate with our existing EHR systems?" });
   } catch (error) {
     console.error("Roleplay Generation Error:", error);
     return NextResponse.json({ 
