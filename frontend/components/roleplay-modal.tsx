@@ -190,52 +190,53 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
         animate={{ opacity: 1, scale: 1, y: 0 }}
         className="relative w-full max-w-2xl bg-white border border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-2xl flex flex-col overflow-hidden h-[650px]"
       >
-        <div className="flex items-center justify-between p-5 border-b border-black bg-white">
+        <div className="flex items-center justify-between p-5 border-b-2 border-black bg-white">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               <ShieldCheck size={20} className="text-white" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-black uppercase tracking-tight">Live Mock Pitch Simulator</h2>
-              <p className="text-[10px] text-black/50 font-bold uppercase tracking-widest flex items-center gap-2">
-                ElevenLabs Voice Assistant Active 
-                <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+              <h2 className="text-[13px] font-bold text-black uppercase tracking-tight">Mock Pitch Simulator</h2>
+              <p className="text-[10px] text-black font-bold uppercase tracking-widest opacity-60">
+                Roleplay vs. {buyerOrg}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
              <button 
                 onClick={toggleVoiceMode}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${
-                  voiceMode ? "bg-black text-white border-black" : "bg-white text-black/40 border-black/10 hover:border-black/30"
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all border-2 ${
+                  voiceMode 
+                    ? "bg-black text-white border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]" 
+                    : "bg-white text-black border-black/20 hover:border-black"
                 }`}
               >
                 {voiceMode ? <Mic size={12} className="animate-pulse" /> : <MicOff size={12} />}
-                {voiceMode ? "Voice Mode On" : "Voice Mode Off"}
+                {voiceMode ? "Voice Agent: ON" : "Voice Agent: OFF"}
               </button>
-            <button onClick={stopAudioAndClose} className="p-2 rounded-lg hover:bg-black/5 text-black/40 hover:text-black transition-all">
+            <button onClick={stopAudioAndClose} className="p-2 rounded-xl hover:bg-black hover:text-white transition-all border border-transparent hover:border-black">
               <X size={20} />
             </button>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#fafafa]">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-white">
           {messages.map((m, i) => (
             <div key={i} className={`flex gap-4 ${m.role === "user" ? "flex-row-reverse" : ""}`}>
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ${m.role === "user" ? "bg-white" : "bg-black text-white"}`}>
+              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ${m.role === "user" ? "bg-white" : "bg-black text-white"}`}>
                 {m.role === "user" ? <User size={14} /> : <ShieldCheck size={14} />}
               </div>
               <div className={`flex flex-col gap-2 max-w-[80%] ${m.role === "user" ? "items-end" : "items-start"}`}>
-                <div className={`p-4 rounded-2xl text-[13px] leading-relaxed shadow-sm border border-black/5 ${m.role === "user" ? "bg-black text-white rounded-tr-sm" : "bg-white text-black rounded-tl-sm"}`}>
+                <div className={`p-4 rounded-2xl text-[13px] leading-relaxed border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] ${m.role === "user" ? "bg-black text-white rounded-tr-sm" : "bg-white text-black rounded-tl-sm"}`}>
                   {m.text}
                 </div>
                 {m.role === "buyer" && m.audioUrl && (
                   <button 
                     onClick={() => handlePlayAudio(m.audioUrl!)}
-                    className="flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-widest text-black/40 hover:text-black transition-colors"
+                    className="flex items-center gap-1.5 text-[9px] uppercase font-bold tracking-widest text-black/60 hover:text-black transition-colors px-2 py-1"
                   >
-                    {isPlaying && audioRef.current?.src === m.audioUrl ? <Square size={10} fill="currentColor" /> : <Volume2 size={12} />}
-                    {isPlaying && audioRef.current?.src === m.audioUrl ? "Stop Playing" : "Replay Audio"}
+                    {isPlaying && audioRef.current?.src === m.audioUrl ? <Square size={8} fill="currentColor" /> : <Volume2 size={10} />}
+                    {isPlaying && audioRef.current?.src === m.audioUrl ? "Stop" : "Replay Audio"}
                   </button>
                 )}
               </div>
@@ -243,11 +244,11 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
           ))}
           {isProcessing && (
             <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center shrink-0 border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <div className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center shrink-0 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                 <Loader2 size={14} className="animate-spin" />
               </div>
-              <div className="p-4 rounded-2xl bg-white border border-black/10 text-black/40 text-[13px] rounded-tl-sm flex items-center gap-2">
-                Processing pitch...
+              <div className="p-4 rounded-2xl bg-white border-2 border-black text-black/60 text-[13px] rounded-tl-sm flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                Buyer is thinking...
               </div>
             </div>
           )}
@@ -256,30 +257,34 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
           <AnimatePresence>
             {(isPlaying || isListening) && (
               <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                className="flex flex-col items-center justify-center py-4 space-y-3"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="flex flex-col items-center justify-center py-6 space-y-4 bg-black/5 rounded-2xl border border-dashed border-black/20"
               >
-                <div className="flex items-center gap-1 h-8">
-                  {[...Array(8)].map((_, i) => (
+                <div className="flex items-center gap-1.5 h-10">
+                  {[...Array(12)].map((_, i) => (
                     <motion.div
                       key={i}
                       animate={{ 
-                        height: [8, Math.random() * 32 + 8, 8],
+                        height: [10, Math.random() * 40 + 10, 10],
+                        opacity: [0.3, 1, 0.3]
                       }}
                       transition={{ 
                         repeat: Infinity, 
-                        duration: 0.5 + Math.random() * 0.5,
+                        duration: 0.4 + Math.random() * 0.4,
                         ease: "easeInOut"
                       }}
-                      className={`w-1 rounded-full ${isPlaying ? "bg-black" : "bg-emerald-500"}`}
+                      className={`w-1.5 rounded-full ${isPlaying ? "bg-black" : "bg-emerald-500"}`}
                     />
                   ))}
                 </div>
-                <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${isPlaying ? "text-black" : "text-emerald-500"}`}>
-                  {isPlaying ? "Assistant Speaking" : "Listening to your pitch..."}
-                </p>
+                <div className="flex flex-col items-center gap-1">
+                  <p className={`text-[10px] font-black uppercase tracking-[0.3em] ${isPlaying ? "text-black" : "text-emerald-600"}`}>
+                    {isPlaying ? "Buyer Speaking" : "Listening..."}
+                  </p>
+                  <p className="text-[8px] font-bold text-black/40 uppercase tracking-widest">Powered by ElevenLabs</p>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -287,7 +292,7 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
           <div ref={chatEndRef} />
         </div>
 
-        <div className="p-5 border-t border-black bg-white">
+        <div className="p-6 border-t-2 border-black bg-white">
           <div className="flex items-center gap-3 relative">
             <div className="relative flex-1">
               <input 
@@ -295,14 +300,14 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder={isListening ? "Listening..." : "Type your pitch..."}
-                className={`w-full bg-[#fafafa] border border-black rounded-xl py-3.5 pl-4 pr-12 text-[13px] text-black placeholder-black/30 focus:outline-none focus:ring-1 focus:ring-black transition-all ${isListening ? "border-emerald-500 ring-1 ring-emerald-500" : ""}`}
+                placeholder={isListening ? "Listening to your voice..." : "Type your pitch or response..."}
+                className={`w-full bg-white border-2 border-black rounded-xl py-4 pl-5 pr-14 text-[13px] text-black font-medium placeholder-black/30 focus:outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all ${isListening ? "border-emerald-500 ring-2 ring-emerald-500/20" : ""}`}
                 disabled={isListening}
               />
               <button 
                 onClick={() => handleSend()}
                 disabled={!input.trim() || isProcessing || isListening}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-black hover:text-black/60 disabled:opacity-20 transition-all"
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black text-white rounded-lg hover:bg-zinc-800 disabled:opacity-20 transition-all"
               >
                 <Send size={18} />
               </button>
@@ -311,21 +316,24 @@ export default function RoleplayModal({ isOpen, onClose, buyerOrg, startupId }: 
             <button 
               onClick={isListening ? stopListening : startListening}
               disabled={isPlaying || isProcessing}
-              className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all border shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] ${
+              className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all border-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${
                 isListening 
                   ? "bg-emerald-500 border-black text-white shadow-none translate-x-[2px] translate-y-[2px]" 
-                  : "bg-black border-black text-white hover:bg-zinc-800 disabled:opacity-20"
+                  : "bg-white border-black text-black hover:bg-black hover:text-white disabled:opacity-20"
               }`}
             >
-              {isListening ? <Square size={16} fill="currentColor" /> : <Mic size={20} />}
+              {isListening ? <Waves size={24} className="animate-pulse" /> : <Mic size={24} />}
             </button>
           </div>
-          <div className="mt-3 flex justify-between items-center px-1">
-            <p className="text-[10px] text-black/40 font-bold uppercase tracking-wider">
-              {voiceMode ? "✦ Voice mode active — just speak your pitch" : "✦ Enable Voice Mode for hands-free practice"}
-            </p>
+          <div className="mt-4 flex justify-between items-center px-1">
             <div className="flex items-center gap-2">
-              <span className="text-[9px] text-black/30 font-bold uppercase">Powered by ElevenLabs</span>
+              <div className={`w-2 h-2 rounded-full ${voiceMode ? "bg-emerald-500 animate-pulse" : "bg-black/20"}`} />
+              <p className="text-[10px] text-black font-bold uppercase tracking-wider">
+                {voiceMode ? "Continuous Voice Mode Active" : "Click mic or enable Voice Mode for hands-free"}
+              </p>
+            </div>
+            <div className="flex items-center gap-2 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+              <span className="text-[9px] text-black font-black uppercase tracking-tighter italic">ELEVENLABS</span>
             </div>
           </div>
         </div>

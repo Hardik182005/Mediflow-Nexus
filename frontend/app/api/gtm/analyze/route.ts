@@ -334,8 +334,8 @@ export async function POST(req: NextRequest) {
         const Groq = (await import("groq-sdk")).default;
         const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
         
-        // Simple text-based conversion of parts for Groq (multimodal won't work easily)
-        const textParts = parts.filter(p => p.text).map(p => p.text).join("\n");
+        // Simple text-based conversion of parts for Groq
+        const textParts = textContext || "Analyze healthcare startup potential.";
         
         const groqCompletion = await groq.chat.completions.create({
           messages: [
@@ -349,17 +349,12 @@ export async function POST(req: NextRequest) {
         const groqText = groqCompletion.choices[0]?.message?.content?.replace(/```json|```/g, "").trim() || "";
         return NextResponse.json({ strategy: JSON.parse(groqText) }, { status: 200 });
       } catch (fallbackErr) {
-        throw geminiErr; // If Groq also fails, throw original Gemini error for UI to handle
+        console.error("[GTM Analyze] Both Gemini and Groq failed.");
+        return NextResponse.json({ error: "GTM Intelligence engine is temporarily unavailable. Please check your API keys." }, { status: 500 });
       }
     }
   } catch (err: unknown) {
-    console.error("[GTM Analyze Error]", err);
-    const message = err instanceof Error ? err.message : "Internal server error";
-    return NextResponse.json({ error: message }, { status: 500 });
-  }
-  } catch (err: unknown) {
-    console.error("[GTM Analyze Error]", err);
-    const message = err instanceof Error ? err.message : "Internal server error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error("[GTM Analyze Fatal Error]", err);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

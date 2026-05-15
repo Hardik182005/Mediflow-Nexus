@@ -459,51 +459,55 @@ export default function BuyerDiscoveryPage() {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-black">
-                  <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider ${getStatusBadge(b.status)}`}>
-                    {b.status}
-                  </span>
-                  <div className="flex gap-2">
+                <div className="flex flex-col gap-3 pt-4 border-t border-black">
+                  <div className="flex items-center justify-between">
+                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider ${getStatusBadge(b.status)}`}>
+                      {b.status}
+                    </span>
+                    {connectedBuyers.includes(b.id) && (
+                      <span className="text-[10px] font-bold text-black flex items-center gap-1">
+                        ✓ Connected
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2">
                     {b.pitch_deck_json ? (
                       <button 
                         onClick={() => handleViewPitch(b.pitch_deck_json, b.buyer_org)}
-                        className="p-2 rounded-lg bg-black text-white border border-black hover:bg-black/90 transition-all flex items-center gap-2"
+                        className="p-2 rounded-lg bg-black text-white border border-black hover:bg-black/90 transition-all flex items-center justify-center gap-2"
                       >
                         <Presentation size={14} />
-                        <span className="text-[10px] font-bold uppercase tracking-widest">View Pitch</span>
+                        <span className="text-[9px] font-bold uppercase tracking-widest">View Pitch</span>
                       </button>
                     ) : (
                       <button 
                         onClick={() => handleGeneratePitch(b.id, b.buyer_org)}
                         disabled={!!isGeneratingPitch}
-                        className="p-2 rounded-lg bg-white border border-black text-black hover:text-white hover:bg-black hover:bg-white transition-all flex items-center gap-2"
+                        className="p-2 rounded-lg bg-white border border-black text-black hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                       >
-                        {isGeneratingPitch === b.id ? <Loader2 size={14} className="animate-spin" /> : <Presentation size={14} />}
-                        <span className="text-[10px] font-bold uppercase tracking-widest">
+                        {isGeneratingPitch === b.id ? <Loader2 size={12} className="animate-spin" /> : <Presentation size={14} />}
+                        <span className="text-[9px] font-bold uppercase tracking-widest">
                           {isGeneratingPitch === b.id ? "Analyzing..." : "AI Pitch"}
                         </span>
                       </button>
                     )}
-                    {connectedBuyers.includes(b.id) ? (
-                      <span className="text-[10px] font-bold text-black flex items-center gap-1 py-2 px-4">
-                        ✓ Connected
-                      </span>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() => openRoleplayModal(b)}
-                          className="p-2 rounded-lg bg-white border border-black text-black hover:text-black hover:bg-white transition-all flex items-center gap-2"
-                        >
-                          <Mic size={14} />
-                          <span className="text-[10px] font-bold uppercase tracking-widest hidden xl:block">Mock Pitch</span>
-                        </button>
-                        <button
-                          onClick={() => openOutreachModal(b)}
-                          className="btn-primary text-[10px] py-2 px-4 uppercase font-bold tracking-widest flex items-center gap-2"
-                        >
-                          Send Outreach <ArrowRight size={12} />
-                        </button>
-                      </>
+
+                    <button
+                      onClick={() => openRoleplayModal(b)}
+                      className="p-2 rounded-lg bg-white border border-black text-black hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2"
+                    >
+                      <Mic size={14} />
+                      <span className="text-[9px] font-bold uppercase tracking-widest">Mock Pitch</span>
+                    </button>
+
+                    {!connectedBuyers.includes(b.id) && (
+                      <button
+                        onClick={() => openOutreachModal(b)}
+                        className="col-span-2 btn-primary text-[10px] py-2.5 px-4 uppercase font-bold tracking-widest flex items-center justify-center gap-2"
+                      >
+                        Send Outreach <ArrowRight size={12} />
+                      </button>
                     )}
                   </div>
                 </div>
