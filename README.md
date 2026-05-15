@@ -1,149 +1,108 @@
 <p align="center">
   <img src="https://img.shields.io/badge/MediFlow-Nexus-black?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBvbHlsaW5lIHBvaW50cz0iMjIgMTIgMTggMTIgMTUgMjEgOSAzIDYgMTIgMiAxMiI+PC9wb2x5bGluZT48L3N2Zz4=" alt="MediFlow Nexus" />
   <br/>
-  <strong>The Intelligence Engine for Modern Healthcare</strong>
+  <strong>The Unified Intelligence Engine for the Healthcare Lifecycle</strong>
   <br/>
-  <a href="https://mediflow-nexus-frontend-m477e5mida-uc.a.run.app">Live URL: mediflow-nexus-frontend-m477e5mida-uc.a.run.app</a>
+  <a href="https://mediflow-nexus-frontend-3692981377.us-central1.run.app"><strong>Live Production Dashboard ➔</strong></a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=nextdotjs" />
-  <img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript" />
-  <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e?style=flat-square&logo=supabase" />
-  <img src="https://img.shields.io/badge/Gemini-1.5_Pro-4285F4?style=flat-square&logo=google" />
-  <img src="https://img.shields.io/badge/License-MIT-white?style=flat-square" />
+  <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=nextdotjs" />
+  <img src="https://img.shields.io/badge/TypeScript-5.0-black?style=flat-square&logo=typescript" />
+  <img src="https://img.shields.io/badge/Supabase-DB-black?style=flat-square&logo=supabase" />
+  <img src="https://img.shields.io/badge/Gemini-1.5_Pro-black?style=flat-square&logo=google" />
+  <img src="https://img.shields.io/badge/ElevenLabs-Voice-black?style=flat-square" />
+  <img src="https://img.shields.io/badge/Cloud_Run-GCP-black?style=flat-square&logo=googlecloud" />
 </p>
 
 ---
 
-# MediFlow Nexus
+# 🏥 MediFlow Nexus: Intelligence Reimagined
 
-**MediFlow Nexus** is a dual-core AI-powered healthcare intelligence platform that bridges the gap between **Medical Startups** (Go-To-Market) and **Clinical Operations** (Revenue Cycle Management). It leverages Google's Gemini 1.5 Pro to automate the most expensive and time-consuming processes in the healthcare ecosystem.
+**MediFlow Nexus** is a state-of-the-art AI intelligence platform designed to collapse the friction between healthcare innovation and clinical operations. Built on a foundation of **Google Gemini 1.5 Pro**, it serves as a dual-core operating system for the healthcare industry:
+
+1.  **🚀 Launch Engine:** Accelerating Go-To-Market for medical startups.
+2.  **🏥 Clinic Ops:** Optimizing Revenue Cycle Management (RCM) and insurance verification for hospitals.
 
 ---
 
-## 🏗️ Architecture
+## ⚡ The "Stitch White" Design System
+MediFlow Nexus features a custom-engineered **monochromatic high-contrast UI**. 
+- **Pure Aesthetics:** A museum-grade black-on-white interface that minimizes cognitive load.
+- **Premium Feel:** Professional-grade typography and fluid micro-animations.
+- **Accessibility:** Maximum legibility for clinical environments where split-second decisions matter.
 
+---
+
+## 🏗️ Core Architecture
+
+```mermaid
+graph TD
+    User((User)) --> Dashboard{MediFlow Nexus}
+    Dashboard --> LaunchEngine[🚀 Launch Engine]
+    Dashboard --> ClinicOps[🏥 Clinic Ops]
+    
+    subgraph "Launch Engine"
+        LE1[Buyer Discovery]
+        LE2[AI Pitch Deck]
+        LE3[Outreach Automation]
+    end
+    
+    subgraph "Clinic Ops"
+        CO1[VOB Analyzer]
+        CO2[Denial Prediction]
+        CO3[Revenue Intelligence]
+    end
+    
+    Dashboard --> AI[🧠 Gemini 1.5 Pro Intelligence]
+    Dashboard --> Voice[🎙️ ElevenLabs Voice Agents]
+    Dashboard --> DB[(Supabase RLS DB)]
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    MEDIFLOW NEXUS                        │
-├──────────────────────┬──────────────────────────────────┤
-│   LAUNCH ENGINE      │         CLINIC OPS               │
-│   (Startup GTM)      │    (Hospital Intelligence)       │
-├──────────────────────┼──────────────────────────────────┤
-│ • Startup Onboarding │ • Patient Intake Dashboard       │
-│ • Buyer Discovery    │ • Insurance Intelligence (VOB)   │
-│ • AI Pitch Deck      │ • Denial Prediction Engine       │
-│ • Email Outreach     │ • Prior Authorization            │
-│ • Sales Pipeline     │ • Revenue Intelligence           │
-│ • Competitive Intel  │ • Payer Intelligence             │
-│ • GTM Strategy       │ • Growth Intelligence            │
-├──────────────────────┴──────────────────────────────────┤
-│              SHARED INTELLIGENCE LAYER                   │
-│  AI Copilot │ Reports │ Marketplace │ Settings           │
-├─────────────────────────────────────────────────────────┤
-│              INFRASTRUCTURE                              │
-│  Supabase (Auth + DB) │ Gemini 1.5 Pro │ Vercel Edge    │
-└─────────────────────────────────────────────────────────┘
-```
 
 ---
 
-## ✨ Key Features
+## ✨ Primary Capabilities
 
-### 🚀 Launch Engine (For Healthcare Startups)
-| Feature | Description |
-|---------|-------------|
-| **Buyer Discovery** | AI cross-references startup USP with 30+ hospital profiles to find "Perfect Match" buyers |
-| **8-Slide AI Pitch Deck** | Generates personalized, data-driven sales decks with real ROI calculations per buyer |
-| **AI Email Outreach** | Drafts high-conversion cold emails using pitch deck intelligence |
-| **GTM Strategy Generator** | Multi-modal AI strategy engine that processes documents, decks, and market data |
-| **Sales Pipeline** | Kanban-style deal tracker with win probability scoring |
-| **Competitive Intel** | Real competitor profiles with market share, strengths, weaknesses, and pricing |
+### 🚀 Launch Engine (GTM for Startups)
+*   **Buyer Discovery:** AI cross-references startup USPs with deep hospital profiles to find the "Perfect Match."
+*   **8-Slide AI Pitch Deck:** Automatically generates investor-ready decks with custom ROI models for each prospect.
+*   **AI Outreach:** Context-aware email drafting and **ElevenLabs voice memos** for personalized clinical pitch narration.
+*   **Sales Pipeline:** Integrated Kanban system with AI-driven win probability scoring.
 
-### 🏥 Clinic Ops (For Hospitals & Clinics)
-| Feature | Description |
-|---------|-------------|
-| **VOB Analyzer** | AI-powered Verification of Benefits — extracts coverage, exclusions, and waiting periods from insurance documents |
-| **Denial Prediction** | Predicts claim denial probability with AI-generated fix recommendations |
-| **Prior Authorization** | Tracks PA status, approval probability, and missing documents |
-| **Revenue Intelligence** | Revenue vs predicted charts, leakage detection, CPT profitability engine |
-| **Payer Intelligence** | Performance scorecards for each insurance payer with denial rates and payment delays |
-| **Growth Intelligence** | Referral network analysis, patient drop-off predictions, and growth opportunities |
-
-### 🤖 Platform Intelligence
-| Feature | Description |
-|---------|-------------|
-| **AI Copilot** | Natural language assistant connected to Gemini 1.5 Pro for real-time healthcare queries |
-| **Executive Dashboard** | 6 KPIs, revenue trajectory charts, denial distribution, and real-time activity feed |
-| **Intelligence Reports** | Filterable, downloadable reports across all modules |
-| **Marketplace** | Integration directory for EHR systems, data sources, and service partners |
+### 🏥 Clinic Ops (Hospital Intelligence)
+*   **VOB AI Analyzer:** High-speed document processing to extract insurance coverage, exclusions, and waiting periods.
+*   **Denial Prediction Engine:** Identifies high-risk claims before submission and provides actionable mitigation steps.
+*   **Prior Auth Tracker:** Real-time visibility into authorization readiness and missing clinical documentation.
+*   **Revenue Intelligence:** Advanced CPT profitability analysis and leakage detection dashboards.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Technical Implementation
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Frontend** | Next.js 14 (App Router) | Server-side rendering, file-based routing |
-| **Language** | TypeScript | Type-safe development |
-| **Styling** | Tailwind CSS | Utility-first CSS with custom "Obsidian Glass" design system |
-| **Animation** | Framer Motion | Fluid page transitions and micro-interactions |
-| **Charts** | Recharts | Data visualization (Area, Bar, Line charts) |
-| **Icons** | Lucide React | 200+ consistent icons |
-| **Database** | Supabase (PostgreSQL) | Real-time database with Row-Level Security |
-| **Auth** | Supabase Auth | JWT-based session management |
-| **AI Engine** | Google Gemini 1.5 Pro | Multi-modal intelligence (text + vision/OCR) |
-| **Deployment** | Vercel | Edge Functions, CDN, CI/CD |
+| Component | Technology | Role |
+|-----------|------------|------|
+| **Frontend** | Next.js (Standalone Mode) | Ultra-fast production builds with optimized NFT tracing. |
+| **Intelligence** | Gemini 1.5 Pro/Flash | Multi-modal processing for medical OCR and strategic analysis. |
+| **Voice Synthesis** | ElevenLabs | High-fidelity voice cloning for pitch narration and outreach. |
+| **Inference Fallback** | Groq (Llama-3) | High-speed redundancy for heavy analytical reasoning. |
+| **Backend/Auth** | Supabase | Secure, type-safe database with strict Row-Level Security (RLS). |
+| **Infrastructure** | Google Cloud Run | Scalable, serverless deployment via Docker & Artifact Registry. |
 
 ---
 
 ## 📂 Project Structure
 
-```
-MediFlow Nexus/
+```text
+MediFlow-Nexus/
 ├── frontend/
-│   ├── app/
-│   │   ├── (dashboard)/          # Authenticated dashboard routes
-│   │   │   ├── dashboard/        # Executive summary KPIs
-│   │   │   ├── clinic-ops/       # Hospital intelligence modules
-│   │   │   │   ├── patient-intake/
-│   │   │   │   ├── insurance/    # VOB Analyzer
-│   │   │   │   ├── denials/      # Denial Prediction
-│   │   │   │   ├── prior-auth/   # Prior Authorization
-│   │   │   │   ├── revenue/      # Revenue Intelligence
-│   │   │   │   ├── payer/        # Payer Intelligence
-│   │   │   │   └── growth/       # Growth Intelligence
-│   │   │   ├── launch-engine/    # Startup GTM modules
-│   │   │   │   ├── gtm/          # Strategy Generator
-│   │   │   │   ├── buyer-discovery/  # AI Match Engine
-│   │   │   │   ├── onboarding/   # Startup Profiles
-│   │   │   │   ├── sales-pipeline/   # Kanban Board
-│   │   │   │   └── competitive/  # Competitor Analysis
-│   │   │   ├── copilot/          # AI Assistant
-│   │   │   ├── marketplace/      # Integrations
-│   │   │   ├── reports/          # Intelligence Reports
-│   │   │   └── settings/         # App Configuration
-│   │   ├── api/                  # API Routes
-│   │   │   ├── gtm/analyze/      # GTM + Buyer Discovery
-│   │   │   ├── gtm/pitch-deck/   # Pitch Deck + Email
-│   │   │   ├── clinic/vob/       # VOB Analysis
-│   │   │   └── copilot/chat/     # AI Copilot
-│   │   ├── login/                # Authentication
-│   │   └── page.tsx              # Marketing Landing Page
-│   ├── components/
-│   │   ├── layout/               # Sidebar, Header
-│   │   ├── pitch-deck-modal.tsx  # 8-Slide Deck Viewer
-│   │   ├── vob-report-view.tsx   # Insurance Report
-│   │   └── gtm-results.tsx       # Strategy Results
-│   ├── lib/
-│   │   ├── demo-data.ts          # Comprehensive demo dataset
-│   │   ├── supabase/             # Client + Server configs
-│   │   └── utils.ts              # Formatters & helpers
-│   └── types/                    # TypeScript interfaces
-├── buyers.json                   # 30+ hospital profiles dataset
-├── supabase_schema.sql           # Database schema
-└── README.md                     # This file
+│   ├── app/ (dashboard)/       # Core Intelligence Modules
+│   ├── components/             # Monochromatic Component Library
+│   ├── lib/supabase/           # Secure DB Infrastructure
+│   ├── api/                    # AI & Inference Endpoints
+│   └── Dockerfile              # Production Standalone Build
+├── buyers.json                 # Proprietary Hospital Matching Dataset
+├── supabase_schema.sql         # Secure RLS Schema
+└── README.md                   # You are here
 ```
 
 ---
@@ -151,152 +110,38 @@ MediFlow Nexus/
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+
-- npm or yarn
-- Supabase account
-- Google Gemini API key
+- Node.js 20+
+- Google Cloud SDK (gcloud)
+- Gemini & ElevenLabs API Keys
 
-### Installation
-
+### Quick Start (Local)
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Hardik182005/Mediflow-Nexus.git
-cd MediFlow-Nexus
-
-# 2. Install dependencies
 cd frontend
 npm install
-
-# 3. Configure environment variables
-cp .env.example .env.local
-```
-
-### Environment Variables
-
-Create a `.env.local` file in the `frontend/` directory:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-GEMINI_API_KEY=your_gemini_api_key
-GROQ_API_KEY=your_groq_api_key
-ELEVENLABS_API_KEY=your_elevenlabs_api_key
-RESEND_API_KEY=your_resend_api_key
-```
-
-### Advanced Voice & Inference Agents
-
-MediFlow Nexus now supports:
-- **ElevenLabs Integration:** Live Mock Pitch Simulator and AI Outreach Voice Memos.
-- **Groq Llama-3 Fallback:** High-performance fallback for heavy analytical tasks if the primary LLM goes down.
-- **Cloud Run Deployment:** Configured out-of-the-box for serverless edge deployment using Google Cloud Run.
-
-### Database Setup
-
-Run the schema in your Supabase SQL Editor:
-
-```bash
-# Copy contents of supabase_schema.sql into Supabase SQL Editor
-```
-
-### Run Development Server
-
-```bash
-cd frontend
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the application.
-
----
-
-## ☁️ Deployment (Google Cloud Run)
-
-MediFlow Nexus is fully configured for serverless deployment using Google Cloud Run. This setup automatically builds the Next.js frontend into a Docker container and deploys it to a managed GCP environment.
-
-### 1. Authenticate with Google Cloud
+### Production Deployment
+MediFlow Nexus is optimized for **Google Cloud Run**.
 ```bash
-# Login to Google Cloud
-gcloud auth login
-```
-
-### 2. Set Up GCP Project
-```bash
-# Set your project ID
-gcloud config set project mediflow-nexus-2026
-
-# Verify environment variables in .env are set correctly.
-```
-
-### 3. Deploy
-```bash
-cd frontend
+# Deploys current state to high-performance GCP infrastructure
 bash deploy-cloudrun.sh
 ```
-
-The deployment script will build the Docker image, push it to the Google Container Registry (GCR), and deploy the service to Cloud Run.
-
----
-
-## 🔌 API Routes
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/gtm/analyze` | POST | GTM strategy generation & buyer discovery |
-| `/api/gtm/pitch-deck` | POST | AI pitch deck generation (8 slides) |
-| `/api/gtm/pitch-deck/email` | POST | AI outreach email drafting |
-| `/api/clinic/vob/analyze` | POST | Insurance document analysis (VOB) |
-| `/api/copilot/chat` | POST | AI Copilot conversation |
-
----
-
-## 🗄️ Database Schema
-
-| Table | Purpose |
-|-------|---------|
-| `patients` | Patient demographics, insurance info, treatment readiness |
-| `startup_profiles` | Onboarded startup business profiles |
-| `gtm_recommendations` | Saved AI-generated GTM strategies |
-| `marketplace_matches` | Discovered buyers, match scores, pitch decks |
-| `insurance_cases` | VOB results, risk scores, denial probabilities |
-
----
-
-## 🎨 Design System
-
-MediFlow Nexus uses the **"Stitch White"** design language:
-
-- **Palette**: High-contrast monochrome (Obsidian Black text on Pure White backgrounds)
-- **Aesthetics**: Premium, professional, and accessible light theme
-- **Typography**: Playfair Display (Serif Headings) & Plus Jakarta Sans (Functional UI)
-- **Animations**: Staggered reveals, smooth modals, and live loading states
-- **Responsive**: Mobile-first adaptive layouts
 
 ---
 
 ## 🔐 Security & Compliance
-
-- **HIPAA Ready**: All patient data encrypted at rest and in transit
-- **SOC2 Type II**: Enterprise-grade access controls
-- **Row-Level Security**: PostgreSQL RLS policies ensure data isolation
-- **NABH/JCI Aware**: Compliance considerations built into GTM strategy prompts
+- **HIPAA-First Design:** Data isolation through Supabase RLS.
+- **Enterprise Ready:** Optimized for high-concurrency clinical workflows.
+- **Transparent AI:** Every AI recommendation includes "Reasoning" logs for clinical auditing.
 
 ---
 
-## 👥 Team
-
-| Name | Role |
-|------|------|
-| **Hardik Hinduja** | Founder & Full-Stack Developer |
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
+## 👥 The Team
+**Hardik Hinduja** — Architect & Full-Stack Developer
 
 ---
 
 <p align="center">
-  <strong>MEDIFLOW NEXUS OS // v2.0.0 ENTERPRISE // ALL SYSTEMS OPERATIONAL</strong>
+  <strong>MEDIFLOW NEXUS // PRODUCTION STABLE // ALL SYSTEMS OPERATIONAL</strong>
 </p>
