@@ -8,7 +8,7 @@ on:
 env:
   PROJECT_ID: mediflow-nexus-2026
   REGION: us-central1
-  SERVICE_NAME: mediflow-nexus-frontend
+  SERVICE_NAME: mediflow-nexus
   IMAGE: gcr.io/mediflow-nexus-2026/mediflow-nexus-frontend
 
 jobs:
