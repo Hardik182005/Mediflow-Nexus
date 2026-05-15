@@ -8,6 +8,8 @@ import GTMResults from "@/components/gtm-results";
 import { createClient } from "@/lib/supabase/client";
 import type { GTMStrategy } from "@/types/gtm";
 import { useLaunchEngineStore } from "@/store/useLaunchEngineStore";
+import { useSearchParams } from "next/navigation";
+import RoleplayModal from "@/components/roleplay-modal";
 
 type Phase = "input" | "loading" | "result" | "error";
 
@@ -25,6 +27,9 @@ export default function GTMPage() {
   const [loadingStep, setLoadingStep] = useState(0);
   const [startups, setStartups] = useState<any[]>([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [isRoleplayOpen, setIsRoleplayOpen] = useState(false);
+  const [roleplayBuyer, setRoleplayBuyer] = useState("");
+  const searchParams = useSearchParams();
   const supabase = createClient();
 
   useEffect(() => {
@@ -39,6 +44,15 @@ export default function GTMPage() {
     };
     fetchStartups();
   }, []);
+
+  useEffect(() => {
+    const roleplay = searchParams.get("roleplay");
+    const buyer = searchParams.get("buyer");
+    if (roleplay === "true" && buyer) {
+      setRoleplayBuyer(buyer);
+      setIsRoleplayOpen(true);
+    }
+  }, [searchParams]);
 
   const handleGenerate = async (files: UploadedFile[], textContext: string) => {
     if (!selectedStartupId) {
@@ -293,6 +307,13 @@ export default function GTMPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <RoleplayModal 
+        isOpen={isRoleplayOpen}
+        onClose={() => setIsRoleplayOpen(false)}
+        buyerOrg={roleplayBuyer}
+        startupId={selectedStartupId || "default"}
+      />
     </div>
   );
 }
