@@ -216,7 +216,7 @@ export default function Copilot() {
           </div>
           <div className="flex justify-between items-center mt-2 px-1">
             <p className="text-[11px] text-black">
-              Powered by Gemini 1.5 Pro · AI may make mistakes. Verify critical information.
+              Powered by Gemini 2.0 Flash · AI may make mistakes. Verify critical information.
             </p>
             <span className="text-[10.5px] text-black font-mono border border-black px-1.5 py-0.5 rounded bg-white">Enter ↵</span>
           </div>
