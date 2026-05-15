@@ -21,15 +21,15 @@ function Section({ title, icon, badge, badgeVariant = "neutral", children, defau
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const badgeStyle = {
-    high: "bg-white/10 text-black border border-white/20",
-    medium: "bg-black/[0.04] text-black/60 border border-white/10",
-    low: "bg-black/[0.02] text-black/30 border border-black/[0.06]",
-    neutral: "bg-black/[0.04] text-black/40 border border-white/[0.08]",
+    high: "bg-black text-white",
+    medium: "bg-white text-black border border-black",
+    low: "bg-white text-black border border-black/20",
+    neutral: "bg-white text-black/40 border border-black/10",
   }[badgeVariant];
 
   return (
-    <div className="bg-white border border-black/[0.07] rounded-2xl overflow-hidden">
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-4 text-left hover:bg-black/[0.02] transition-colors">
+    <div className="bg-white border border-black rounded-2xl overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-4 text-left hover:bg-black/[0.02] transition-colors border-b border-black/5">
         <div className="flex items-center gap-3">
           <span className="text-black/60">{icon}</span>
           <span className="text-sm font-semibold text-black">{title}</span>
@@ -44,23 +44,31 @@ function Section({ title, icon, badge, badgeVariant = "neutral", children, defau
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
-    <div className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.06]">
-      <p className="text-[10px] text-black/20 uppercase tracking-wider font-bold mb-1">{label}</p>
-      <p className="text-sm text-black/70">{value || "—"}</p>
+    <div className="p-3 rounded-lg bg-white border border-black/10">
+      <p className="text-[10px] text-black/30 uppercase tracking-wider font-bold mb-1">{label}</p>
+      <p className="text-sm font-medium text-black">{value || "—"}</p>
     </div>
   );
 }
 
 function RiskPill({ level }: { level: "Low" | "Medium" | "High" }) {
-  const styles = { High: "bg-white/10 text-black border-white/20", Medium: "bg-black/[0.04] text-black/60 border-white/10", Low: "bg-black/[0.02] text-black/30 border-black/[0.06]" };
-  return <span className={`text-xs px-3 py-1 rounded-full border font-semibold ${styles[level]}`}>{level} Risk</span>;
+  const styles = { 
+    High: "bg-black text-white", 
+    Medium: "bg-white text-black border-2 border-black", 
+    Low: "bg-white text-black border border-black/20" 
+  };
+  return <span className={`text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-tight ${styles[level]}`}>{level} Risk</span>;
 }
 
 function StatusPill({ status }: { status: string }) {
   const isGood = ["Active", "Covered", "Not Required", "Ready", "Proceed with scheduling"].includes(status);
   const isBad = ["Inactive", "Not Covered", "Required", "Not Ready", "Hold until prior auth"].includes(status);
-  const style = isGood ? "bg-white/10 text-black border-white/20" : isBad ? "bg-black/[0.03] text-black/40 border-white/[0.08]" : "bg-black/[0.04] text-black/50 border-black/[0.08]";
-  return <span className={`text-xs px-3 py-1 rounded-full border font-semibold ${style}`}>{status}</span>;
+  const style = isGood 
+    ? "bg-black text-white" 
+    : isBad 
+    ? "bg-white text-black border-2 border-black" 
+    : "bg-white text-black border border-black/20";
+  return <span className={`text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-tight ${style}`}>{status}</span>;
 }
 
 function ScoreRing({ score }: { score: number }) {

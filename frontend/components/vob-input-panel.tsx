@@ -97,7 +97,7 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
         <button
           onClick={addInput}
           disabled={inputs.length >= 4}
-          className="btn-secondary flex items-center gap-2 text-xs disabled:opacity-30 border border-black/10"
+          className="btn-secondary flex items-center gap-2 text-xs disabled:opacity-30 border border-black hover:bg-black hover:text-white transition-all font-bold"
         >
           <Plus size={12} /> Add Input
         </button>
@@ -105,7 +105,7 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {inputs.map((inp, idx) => (
-          <div key={inp.id} className="bg-white border border-black/[0.1] shadow-sm rounded-2xl p-4 space-y-3">
+          <div key={inp.id} className="bg-white border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-2xl p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-black/40 text-[10px] font-bold">#{idx + 1}</span>
@@ -157,7 +157,7 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
                 onChange={(e) => updateContent(inp.id, e.target.value)}
                 placeholder={TYPE_PLACEHOLDERS[inp.type]}
                 rows={5}
-                className="w-full bg-white border border-black/[0.1] rounded-lg p-3 text-xs text-black placeholder:text-black/30 outline-none focus:border-black/30 resize-none font-mono leading-relaxed transition-colors shadow-sm"
+                className="w-full bg-white border border-black rounded-lg p-3 text-xs text-black placeholder:text-black/30 outline-none focus:ring-1 focus:ring-black resize-none font-mono leading-relaxed transition-all"
               />
             )}
             
