@@ -138,11 +138,14 @@ bash deploy-cloudrun.sh
 
 ---
 
-## 👥 The Team
-**Hardik Hinduja** — Architect & Full-Stack Developer
+## 👥 The Team: Kryptonite
+- **Hardik Hinduja** — Leader & Architect
+- **Avinash Gehi** — Full-Stack Developer
+- **Siddharth Dey** — Product Strategy
+- **Sahil Deshmukh** — Backend & AI
 
 ---
 
 <p align="center">
-  <strong>MEDIFLOW NEXUS // PRODUCTION STABLE // ALL SYSTEMS OPERATIONAL</strong>
+  <a href="https://mediflow-nexus-frontend-3692981377.us-central1.run.app"><strong>MEDIFLOW NEXUS // PRODUCTION STABLE // ALL SYSTEMS OPERATIONAL</strong></a>
 </p>
