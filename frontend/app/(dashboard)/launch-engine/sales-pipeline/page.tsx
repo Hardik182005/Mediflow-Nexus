@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,7 +8,7 @@ import { formatCurrency } from "@/lib/utils";
 
 const stages = ["lead", "meeting", "demo", "proposal", "negotiation", "closed_won", "closed_lost"];
 const stageLabels: Record<string, string> = { lead: "Lead", meeting: "Meeting", demo: "Demo", proposal: "Proposal", negotiation: "Negotiation", closed_won: "Won", closed_lost: "Lost" };
-const stageColors: Record<string, string> = { lead: "border-t-white/10", meeting: "border-t-white/20", demo: "border-t-white/30", proposal: "border-t-white/40", negotiation: "border-t-white/50", closed_won: "border-t-white", closed_lost: "border-t-white/5" };
+const stageColors: Record<string, string> = { lead: "border-t-black/10", meeting: "border-t-black/20", demo: "border-t-black/30", proposal: "border-t-black/40", negotiation: "border-t-black/50", closed_won: "border-t-black", closed_lost: "border-t-black/5" };
 
 export default function SalesPipelinePage() {
   const [pipeline, setPipeline] = useState<any[]>([]);
@@ -49,13 +49,13 @@ export default function SalesPipelinePage() {
   const activeStages = stages.filter(s => pipeline.some(d => d.stage === s));
   const totalValue = pipeline.reduce((a, d) => a + (d.deal_value || 0), 0);
 
-  if (loading) return <div className="flex items-center justify-center py-32"><Loader2 className="w-8 h-8 text-white animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center py-32"><Loader2 className="w-8 h-8 text-black animate-spin" /></div>;
 
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Sales Pipeline</h1>
+          <h1 className="text-2xl font-bold text-black">Sales Pipeline</h1>
           <p className="text-sm text-black mt-1">Deal tracking, stage progression & win probability</p>
         </div>
         <button onClick={() => setShowAddModal(true)} className="btn-primary flex items-center gap-2"><Plus size={16} /> Add Deal</button>
@@ -71,7 +71,7 @@ export default function SalesPipelinePage() {
           <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white border border-black rounded-2xl p-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-white border border-black flex items-center justify-center"><s.icon size={18} className="text-black" /></div>
-              <div><p className="text-lg font-bold text-white">{s.value}</p><p className="text-xs text-black">{s.label}</p></div>
+              <div><p className="text-lg font-bold text-black">{s.value}</p><p className="text-xs text-black">{s.label}</p></div>
             </div>
           </motion.div>
         ))}
@@ -83,11 +83,11 @@ export default function SalesPipelinePage() {
           activeStages.map((stage, si) => {
             const deals = pipeline.filter(d => d.stage === stage);
             return (
-              <motion.div key={stage} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + si * 0.05 }} className={`min-w-[300px] flex-shrink-0 rounded-xl bg-white border border-black border-t-2 ${stageColors[stage] || "border-t-white/10"}`}>
+              <motion.div key={stage} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + si * 0.05 }} className={`min-w-[300px] flex-shrink-0 rounded-xl bg-white border border-black border-t-2 ${stageColors[stage] || "border-t-black/"}`}>
                 <div className="p-3 border-b border-black">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-semibold text-white">{stageLabels[stage]}</h4>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-black">{deals.length}</span>
+                    <h4 className="text-sm font-semibold text-black">{stageLabels[stage]}</h4>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-black/5 text-black">{deals.length}</span>
                   </div>
                   <p className="text-xs text-black mt-0.5">{formatCurrency(deals.reduce((a, d) => a + (d.deal_value || 0), 0))} total</p>
                 </div>
@@ -95,13 +95,13 @@ export default function SalesPipelinePage() {
                   {deals.map((deal, di) => (
                     <motion.div key={deal.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 + di * 0.05 }} className="pipeline-card">
                       <div className="flex items-center justify-between mb-2">
-                        <p className="text-sm font-medium text-white">{deal.buyer_name}</p>
+                        <p className="text-sm font-medium text-black">{deal.buyer_name}</p>
                         <span className="text-xs font-bold text-black">{deal.win_probability}%</span>
                       </div>
                       <p className="text-xs text-black mb-2">{deal.buyer_organization}</p>
-                      <p className="text-sm font-semibold text-white mb-2">{formatCurrency(deal.deal_value)}</p>
+                      <p className="text-sm font-semibold text-black mb-2">{formatCurrency(deal.deal_value)}</p>
                       <div className="h-1.5 bg-white border border-black rounded-full overflow-hidden mb-2">
-                        <div className="h-full rounded-full bg-white" style={{ width: `${deal.win_probability}%` }} />
+                        <div className="h-full rounded-full bg-black" style={{ width: `${deal.win_probability}%` }} />
                       </div>
                       <div className="flex items-center gap-1 text-xs text-black">
                         <ArrowRight size={10} />
@@ -115,8 +115,8 @@ export default function SalesPipelinePage() {
           })
         ) : (
           <div className="w-full flex flex-col items-center justify-center py-20 bg-white border border-dashed border-black rounded-2xl">
-            <BarChart3 size={40} className="text-white mb-4" />
-            <h3 className="text-sm font-semibold text-white">No active deals</h3>
+            <BarChart3 size={40} className="text-black/50 mb-4" />
+            <h3 className="text-sm font-semibold text-black">No active deals</h3>
             <p className="text-xs text-black mt-1">Add a deal to start tracking your pipeline.</p>
             <button onClick={() => setShowAddModal(true)} className="mt-4 btn-secondary text-xs">Add First Deal</button>
           </div>
@@ -129,7 +129,7 @@ export default function SalesPipelinePage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowAddModal(false)}>
             <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95 }} onClick={(e) => e.stopPropagation()} className="w-full max-w-md bg-white border border-black rounded-2xl p-6 space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-white">Add New Deal</h3>
+                <h3 className="text-lg font-bold text-black">Add New Deal</h3>
                 <button onClick={() => setShowAddModal(false)} className="text-black hover:text-white hover:bg-black"><X size={18} /></button>
               </div>
               <div className="space-y-3">

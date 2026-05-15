@@ -100,7 +100,7 @@ export default function PricingPage() {
             )}
 
             <div className="flex items-center gap-3 mb-5">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${tier.highlight ? "bg-white/10" : "bg-white border border-black"}`}>
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${tier.highlight ? "bg-black/" : "bg-white border border-black"}`}>
                 <tier.icon size={18} className={tier.highlight ? "text-white" : "text-black"} />
               </div>
               <h3 className={`text-[17px] font-bold ${tier.highlight ? "text-white" : "text-black"}`}>{tier.name}</h3>

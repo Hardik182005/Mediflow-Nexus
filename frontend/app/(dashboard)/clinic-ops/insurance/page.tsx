@@ -39,7 +39,7 @@ export default function InsurancePage() {
       case 'verified': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
       case 'denied': return 'bg-red-500/10 text-red-400 border-red-500/20';
       case 'pending': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-      default: return 'bg-white/10 text-black border-black';
+      default: return 'bg-black/ text-black border-black';
     }
   };
 
@@ -216,7 +216,7 @@ export default function InsurancePage() {
                   </div>
                   <div className="flex gap-1">
                     {[0, 1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/30 animate-bounce" style={{ animationDelay: `${i * 0.1}s` }} />
+                      <div key={i} className="w-1.5 h-1.5 rounded-full bg-black/ animate-bounce" style={{ animationDelay: `${i * 0.1}s` }} />
                     ))}
                   </div>
                 </motion.div>

@@ -179,7 +179,7 @@ export default function GTMPage() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <button onClick={toggleHistory} className={`btn-secondary text-[10px] flex items-center gap-2 ${showHistory ? 'bg-white/10' : ''}`}>
+                <button onClick={toggleHistory} className={`btn-secondary text-[10px] flex items-center gap-2 ${showHistory ? 'bg-black/' : ''}`}>
                   <History size={12} /> View History
                 </button>
               </div>
