@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { UserPlus, Search, Filter, FileText, CheckCircle, AlertCircle, Clock, X, Loader2 } from "lucide-react";
+import { UserPlus, Search, Filter, FileText, CheckCircle, AlertCircle, Clock, X, Loader2, RefreshCw } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 const statusOptions = ['intake', 'verified', 'authorized', 'in_treatment', 'completed', 'dropped'];
@@ -25,6 +25,7 @@ export default function PatientIntakePage() {
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const supabase = createClient();
 
   // Form State
@@ -39,13 +40,33 @@ export default function PatientIntakePage() {
 
   const fetchPatients = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from('patients')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (data) setPatients(data);
-    setLoading(false);
+    setError(null);
+    try {
+      console.log("[Patient Intake] Fetching patients...");
+      const response = await fetch("/api/patients");
+      const data = await response.json();
+      console.log("[Patient Intake] Response:", JSON.stringify(data).slice(0, 200));
+      
+      if (!response.ok) {
+        const errMsg = data.error || `HTTP ${response.status}`;
+        console.error("[Patient Intake] API error:", errMsg);
+        setError(errMsg);
+        return;
+      }
+      
+      if (Array.isArray(data)) {
+        setPatients(data);
+        console.log(`[Patient Intake] Loaded ${data.length} patients`);
+      } else {
+        console.error("Error fetching patients:", data.error);
+        setError(data.error || "Unexpected response format");
+      }
+    } catch (err: any) {
+      console.error("Fetch error:", err);
+      setError(err.message || "Network error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -57,76 +78,37 @@ export default function PatientIntakePage() {
     setIsSubmitting(true);
     
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        console.error("No authenticated user found");
-        alert("You must be logged in to add patients.");
-        setIsSubmitting(false);
-        return;
+      const response = await fetch("/api/patients", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to add patient");
       }
 
-      // 1. Try to get clinic_id from user metadata
-      let target_clinic_id = user?.user_metadata?.clinic_id;
-
-      // 2. If not in metadata, fetch from public.users table
-      if (!target_clinic_id) {
-        const { data: profile } = await supabase
-          .from('users')
-          .select('clinic_id')
-          .eq('id', user.id)
-          .single();
-        
-        if (profile?.clinic_id) {
-          target_clinic_id = profile.clinic_id;
-        }
-      }
-
-      // 3. Fallback: If still no clinic_id, fetch the first available clinic (demo-friendly fallback)
-      if (!target_clinic_id) {
-        const { data: clinics } = await supabase.from('clinics').select('id').limit(1);
-        if (clinics && clinics.length > 0) {
-          target_clinic_id = clinics[0].id;
-        }
-      }
-
-      // 4. Ultimate fallback (hardcoded UUID from schema/dev)
-      if (!target_clinic_id) {
-        target_clinic_id = "00000000-0000-0000-0000-000000000000";
-      }
-
-      const { error } = await supabase
-        .from('patients')
-        .insert([{
-          ...formData,
-          clinic_id: target_clinic_id,
-          treatment_readiness_score: Math.floor(Math.random() * 40) + 40,
-          document_completeness: Math.floor(Math.random() * 30) + 20
-        }]);
-
-      if (error) {
-        console.error("Supabase Insertion Error:", error);
-        alert(`Error adding patient: ${error.message}`);
-      } else {
-        setShowModal(false);
-        setFormData({ 
-          first_name: "", 
-          last_name: "", 
-          insurance_provider: "", 
-          policy_number: "", 
-          diagnosis_code: "", 
-          status: "intake" 
-        });
-        await fetchPatients();
-        console.log("Patient added successfully");
-      }
+      setShowModal(false);
+      setFormData({ 
+        first_name: "", 
+        last_name: "", 
+        insurance_provider: "", 
+        policy_number: "", 
+        diagnosis_code: "", 
+        status: "intake" 
+      });
+      await fetchPatients();
+      console.log("Patient added successfully:", result);
     } catch (err: any) {
       console.error("Unexpected error during patient intake:", err);
-      alert(`An unexpected error occurred: ${err.message}`);
+      alert(`Error: ${err.message}`);
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   const filteredPatients = patients.filter(p => 
     `${p.first_name} ${p.last_name}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -147,13 +129,48 @@ export default function PatientIntakePage() {
           <h1 className="text-2xl font-bold text-black">Patient Intake Intelligence</h1>
           <p className="text-sm text-black mt-1">Smart intake, document tracking & readiness scoring</p>
         </div>
-        <button 
-          onClick={() => setShowModal(true)}
-          className="btn-primary flex items-center gap-2"
-        >
-          <UserPlus size={16} /> New Patient
-        </button>
+        <div className="flex gap-3">
+          <button 
+            onClick={async () => {
+              const res = await fetch("/api/debug/fix-rls");
+              const data = await res.json();
+              alert(data.message);
+              fetchPatients();
+            }}
+            className="btn-secondary flex items-center gap-2"
+          >
+            <RefreshCw size={16} /> Fix DB
+          </button>
+          <button 
+            onClick={async () => {
+              const res = await fetch("/api/debug/check-db");
+              const data = await res.json();
+              alert(data.message);
+              fetchPatients();
+            }}
+            className="btn-secondary flex items-center gap-2"
+          >
+            <RefreshCw size={16} /> Check Backend
+          </button>
+          <button 
+            onClick={() => setShowModal(true)}
+            className="btn-primary flex items-center gap-2"
+          >
+            <UserPlus size={16} /> New Patient
+          </button>
+        </div>
       </div>
+
+      {/* Error Banner */}
+      {error && (
+        <div className="bg-red-50 border border-red-300 text-red-800 rounded-xl p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <AlertCircle size={16} />
+            <span className="text-sm font-medium">Backend Error: {error}</span>
+          </div>
+          <button onClick={() => { setError(null); fetchPatients(); }} className="text-red-600 hover:text-red-800 text-sm font-bold">Retry</button>
+        </div>
+      )}
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

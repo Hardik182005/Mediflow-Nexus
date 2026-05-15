@@ -13,22 +13,32 @@ REGION="us-central1"
 SERVICE_NAME="mediflow-nexus-frontend"
 IMAGE="gcr.io/${PROJECT_ID}/${SERVICE_NAME}"
 
+# ── Load from .env.local if exists ───────────────────────────
+if [ -f .env.local ]; then
+  echo "▶  Found .env.local, sourcing variables..."
+  # Source .env.local, ignoring comments and empty lines
+  export $(grep -v '^#' .env.local | xargs)
+fi
+
 # ── Validate required env vars ───────────────────────────────
-if [ -z "$NEXT_PUBLIC_SUPABASE_URL" ] || [ -z "$NEXT_PUBLIC_SUPABASE_ANON_KEY" ]; then
+if [ -z "$NEXT_PUBLIC_SUPABASE_URL" ] || [ -z "$NEXT_PUBLIC_SUPABASE_ANON_KEY" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
   echo ""
   echo "❌  Missing required environment variables:"
   echo "    NEXT_PUBLIC_SUPABASE_URL"
   echo "    NEXT_PUBLIC_SUPABASE_ANON_KEY"
+  echo "    SUPABASE_SERVICE_ROLE_KEY"
   echo ""
   echo "    Export them before running this script:"
   echo "    export NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co"
   echo "    export NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ..."
+  echo "    export SUPABASE_SERVICE_ROLE_KEY=eyJ..."
   echo ""
   exit 1
 fi
 
 GEMINI_KEY="${GEMINI_API_KEY:-}"
 ELEVENLABS_KEY="${ELEVENLABS_API_KEY:-}"
+SERVICE_KEY="${SUPABASE_SERVICE_ROLE_KEY:-}"
 
 echo ""
 echo "🚀  MediFlow Nexus — Cloud Run Deployment"
@@ -77,7 +87,7 @@ gcloud run deploy "${SERVICE_NAME}" \
   --min-instances 0 \
   --max-instances 10 \
   --timeout 300 \
-  --set-env-vars "NODE_ENV=production,NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL},NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}${GEMINI_KEY:+,GEMINI_API_KEY=${GEMINI_KEY}}${ELEVENLABS_KEY:+,ELEVENLABS_API_KEY=${ELEVENLABS_KEY}}" \
+  --set-env-vars "NODE_ENV=production,NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL},NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY},SUPABASE_SERVICE_ROLE_KEY=${SERVICE_KEY}${GEMINI_KEY:+,GEMINI_API_KEY=${GEMINI_KEY}}${ELEVENLABS_KEY:+,ELEVENLABS_API_KEY=${ELEVENLABS_KEY}}" \
   --quiet
 
 # ── Step 7: Get service URL ──────────────────────────────────

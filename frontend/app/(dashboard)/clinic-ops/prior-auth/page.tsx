@@ -24,12 +24,17 @@ export default function PriorAuthPage() {
 
   const fetchPACases = async () => {
     setLoading(true);
-    const { data } = await supabase
-      .from('insurance_cases')
-      .select('*')
-      .order('created_at', { ascending: false });
-    if (data) setCases(data);
-    setLoading(false);
+    try {
+      const res = await fetch("/api/sync");
+      const data = await res.json();
+      if (data.insuranceCases) {
+        setCases(data.insuranceCases);
+      }
+    } catch (err) {
+      console.error("Prior Auth sync error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

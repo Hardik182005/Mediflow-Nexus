@@ -19,13 +19,21 @@ export default function DenialsPage() {
   useEffect(() => {
     const fetchDenials = async () => {
       setLoading(true);
-      const { data } = await supabase
-        .from('insurance_cases')
-        .select('*')
-        .or('status.eq.denied,denial_risk_score.gt.50')
-        .order('created_at', { ascending: false });
-      if (data) setDenials(data);
-      setLoading(false);
+      try {
+        const res = await fetch("/api/sync");
+        const data = await res.json();
+        if (data.insuranceCases) {
+          // Filter for denied cases or high-risk scores > 50
+          const filtered = data.insuranceCases.filter((c: any) => 
+            c.status === 'denied' || (c.denial_risk_score && c.denial_risk_score > 50)
+          );
+          setDenials(filtered);
+        }
+      } catch (err) {
+        console.error("Denials sync error:", err);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchDenials();
   }, []);

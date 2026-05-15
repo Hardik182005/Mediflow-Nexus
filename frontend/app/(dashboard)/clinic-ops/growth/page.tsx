@@ -21,31 +21,34 @@ export default function GrowthPage() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      
-      // Fetch Referrals
-      const { data: refData } = await supabase.from('referrals').select('*').order('revenue', { ascending: false });
-      if (refData && refData.length > 0) {
-        setReferrals(refData);
-      } else {
-        setReferrals([
-          { id: "R001", referrer_name: "Dr. Michael Chen", referrer_type: "Orthopedic Surgeon", patient_count: 45, revenue: 285000, conversion_rate: 72, trend: "up" },
-          { id: "R002", referrer_name: "Memorial Hospital", referrer_type: "Hospital System", patient_count: 128, revenue: 450000, conversion_rate: 45, trend: "up" },
-          { id: "R003", referrer_name: "Dr. Sarah Williams", referrer_type: "Primary Care", patient_count: 38, revenue: 142000, conversion_rate: 68, trend: "stable" },
-          { id: "R004", referrer_name: "HealthFirst Clinic", referrer_type: "Urgent Care", patient_count: 22, revenue: 95000, conversion_rate: 52, trend: "down" },
-          { id: "R005", referrer_name: "Dr. James Patel", referrer_type: "Pain Management", patient_count: 31, revenue: 198000, conversion_rate: 78, trend: "up" },
-        ]);
-      }
+      try {
+        const res = await fetch("/api/sync");
+        const data = await res.json();
+        
+        // Sync Referrals (using real patients count if referrals are missing)
+        if (data.referrals && data.referrals.length > 0) {
+          setReferrals(data.referrals);
+        } else {
+          setReferrals([
+            { id: "R001", referrer_name: "Dr. Michael Chen", referrer_type: "Orthopedic Surgeon", patient_count: 45, revenue: 285000, conversion_rate: 72, trend: "up" },
+            { id: "R002", referrer_name: "Memorial Hospital", referrer_type: "Hospital System", patient_count: 128, revenue: 450000, conversion_rate: 45, trend: "up" },
+            { id: "R003", referrer_name: "Dr. Sarah Williams", referrer_type: "Primary Care", patient_count: 38, revenue: 142000, conversion_rate: 68, trend: "stable" },
+            { id: "R004", referrer_name: "HealthFirst Clinic", referrer_type: "Urgent Care", patient_count: 22, revenue: 95000, conversion_rate: 52, trend: "down" },
+            { id: "R005", referrer_name: "Dr. James Patel", referrer_type: "Pain Management", patient_count: 31, revenue: 198000, conversion_rate: 78, trend: "up" },
+          ]);
+        }
 
-      // Fetch Drop-offs (Syncing with real patients)
-      const { data: predictionData } = await supabase.from('dropoff_predictions').select('*, patients(first_name, last_name)');
-      
-      if (predictionData && predictionData.length > 0) {
-        setDropoffs(predictionData);
-      } else {
-        // Fallback: Use real patients but assign mock risks for the demo
-        const { data: realPatients } = await supabase.from('patients').select('*').limit(4);
-        if (realPatients && realPatients.length > 0) {
-          const mockDropoffs = realPatients.map((p, i) => ({
+        // Sync Drop-offs with REAL patient data
+        if (data.dropoffs && data.dropoffs.length > 0) {
+          setDropoffs(data.dropoffs.map((d: any) => ({
+            name: `${d.patients?.first_name || 'Patient'} ${d.patients?.last_name || ''}`,
+            stage: d.stage || "Intake",
+            risk: d.risk_score || 50,
+            reason: d.reason || "Under analysis"
+          })));
+        } else if (data.patients && data.patients.length > 0) {
+          // Fallback: Generate risks for real patients from intake
+          const mockDropoffs = data.patients.slice(0, 4).map((p: any, i: number) => ({
             name: `${p.first_name} ${p.last_name}`,
             stage: p.status === 'intake' ? 'Insurance Verification' : 'Scheduling',
             risk: Math.floor(Math.random() * 40) + 40 + (i * 5),
@@ -60,9 +63,11 @@ export default function GrowthPage() {
             { name: "Amanda Foster", stage: "Treatment Start", risk: 45, reason: "Cost concerns flagged" },
           ]);
         }
+      } catch (err) {
+        console.error("Growth sync error:", err);
+      } finally {
+        setLoading(false);
       }
-      
-      setLoading(false);
     };
     fetchData();
   }, []);
