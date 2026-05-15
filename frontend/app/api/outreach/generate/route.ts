@@ -1,10 +1,9 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { VertexAI } from "@google-cloud/vertexai";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import fs from "fs";
 import path from "path";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 function loadBuyersJson(): any[] {
   const candidates = [
@@ -21,16 +20,29 @@ function loadBuyersJson(): any[] {
   return [];
 }
 
+async function generateWithVertexAI(prompt: string): Promise<string> {
+  const vertexAI = new VertexAI({
+    project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026",
+    location: process.env.GCP_LOCATION || "us-central1",
+  });
+  const model = vertexAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const result = await model.generateContent(prompt);
+  return (result.response.candidates?.[0]?.content?.parts?.[0]?.text as string || "").trim();
+}
+
+async function generateWithGoogleAI(prompt: string): Promise<string> {
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const result = await model.generateContent(prompt);
+  return result.response.text().trim();
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { startupId, buyerOrg, buyerName } = await req.json();
 
     if (!startupId || !buyerOrg) {
       return NextResponse.json({ error: "startupId and buyerOrg are required" }, { status: 400 });
-    }
-
-    if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ error: "GEMINI_API_KEY not configured" }, { status: 500 });
     }
 
     // Fetch startup from Supabase
@@ -138,13 +150,17 @@ RETURN JSON ONLY in this exact format:
   "wordCount": 0
 }`;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(prompt);
-    const raw = result.response.text().trim()
-      .replace(/^```json\s*/i, "")
-      .replace(/^```\s*/i, "")
-      .replace(/\s*```$/i, "")
-      .trim();
+    // Try Vertex AI first, then fallback to Google AI SDK
+    let raw: string;
+    try {
+      console.log("[Outreach] Trying Vertex AI...");
+      raw = await generateWithVertexAI(prompt);
+    } catch (vertexErr: any) {
+      console.warn("[Outreach] Vertex AI failed, falling back to Google AI SDK:", vertexErr.message);
+      raw = await generateWithGoogleAI(prompt);
+    }
+
+    raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/\s*```$/i, "").trim();
 
     let parsed;
     try {

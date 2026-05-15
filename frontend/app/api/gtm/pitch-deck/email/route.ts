@@ -1,17 +1,12 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { VertexAI } from "@google-cloud/vertexai";
 import { createClient } from "@/lib/supabase/server";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 export async function POST(req: Request) {
   try {
     const supabase = await createClient();
     const { deck, buyerName, startupId } = await req.json();
-
-    if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ error: "API Key missing" }, { status: 500 });
-    }
 
     // Fetch Startup Profile for extra context
     const { data: startup } = await supabase
@@ -20,7 +15,6 @@ export async function POST(req: Request) {
       .eq('id', startupId)
       .single();
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const prompt = `
       You are an expert in B2B healthcare sales outreach.
       Draft a personalized, high-conversion cold outreach email for the following scenario:
@@ -47,6 +41,23 @@ export async function POST(req: Request) {
       Return ONLY the email text. Use placeholders like [Name] for the recipient.
     `;
 
+    // Try Vertex AI first
+    try {
+      const vertexAI = new VertexAI({
+        project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026",
+        location: process.env.GCP_LOCATION || "us-central1",
+      });
+      const model = vertexAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      const result = await model.generateContent(prompt);
+      const email = (result.response.candidates?.[0]?.content?.parts?.[0]?.text as string || "").trim();
+      return NextResponse.json({ email });
+    } catch (vertexErr: any) {
+      console.warn("[PitchEmail] Vertex AI failed, falling back:", vertexErr.message);
+    }
+
+    // Fallback to Google AI SDK
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const result = await model.generateContent(prompt);
     const email = result.response.text().trim();
 

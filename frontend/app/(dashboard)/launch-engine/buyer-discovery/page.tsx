@@ -471,40 +471,40 @@ export default function BuyerDiscoveryPage() {
                     )}
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="flex flex-wrap gap-2">
                     {b.pitch_deck_json ? (
                       <button 
                         onClick={() => handleViewPitch(b.pitch_deck_json, b.buyer_org)}
-                        className="p-2 rounded-lg bg-black text-white border border-black hover:bg-black/90 transition-all flex items-center justify-center gap-2"
+                        className="flex-1 min-w-0 p-2.5 rounded-lg bg-black text-white border border-black hover:bg-black/90 transition-all flex items-center justify-center gap-1.5"
                       >
-                        <Presentation size={14} />
-                        <span className="text-[9px] font-bold uppercase tracking-widest">View Pitch</span>
+                        <Presentation size={13} className="shrink-0" />
+                        <span className="text-[9px] font-bold uppercase tracking-wider whitespace-nowrap">View Pitch</span>
                       </button>
                     ) : (
                       <button 
                         onClick={() => handleGeneratePitch(b.id, b.buyer_org)}
                         disabled={!!isGeneratingPitch}
-                        className="p-2 rounded-lg bg-white border border-black text-black hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                        className="flex-1 min-w-0 p-2.5 rounded-lg bg-white border border-black text-black hover:bg-black hover:text-white transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
                       >
-                        {isGeneratingPitch === b.id ? <Loader2 size={12} className="animate-spin" /> : <Presentation size={14} />}
-                        <span className="text-[9px] font-bold uppercase tracking-widest">
-                          {isGeneratingPitch === b.id ? "Analyzing..." : "AI Pitch"}
+                        {isGeneratingPitch === b.id ? <Loader2 size={12} className="animate-spin shrink-0" /> : <Presentation size={13} className="shrink-0" />}
+                        <span className="text-[9px] font-bold uppercase tracking-wider whitespace-nowrap">
+                          {isGeneratingPitch === b.id ? "..." : "AI Pitch"}
                         </span>
                       </button>
                     )}
 
                     <button
                       onClick={() => openRoleplayModal(b)}
-                      className="p-2 rounded-lg bg-white border border-black text-black hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2"
+                      className="flex-1 min-w-0 p-2.5 rounded-lg bg-white border border-black text-black hover:bg-black hover:text-white transition-all flex items-center justify-center gap-1.5"
                     >
-                      <Mic size={14} />
-                      <span className="text-[9px] font-bold uppercase tracking-widest">Mock Pitch</span>
+                      <Mic size={13} className="shrink-0" />
+                      <span className="text-[9px] font-bold uppercase tracking-wider whitespace-nowrap">Mock Pitch</span>
                     </button>
 
                     {!connectedBuyers.includes(b.id) && (
                       <button
                         onClick={() => openOutreachModal(b)}
-                        className="col-span-2 btn-primary text-[10px] py-2.5 px-4 uppercase font-bold tracking-widest flex items-center justify-center gap-2"
+                        className="w-full btn-primary text-[10px] py-2.5 px-4 uppercase font-bold tracking-widest flex items-center justify-center gap-2"
                       >
                         Send Outreach <ArrowRight size={12} />
                       </button>

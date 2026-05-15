@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { VertexAI } from "@google-cloud/vertexai";
 import { NextRequest, NextResponse } from "next/server";
 
 const VOB_SYSTEM_PROMPT = `You are an AI Healthcare Revenue Cycle Assistant specializing in Insurance Verification (VOB), Prior Authorization, and Revenue Risk Analysis.
@@ -90,20 +91,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No inputs provided" }, { status: 400 });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey || apiKey === "your_gemini_api_key_here") {
-      return NextResponse.json(
-        { error: "GEMINI_API_KEY not configured. Please add your key to .env.local and restart the dev server." },
-        { status: 500 }
-      );
-    }
-
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
-      systemInstruction: VOB_SYSTEM_PROMPT,
-    });
-
     const prompt = `Analyze the following insurance inputs and generate a clinic-ready VOB intelligence report as JSON:\n\n`;
     
     const parts: any[] = [{ text: prompt }];
@@ -122,8 +109,38 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const result = await model.generateContent(parts);
-    const rawText = result.response.text().trim();
+    let rawText: string;
+
+    // TRY VERTEX AI FIRST (enterprise-grade limits)
+    try {
+      console.log("[VOB-Legacy] Attempting Vertex AI...");
+      const vertexAI = new VertexAI({
+        project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026",
+        location: process.env.GCP_LOCATION || "us-central1",
+      });
+      const vertexModel = vertexAI.getGenerativeModel({
+        model: "gemini-2.0-flash",
+        systemInstruction: { role: "system", parts: [{ text: VOB_SYSTEM_PROMPT }] },
+      });
+      const result = await vertexModel.generateContent({ contents: [{ role: "user", parts }] });
+      rawText = (result.response.candidates?.[0]?.content?.parts?.[0]?.text as string || "").trim();
+      console.log("[VOB-Legacy] Vertex AI Success.");
+    } catch (vertexErr: any) {
+      console.warn("[VOB-Legacy] Vertex AI failed, falling back to Google AI SDK:", vertexErr.message);
+
+      // FALLBACK TO GOOGLE AI SDK
+      const apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) {
+        return NextResponse.json({ error: "No API keys available for analysis." }, { status: 500 });
+      }
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({
+        model: "gemini-2.0-flash",
+        systemInstruction: VOB_SYSTEM_PROMPT,
+      });
+      const result = await model.generateContent(parts);
+      rawText = result.response.text().trim();
+    }
 
     const jsonText = rawText
       .replace(/^```json\s*/i, "")

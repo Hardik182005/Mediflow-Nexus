@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { VertexAI } from "@google-cloud/vertexai";
 import { createClient } from "@/lib/supabase/server";
 import fs from "fs";
 import path from "path";
@@ -24,7 +25,7 @@ export async function POST(req: Request) {
     // Handle email generation requests
     if (body.type === 'email') {
       try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
         const emailResult = await geminiWithTimeout(
           model.generateContent(`Draft a professional sales outreach email based on this pitch deck data. Make it concise, specific, and action-oriented. Pitch deck: ${JSON.stringify(body.pitchDeck)}. Target: ${body.buyerOrg || 'the hospital'}. Return just the email text, no JSON.`)
         );
@@ -90,7 +91,8 @@ export async function POST(req: Request) {
       total_beds: 500
     };
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    // Will be used as fallback
+    const googleAIModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const prompt = `
       You are an enterprise sales expert for healthcare startups.
       Generate a hyper-personalized 8-slide pitch deck in JSON format for this specific match.
@@ -141,12 +143,29 @@ export async function POST(req: Request) {
         }))
       : [];
 
+    // Try Vertex AI first (enterprise-grade limits)
     try {
-      const result = await geminiWithTimeout(model.generateContent([prompt, ...fileParts]));
+      console.log("[PitchDeck] Trying Vertex AI...");
+      const vertexAI = new VertexAI({
+        project: process.env.GCP_PROJECT_ID || "mediflow-nexus-2026",
+        location: process.env.GCP_LOCATION || "us-central1",
+      });
+      const vertexModel = vertexAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      const result = await geminiWithTimeout(vertexModel.generateContent({ contents: [{ role: "user", parts: [{ text: prompt }, ...fileParts] }] }));
+      const rawText = (result as any).response.candidates?.[0]?.content?.parts?.[0]?.text as string || "";
+      const text = rawText.replace(/```json|```/g, "").trim();
+      return NextResponse.json({ pitchDeck: JSON.parse(text) });
+    } catch (vertexErr: any) {
+      console.warn("[PitchDeck] Vertex AI failed, trying Google AI SDK:", vertexErr.message);
+    }
+
+    // Fallback to Google AI SDK
+    try {
+      const result = await geminiWithTimeout(googleAIModel.generateContent([prompt, ...fileParts]));
       const text = (result as any).response.text().replace(/```json|```/g, "").trim();
       return NextResponse.json({ pitchDeck: JSON.parse(text) });
-    } catch (timeoutErr) {
-      console.warn("Gemini timeout/error — falling back to Groq");
+    } catch (googleErr: any) {
+      console.warn("[PitchDeck] Google AI SDK failed, trying Groq:", googleErr.message);
       try {
         const Groq = (await import("groq-sdk")).default;
         const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
@@ -158,7 +177,7 @@ export async function POST(req: Request) {
         const groqText = groqCompletion.choices[0]?.message?.content?.replace(/```json|```/g, "").trim() || "";
         return NextResponse.json({ pitchDeck: JSON.parse(groqText) });
       } catch (groqErr) {
-        console.warn("Groq also failed — using fallback pitch deck", groqErr);
+        console.warn("[PitchDeck] All engines failed — using fallback pitch deck");
         return NextResponse.json({ pitchDeck: fallbackDeck });
       }
     }
