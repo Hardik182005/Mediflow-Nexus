@@ -186,7 +186,7 @@ export default function VOBInputPanel({ onGenerate, isLoading }: Props) {
         )}
       </button>
       <p className="text-center text-[11px] text-black/40 font-medium">
-        Powered by Gemini 1.5 Pro · Generates 8-section clinical intelligence report
+        Powered by Gemini 2.0 Flash · Generates 8-section clinical intelligence report
       </p>
     </div>
   );

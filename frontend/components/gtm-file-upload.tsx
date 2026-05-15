@@ -277,7 +277,7 @@ export default function GTMFileUpload({ onGenerate, isLoading }: Props) {
 
       <div className="flex items-center justify-center gap-4 text-[11px] text-black/20 font-medium">
         <span>✦ PDF · Video · Audio · Images</span>
-        <span>✦ Gemini 1.5 Pro multimodal</span>
+        <span>✦ Gemini 2.0 Flash multimodal</span>
         <span>✦ 11-section output</span>
       </div>
     </div>

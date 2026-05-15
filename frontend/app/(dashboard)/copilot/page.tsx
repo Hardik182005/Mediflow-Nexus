@@ -76,7 +76,7 @@ export default function Copilot() {
     { name: "Sales Pipeline", table: "sales_pipeline", icon: <Table size={14} />, description: "Deal tracking and buyer pipeline" },
     { name: "Marketplace Matches", table: "marketplace_matches", icon: <Sparkles size={14} />, description: "AI-matched buyer–startup connections" },
     { name: "GTM Recommendations", table: "gtm_recommendations", icon: <FileText size={14} />, description: "AI-generated go-to-market strategies" },
-    { name: "Gemini 1.5 Pro API", table: "External API", icon: <Bot size={14} />, description: "LLM-powered analysis and generation" },
+    { name: "Gemini 2.0 Flash API", table: "External API", icon: <Bot size={14} />, description: "LLM-powered analysis and generation" },
   ];
 
   return (
@@ -92,7 +92,7 @@ export default function Copilot() {
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span className="text-[11.5px] text-black font-medium">
-                {isLoading ? "Thinking…" : "Connected · Gemini 1.5 Pro"}
+                {isLoading ? "Thinking…" : "Connected · Gemini 2.0 Flash"}
               </span>
             </div>
           </div>

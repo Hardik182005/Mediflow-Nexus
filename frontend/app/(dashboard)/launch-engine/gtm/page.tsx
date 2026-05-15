@@ -230,7 +230,7 @@ export default function GTMPage() {
 
             {/* Step indicator */}
             <div className="text-center space-y-2 max-w-xs">
-              <p className="text-black font-semibold text-sm">Analyzing with Gemini 1.5 Pro</p>
+              <p className="text-black font-semibold text-sm">Analyzing with Gemini 2.0 Flash</p>
               <motion.p
                 key={loadingStep}
                 initial={{ opacity: 0, y: 4 }}
