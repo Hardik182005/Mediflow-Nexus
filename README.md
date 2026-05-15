@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=nextdotjs" />
   <img src="https://img.shields.io/badge/TypeScript-5.0-black?style=flat-square&logo=typescript" />
   <img src="https://img.shields.io/badge/Supabase-DB-black?style=flat-square&logo=supabase" />
-  <img src="https://img.shields.io/badge/Gemini-2.5-black?style=flat-square&logo=google" />
+  <img src="https://img.shields.io/badge/Gemini-2.0_Flash-black?style=flat-square&logo=google" />
   <img src="https://img.shields.io/badge/ElevenLabs-Voice-black?style=flat-square" />
   <img src="https://img.shields.io/badge/Cloud_Run-GCP-black?style=flat-square&logo=googlecloud" />
 </p>
@@ -19,7 +19,7 @@
 
 # 🏥 MediFlow Nexus: Intelligence Reimagined
 
-**MediFlow Nexus** is a state-of-the-art AI intelligence platform designed to collapse the friction between healthcare innovation and clinical operations. Built on a foundation of **Google Gemini 2.5**, it serves as a dual-core operating system for the healthcare industry:
+**MediFlow Nexus** is a state-of-the-art AI intelligence platform designed to collapse the friction between healthcare innovation and clinical operations. Built on a foundation of **Google Gemini 2.0 Flash**, it serves as a dual-core operating system for the healthcare industry:
 
 1.  **🚀 Launch Engine:** Accelerating Go-To-Market for medical startups.
 2.  **🏥 Clinic Ops:** Optimizing Revenue Cycle Management (RCM) and insurance verification for hospitals.
@@ -54,7 +54,7 @@ graph TD
         CO3[Revenue Intelligence]
     end
     
-    Dashboard --> AI[🧠 Gemini 2.5 Intelligence]
+    Dashboard --> AI[🧠 Gemini 2.0 Flash Intelligence]
     Dashboard --> Voice[🎙️ ElevenLabs Voice Agents]
     Dashboard --> DB[(Supabase RLS DB)]
 ```
@@ -82,7 +82,7 @@ graph TD
 | Component | Technology | Role |
 |-----------|------------|------|
 | **Frontend** | Next.js (Standalone Mode) | Ultra-fast production builds with optimized NFT tracing. |
-| **Intelligence** | Gemini 2.5 | Next-generation multi-modal processing for medical OCR and strategic analysis. |
+| **Intelligence** | Gemini 2.0 Flash | Next-generation multi-modal processing for medical OCR and strategic analysis. |
 | **Voice Synthesis** | ElevenLabs | High-fidelity voice cloning for pitch narration and outreach. |
 | **Inference Fallback** | Groq (Llama-3) | High-speed redundancy for heavy analytical reasoning. |
 | **Backend/Auth** | Supabase | Secure, type-safe database with strict Row-Level Security (RLS). |
