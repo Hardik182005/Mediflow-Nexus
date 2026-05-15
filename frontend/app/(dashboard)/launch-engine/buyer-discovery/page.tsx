@@ -318,7 +318,7 @@ export default function BuyerDiscoveryPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-black tracking-tight">Buyer Discovery</h1>
-          <p className="text-sm text-black mt-1">AI-powered hospital & clinic targeting</p>
+          <p className="text-sm text-black mt-1">Gemini 2.0 Flash-powered hospital & clinic targeting</p>
         </div>
         <div className="flex items-center gap-3">
           <select 
@@ -576,17 +576,28 @@ export default function BuyerDiscoveryPage() {
                 <button onClick={() => setConnectModal(null)} className="text-black hover:text-white hover:bg-black transition-colors"><X size={18} /></button>
               </div>
 
-              {/* Generate Button */}
+              {/* Action Buttons */}
               {!generatedEmail && (
-                <button
-                  onClick={() => handleGenerateEmail(connectModal)}
-                  disabled={isGeneratingEmail}
-                  className="w-full mb-5 flex items-center justify-center gap-2 py-3 rounded-xl bg-black text-white text-sm font-bold hover:bg-black/90 transition-all disabled:opacity-50"
-                >
-                  {isGeneratingEmail
-                    ? <><Loader2 size={16} className="animate-spin" /> Generating personalised email...</>
-                    : <><Sparkles size={16} /> Generate AI Outreach Email</>}
-                </button>
+                <div className="flex gap-3 mb-5">
+                  <button
+                    onClick={() => {
+                      setConnectModal(null);
+                      openRoleplayModal(connectModal);
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-white border border-black text-black text-sm font-bold hover:bg-black hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+                  >
+                    <Mic size={16} /> Practice Mock Pitch
+                  </button>
+                  <button
+                    onClick={() => handleGenerateEmail(connectModal)}
+                    disabled={isGeneratingEmail}
+                    className="flex-[1.5] flex items-center justify-center gap-2 py-3 rounded-xl bg-black text-white text-sm font-bold hover:bg-black/90 transition-all disabled:opacity-50"
+                  >
+                    {isGeneratingEmail
+                      ? <><Loader2 size={16} className="animate-spin" /> Generating...</>
+                      : <><Sparkles size={16} /> Generate AI Outreach Email</>}
+                  </button>
+                </div>
               )}
 
               {/* AI Email Preview */}

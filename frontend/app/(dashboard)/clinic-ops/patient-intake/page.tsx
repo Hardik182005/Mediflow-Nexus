@@ -127,7 +127,7 @@ export default function PatientIntakePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-black">Patient Intake Intelligence</h1>
-          <p className="text-sm text-black mt-1">Smart intake, document tracking & readiness scoring</p>
+          <p className="text-sm text-black mt-1">Gemini 2.0 Flash-powered intake, document tracking & readiness scoring</p>
         </div>
         <div className="flex gap-3">
           <button 

@@ -84,7 +84,7 @@ export default function InsurancePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-black">Insurance Intelligence</h1>
-          <p className="text-sm text-black mt-1">AI-powered VOB analysis, verification & denial prediction</p>
+          <p className="text-sm text-black mt-1">Gemini 2.0 Flash-powered VOB analysis, verification & denial prediction</p>
         </div>
         <button onClick={() => setTab("analyzer")} className="btn-primary flex items-center gap-2">
           <Brain size={15} /> AI Analyzer
